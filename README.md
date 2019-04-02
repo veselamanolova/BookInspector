@@ -51,6 +51,7 @@ The **book** should have the following fields:
 * User’s favourite books
 * Category
 
+
 **Add:**
 * Books, 
 * Authors, 
@@ -65,3 +66,6 @@ The **book** should have the following fields:
 * Authors, 
 * Publishers and 
 * Users
+
+**Board Link:**
+https://dbprojecct.visualstudio.com/DBProject/_sprints/taskboard/DBProject%20Team/DBProject/Sprint%201
