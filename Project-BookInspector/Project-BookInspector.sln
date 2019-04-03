@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.DATA", "BookInspector.DATA\BookInspector.DATA.csproj", "{4D293550-337C-457C-9E42-D46BEAB783D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Data", "BookInspector.DATA\BookInspector.Data.csproj", "{4D293550-337C-457C-9E42-D46BEAB783D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.CLI", "BookInspector.CLI\BookInspector.CLI.csproj", "{1E243265-C0D0-442A-AB3C-AAECE853BD93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.CLI", "BookInspector.CLI\BookInspector.CLI.csproj", "{1E243265-C0D0-442A-AB3C-AAECE853BD93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
 ﻿
-namespace BookInspector.DATA
+namespace BookInspector.Data.Models
 {
     using System.Collections.Generic;
 
@@ -9,6 +9,6 @@ namespace BookInspector.DATA
 
         public string Name { get; set; }
 
-        public virtual ICollection<Book> BookByCategory { get; set; }
+        public virtual ICollection<BookByCategory> BookByCategory { get; set; }
     }
 }

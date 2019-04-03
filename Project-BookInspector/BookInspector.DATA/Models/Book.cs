@@ -1,5 +1,5 @@
 ﻿
-namespace BookInspector.DATA
+namespace BookInspector.Data.Models
 {
     using System;
     using System.Collections.Generic;

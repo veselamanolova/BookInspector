@@ -1,14 +1,40 @@
 ﻿
-namespace BookInspector.DATA
+namespace BookInspector.Data.Context
 {
     using Microsoft.EntityFrameworkCore;
+    using BookInspector.Data.Context;
+    using BookInspector.Data.Models;
+    using BookInspector.Data.Models.Configurations;
 
     public class BookInspectorContext : DbContext
-    {   
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+    {
+        
 
+        public DbSet<Author> Author { get; set; }
+        public DbSet<Book> Book { get; set; }
+        public DbSet<BookByAuthor> BookByAuthor { get; set; }
+        public DbSet<BookByCategory> BookByCategory { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<FavoriteBook> FavoriteBook { get; set; }
+        public DbSet<Publisher> Publisher { get; set; }
+        public DbSet<RatingByBook> RatingByBook { get; set; }
+        public DbSet<User> User { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            const string connectionString =
+                @"Server=localhost\SQLEXPRESS;Database=BookInspector;Trusted_Connection=True;";
+
+            optionsBuilder.UseSqlServer(connectionString);
         }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new BookByAuthorConfiguration());
+        //modelBuilder.ApplyConfiguration(new MessageConfiguration());
+        //modelBuilder.ApplyConfiguration(new ChatConfiguration());
+
+        base.OnModelCreating(modelBuilder);
+    }
     }
 }
-

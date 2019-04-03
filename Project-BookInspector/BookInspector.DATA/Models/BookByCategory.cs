@@ -1,5 +1,5 @@
 ﻿
-namespace BookInspector.DATA
+namespace BookInspector.Data.Models
 {
     public class BookByCategory
     {
