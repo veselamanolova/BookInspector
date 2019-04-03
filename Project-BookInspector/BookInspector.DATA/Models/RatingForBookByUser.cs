@@ -1,7 +1,7 @@
 ﻿
 namespace BookInspector.Data.Models
 {
-    public class RatingByBook
+    public class RatingForBookByUser
     {
         public int RatingId { get; set; }
 
