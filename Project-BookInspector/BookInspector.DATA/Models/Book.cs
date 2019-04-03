@@ -27,7 +27,7 @@ namespace BookInspector.Data.Models
         public virtual Publisher Publisher { get; set; }
 
         public virtual ICollection<FavoriteBook> FavoriteBook { get; set; }
-        public virtual ICollection<RatingByBook> RatingByBook { get; set; }
+        public virtual ICollection<RatingForBookByUser> RatingByBook { get; set; }
         public virtual ICollection<BookByCategory> BookByCategory { get; set; }
         public virtual ICollection<BookByAuthor> BookByAuthor { get; set; }
     }
