@@ -1,8 +1,9 @@
-﻿using System;
-
-namespace Project_BookInspector
+﻿
+namespace BookInspector.CLI
 {
-    class Program
+    using System;
+
+    class StartUp
     {
         static void Main(string[] args)
         {
