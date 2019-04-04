@@ -9,10 +9,19 @@ namespace BookInspector.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<FavoriteBook> builder)
         {
-            builder.Property(x => x.UserId)
+            builder
+                .HasKey(rb => new {rb.UserId, rb.BookId});
+
+            builder
+                .HasOne(rb => rb.User)
+                .WithMany(b => b.FavoriteBook)
+                .HasForeignKey(rb => rb.UserId)
                 .IsRequired();
 
-            builder.Property(x => x.BookId)
+            builder
+                .HasOne(rb => rb.Book)
+                .WithMany(a => a.FavoriteBook)
+                .HasForeignKey(rb => rb.BookId)
                 .IsRequired();
         }
     }
