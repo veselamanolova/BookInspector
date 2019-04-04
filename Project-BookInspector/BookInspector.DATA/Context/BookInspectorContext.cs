@@ -1,20 +1,14 @@
 ﻿
-using System;
-
 namespace BookInspector.Data.Context
 {
-    using Microsoft.EntityFrameworkCore;
-    using BookInspector.Data.Context;
-    using BookInspector.Data.Models;
-    using BookInspector.Data.Models.Configurations;
-    using BookInspector.Data.Configurations;
-    using System.Reflection;
+    using System;
     using System.Linq;
-
+    using System.Reflection;
+    using BookInspector.Data.Models;
+    using Microsoft.EntityFrameworkCore;
+    
     public class BookInspectorContext : DbContext
     {
-        
-
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
         public DbSet<BookByAuthor> BookByAuthor { get; set; }
@@ -35,19 +29,19 @@ namespace BookInspector.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*
-            var configurations = Assembly.GetExecutingAssembly()
-                .DefinedTypes.Where(
-                    typeInfo => typeInfo.ImplementedInterfaces.Contains(typeof(IEntityTypeConfiguration<>)))
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.GetInterfaces()
+                    .Any(gi => gi.IsGenericType && gi.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
                 .ToList();
-            foreach (var configuration in configurations)
+            
+            foreach (var type in typesToRegister)
             {
-                // var c = Activator.CreateInstance(configuration.AsType()) as IEntityTypeConfiguration<>;
+                dynamic configurationInstance = Activator.CreateInstance(type);
 
-                // modelBuilder.ApplyConfiguration(c);
+                modelBuilder.ApplyConfiguration(configurationInstance);
             }
-            */
 
+            /*
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new FavoriteBookConfiguration());
             modelBuilder.ApplyConfiguration(new BookConfiguration());
@@ -58,6 +52,7 @@ namespace BookInspector.Data.Context
             modelBuilder.ApplyConfiguration(new PublisherConfiguration());       
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RatingForBookByUserConfiguration());
+            */
 
             base.OnModelCreating(modelBuilder);
         }
