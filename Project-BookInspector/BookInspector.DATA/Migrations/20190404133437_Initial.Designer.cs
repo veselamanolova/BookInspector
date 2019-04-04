@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookInspector.Data.Migrations
 {
     [DbContext(typeof(BookInspectorContext))]
-    [Migration("20190404130651_Initial")]
+    [Migration("20190404133437_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,8 +42,7 @@ namespace BookInspector.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AuthorId")
-                        .IsRequired();
+                    b.Property<int>("AuthorId");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -56,10 +55,7 @@ namespace BookInspector.Data.Migrations
 
                     b.Property<DateTime>("PublishedDate");
 
-                    b.Property<string>("PublisherId")
-                        .IsRequired();
-
-                    b.Property<int?>("PublisherId1");
+                    b.Property<int>("PublisherId");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -69,7 +65,7 @@ namespace BookInspector.Data.Migrations
 
                     b.HasKey("BookId");
 
-                    b.HasIndex("PublisherId1");
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("Book");
                 });
@@ -173,7 +169,8 @@ namespace BookInspector.Data.Migrations
                 {
                     b.HasOne("BookInspector.Data.Models.Publisher", "Publisher")
                         .WithMany("BookByPublisher")
-                        .HasForeignKey("PublisherId1");
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BookInspector.Data.Models.BookByAuthor", b =>

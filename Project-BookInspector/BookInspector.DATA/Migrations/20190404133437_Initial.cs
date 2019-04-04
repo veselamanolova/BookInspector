@@ -67,24 +67,23 @@ namespace BookInspector.Data.Migrations
                     BookId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 200, nullable: false),
-                    AuthorId = table.Column<string>(nullable: false),
-                    PublisherId = table.Column<string>(nullable: false),
+                    AuthorId = table.Column<int>(nullable: false),
+                    PublisherId = table.Column<int>(nullable: false),
                     PublishedDate = table.Column<DateTime>(nullable: false),
                     Isbn = table.Column<int>(maxLength: 13, nullable: false),
                     VolumeId = table.Column<int>(nullable: true),
                     PageCount = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    PublisherId1 = table.Column<int>(nullable: true)
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Book", x => x.BookId);
                     table.ForeignKey(
-                        name: "FK_Book_Publisher_PublisherId1",
-                        column: x => x.PublisherId1,
+                        name: "FK_Book_Publisher_PublisherId",
+                        column: x => x.PublisherId,
                         principalTable: "Publisher",
                         principalColumn: "PublisherId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,9 +184,9 @@ namespace BookInspector.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_PublisherId1",
+                name: "IX_Book_PublisherId",
                 table: "Book",
-                column: "PublisherId1");
+                column: "PublisherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookByCategory_CategoryId",

@@ -10,9 +10,9 @@ namespace BookInspector.Data.Models
 
         public string Title { get; set; }
 
-        public string AuthorId { get; set; }
+        public int AuthorId { get; set; }
 
-        public string PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         public DateTime PublishedDate { get; set; }
 
