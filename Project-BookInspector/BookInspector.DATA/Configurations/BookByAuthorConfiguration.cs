@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    class BookByAuthorConfiguration : IEntityTypeConfiguration<BookByAuthor>
+    public class BookByAuthorConfiguration : IEntityTypeConfiguration<BookByAuthor>
     {
         public void Configure(EntityTypeBuilder<BookByAuthor> builder)
         {
