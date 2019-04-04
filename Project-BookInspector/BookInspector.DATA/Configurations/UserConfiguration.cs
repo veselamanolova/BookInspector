@@ -3,7 +3,6 @@
     using BookInspector.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Microsoft.EntityFrameworkCore.SqlServer;
 
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -15,3 +14,4 @@
         }
     }
 }
+
