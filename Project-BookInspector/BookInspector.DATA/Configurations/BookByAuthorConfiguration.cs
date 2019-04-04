@@ -9,17 +9,17 @@
         public void Configure(EntityTypeBuilder<BookByAuthor> builder)
         {
             builder
-                .HasKey(ba => new { ba.BookId, ba.AuthorId });
+                .HasKey(rb => new { rb.BookId, rb.AuthorId });
 
             builder
-                .HasOne(ba => ba.Book)
+                .HasOne(rb => rb.Book)
                 .WithMany(b => b.BookByAuthor)
-                .HasForeignKey(ba => ba.BookId);
+                .HasForeignKey(rb => rb.BookId);
 
             builder
-                .HasOne(ba => ba.Author)
+                .HasOne(rb => rb.Author)
                 .WithMany(a => a.BookByAuthor)
-                .HasForeignKey(ba => ba.BookId);
+                .HasForeignKey(rb => rb.BookId);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace BookInspector.Data.Models
         public string Name { get; set; }
 
         public virtual ICollection<FavoriteBook> FavoriteBook { get; set; }
+        public virtual ICollection<RatingForBookByUser> BookRatings { get; set; }
     }
 }
 

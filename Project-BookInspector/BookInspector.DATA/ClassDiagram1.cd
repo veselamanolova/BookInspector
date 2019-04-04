@@ -3,7 +3,7 @@
   <Class Name="BookInspector.Data.Models.Author" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAArbAAAAAAAA=</HashCode>
       <FileName>Models\Author.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -17,14 +17,14 @@
   <Class Name="BookInspector.Data.Models.BookByAuthor" Collapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAABAgAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAAAAAAArbgAAAAAAAAAAAAAAAArbAAAAAAAA=</HashCode>
       <FileName>Models\BookByAuthor.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BookInspector.Data.Models.BookByCategory" Collapsed="true">
     <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAgBAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAACAAAAAAAAgrbAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Models\BookByCategory.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -38,7 +38,7 @@
   <Class Name="BookInspector.Data.Models.FavoriteBook" Collapsed="true">
     <Position X="4" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABCAAAAAAAAABAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAABCAAAAAAAAArbAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\FavoriteBook.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 namespace BookInspector.Data.Context
 {
     using Microsoft.EntityFrameworkCore;
@@ -8,8 +6,6 @@ namespace BookInspector.Data.Context
     using BookInspector.Data.Models;
     using BookInspector.Data.Models.Configurations;
     using BookInspector.Data.Configurations;
-    using System.Reflection;
-    using System.Linq;
 
     public class BookInspectorContext : DbContext
     {
@@ -28,38 +24,22 @@ namespace BookInspector.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string connectionString =
-                @"Server=localhost\SQLEXPRESS;Database=BookInspector;Trusted_Connection=True;";
+                @"Server=localhost\SQLEXPRESS;Datarbse=BookInspector;Trusted_Connection=True;";
 
             optionsBuilder.UseSqlServer(connectionString);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            /*
-            var configurations = Assembly.GetExecutingAssembly()
-                .DefinedTypes.Where(
-                    typeInfo => typeInfo.ImplementedInterfaces.Contains(typeof(IEntityTypeConfiguration<>)))
-                .ToList();
-            foreach (var configuration in configurations)
-            {
-                // var c = Activator.CreateInstance(configuration.AsType()) as IEntityTypeConfiguration<>;
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new BookByAuthorConfiguration());
+        modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+        modelBuilder.ApplyConfiguration(new PublisherConfiguration());
+        modelBuilder.ApplyConfiguration(new PublisherConfiguration());       
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RatingForBookByUserConfiguration());
 
-                // modelBuilder.ApplyConfiguration(c);
-            }
-            */
-
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new FavoriteBookConfiguration());
-            modelBuilder.ApplyConfiguration(new BookConfiguration());
-            modelBuilder.ApplyConfiguration(new BookByCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new BookByAuthorConfiguration());
-            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
-            modelBuilder.ApplyConfiguration(new PublisherConfiguration());
-            modelBuilder.ApplyConfiguration(new PublisherConfiguration());       
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new RatingForBookByUserConfiguration());
 
             base.OnModelCreating(modelBuilder);
-        }
+    }
     }
 }
