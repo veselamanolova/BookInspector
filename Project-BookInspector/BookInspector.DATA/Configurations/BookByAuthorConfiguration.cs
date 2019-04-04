@@ -19,7 +19,7 @@
             builder
                 .HasOne(rb => rb.Author)
                 .WithMany(a => a.BookByAuthor)
-                .HasForeignKey(rb => rb.BookId);
+                .HasForeignKey(rb => rb.AuthorId);
         }
     }
 }

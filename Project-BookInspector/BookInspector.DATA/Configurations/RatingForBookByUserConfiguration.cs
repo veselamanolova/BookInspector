@@ -20,7 +20,7 @@
             builder
                 .HasOne(rb => rb.User)
                 .WithMany(u => u.BookRatings)
-                .HasForeignKey(rb => rb.BookId);
+                .HasForeignKey(rb => rb.UserId);
 
 
             builder

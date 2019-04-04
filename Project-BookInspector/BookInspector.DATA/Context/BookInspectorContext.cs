@@ -24,8 +24,8 @@ namespace BookInspector.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string connectionString =
-                @"Server=DESKTOP-OHKJ4C7\SQLEXPRESS;Database=BookInspector;Trusted_Connection=True;";
-
+              //   @"Server=DESKTOP-OHKJ4C7\SQLEXPRESS;Database=BookInspector;Trusted_Connection=True;";
+              @"Server=localhost\SQLEXPRESS;Database=BookInspector;Trusted_Connection=True;";
             optionsBuilder.UseSqlServer(connectionString);
         }
 

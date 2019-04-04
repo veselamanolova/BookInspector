@@ -4,14 +4,16 @@ using BookInspector.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookInspector.Data.Migrations
 {
     [DbContext(typeof(BookInspectorContext))]
-    partial class BookInspectorContextModelSnapshot : ModelSnapshot
+    [Migration("20190404135551_0404InitialForV")]
+    partial class _0404InitialForV
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,8 +77,6 @@ namespace BookInspector.Data.Migrations
                     b.Property<int>("AuthorId");
 
                     b.HasKey("BookId", "AuthorId");
-
-                    b.HasIndex("AuthorId");
 
                     b.ToTable("BookByAuthor");
                 });
@@ -147,8 +147,6 @@ namespace BookInspector.Data.Migrations
 
                     b.HasKey("BookId", "UserId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("RatingByBook");
                 });
 
@@ -179,7 +177,7 @@ namespace BookInspector.Data.Migrations
                 {
                     b.HasOne("BookInspector.Data.Models.Author", "Author")
                         .WithMany("BookByAuthor")
-                        .HasForeignKey("AuthorId")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BookInspector.Data.Models.Book", "Book")
@@ -223,7 +221,7 @@ namespace BookInspector.Data.Migrations
 
                     b.HasOne("BookInspector.Data.Models.User", "User")
                         .WithMany("BookRatings")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
