@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Data", "BookI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.CLI", "BookInspector.CLI\BookInspector.CLI.csproj", "{1E243265-C0D0-442A-AB3C-AAECE853BD93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.Console", "BookInspector.Console\BookInspector.Console.csproj", "{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.Services", "BookInspector.Services\BookInspector.Services.csproj", "{C8192377-7968-4706-996A-72A86DCFE277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{1E243265-C0D0-442A-AB3C-AAECE853BD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E243265-C0D0-442A-AB3C-AAECE853BD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E243265-C0D0-442A-AB3C-AAECE853BD93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8192377-7968-4706-996A-72A86DCFE277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8192377-7968-4706-996A-72A86DCFE277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8192377-7968-4706-996A-72A86DCFE277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8192377-7968-4706-996A-72A86DCFE277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
