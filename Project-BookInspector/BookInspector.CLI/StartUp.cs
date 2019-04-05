@@ -1,5 +1,7 @@
 ﻿
+using System.Linq;
 using System;
+using BookInspector.Console;
 using BookInspector.Data.Context;
 using BookInspector.Services.Interfaces;
 using System.Collections.Generic;
@@ -32,8 +34,10 @@ namespace BookInspector.CLI
             //var list = context.Category.Select(x => x.Name).ToList();
 
 
-            //context.Dispose();
-
+            foreach (var category in list)
+                System.Console.WriteLine(category.Name);
+            
+            context.Dispose();
 
             List<string> arguments = new List<string>();
             BookInspectorContext bic = new BookInspectorContext();
