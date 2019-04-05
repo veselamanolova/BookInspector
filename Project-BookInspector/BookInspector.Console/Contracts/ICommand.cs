@@ -1,8 +1,11 @@
 ﻿
 namespace BookInspector.Console.Contracts
 {
+    using System.Collections.Generic;
+
     public interface ICommand
     {
-        void Execute();
+        string Execute(IReadOnlyList<string> args);
     }
 }
+
