@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using BookInspector.Data.Context;
 using BookInspector.Services.Interfaces;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using BookInspector.Services;
 using BookInspector.Console.Commands.AuthorCommands;
 using System.Net.Http;
 
-namespace BookInspector.CLI
+namespace BookInspector.App
 {
     class StartUp
     {
@@ -63,7 +62,7 @@ namespace BookInspector.CLI
             IPublisherService userService = new PublisherService(bic);
 
             arguments = new List<string>();
-            arguments.Add("O'Reilly Media, Inc.");
+            arguments.Add("Apress");
             AddPublisher addPublisher = new AddPublisher(new PublisherService(bic));
             System.Console.WriteLine(addPublisher.Execute(arguments));
 

@@ -14,8 +14,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BookInspector.Console\BookInspector.App.csproj" />
+  <ItemGroup>  
     <ProjectReference Include="..\BookInspector.DATA\BookInspector.Data.csproj" />
     <ProjectReference Include="..\BookInspector.Services\BookInspector.Services.csproj" />
   </ItemGroup>
