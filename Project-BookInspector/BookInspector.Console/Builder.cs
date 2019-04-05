@@ -1,4 +1,6 @@
 ﻿
+using BookInspector.Data.Context;
+
 namespace BookInspector.Console
 {
     using Autofac;
@@ -6,7 +8,7 @@ namespace BookInspector.Console
     using System.Reflection;
     using BookInspector.Console.Contracts;
 
-    class Builder
+    public class Builder
     {
         public void AppBuilder()
         {
@@ -15,9 +17,8 @@ namespace BookInspector.Console
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces();
 
-            // appBuilder.RegisterType<.>().As<.>().SingleInstance();
+            appBuilder.RegisterType<BookInspectorContext>().As<IBookInspectorContext>();
 
-            
             var commands = Assembly.GetExecutingAssembly()
                 .DefinedTypes.Where(
                     typeInfo => typeInfo.ImplementedInterfaces.Contains(typeof(ICommand)))

@@ -1,10 +1,10 @@
 ﻿
-namespace BookInspector.Data.Contracts
+namespace BookInspector.Data.Context
 {
     using BookInspector.Data.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public interface IBookInspectorDB
+    public interface IBookInspectorContext
     {
         DbSet<Author> Author { get; set; }
         DbSet<Book> Book { get; set; }
@@ -17,4 +17,3 @@ namespace BookInspector.Data.Contracts
         DbSet<User> User { get; set; }
     }
 }
-

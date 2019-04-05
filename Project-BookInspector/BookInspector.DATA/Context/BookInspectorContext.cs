@@ -5,10 +5,9 @@ namespace BookInspector.Data.Context
     using System.Linq;
     using System.Reflection;
     using BookInspector.Data.Models;
-    using BookInspector.Data.Contracts;
     using Microsoft.EntityFrameworkCore;
     
-    public class BookInspectorContext : DbContext, IBookInspectorDB
+    public class BookInspectorContext : DbContext, IBookInspectorContext
     {
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
@@ -23,8 +22,8 @@ namespace BookInspector.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string connectionString =
-                "Server=tcp:bookinspector.database.windows.net,1433;Initial Catalog=BookInspector;Persist Security Info=False;User " +
-                "ID=book;Password=Teler1kAcademy;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
+                "Server=tcp:bookinspector.database.windows.net,1433;Initial Catalog=BookInspector;Persist Security Info=False;" +
+                "User ID=book;Password=Teler1kAcademy;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             optionsBuilder.UseSqlServer(connectionString);
         }
 

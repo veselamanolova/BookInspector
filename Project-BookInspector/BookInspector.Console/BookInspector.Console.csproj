@@ -8,4 +8,8 @@
     <PackageReference Include="Autofac" Version="4.9.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookInspector.DATA\BookInspector.Data.csproj" />
+  </ItemGroup>
+
 </Project>
