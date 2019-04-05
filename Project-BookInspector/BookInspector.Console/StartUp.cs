@@ -19,7 +19,7 @@ namespace BookInspector.CLI
 
             foreach (var category in list)
                 System.Console.WriteLine(category.Name);
-            
+
             context.Dispose();
         }
     }

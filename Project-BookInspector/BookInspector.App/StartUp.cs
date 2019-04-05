@@ -1,10 +1,8 @@
 ﻿
 using System.Linq;
-using System;
-using BookInspector.Console;
 using BookInspector.Data.Context;
 
-namespace BookInspector.CLI
+namespace BookInspector.App
 {
     class StartUp
     {
@@ -19,7 +17,7 @@ namespace BookInspector.CLI
 
             foreach (var category in list)
                 System.Console.WriteLine(category.Name);
-            
+
             context.Dispose();
         }
     }
