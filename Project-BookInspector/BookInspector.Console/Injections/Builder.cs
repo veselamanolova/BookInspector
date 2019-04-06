@@ -6,6 +6,7 @@ namespace BookInspector.App
     using System.Reflection;
     using BookInspector.Data.Context;
     using BookInspector.App.Contracts;
+    using BookInspector.App.Providers;
 
     public class Builder
     {
@@ -16,6 +17,10 @@ namespace BookInspector.App
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces();
 
+            appBuilder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
+            appBuilder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();
+            appBuilder.RegisterType<ConsoleReader>().As<IReader>().SingleInstance();
+            appBuilder.RegisterType<ConsoleWriter>().As<IWriter>().SingleInstance();
             appBuilder.RegisterType<BookInspectorContext>().As<IBookInspectorContext>().SingleInstance();
             
             var commands = Assembly.GetExecutingAssembly()
