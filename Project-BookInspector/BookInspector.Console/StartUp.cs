@@ -5,8 +5,7 @@ namespace BookInspector.App
     {
         static void Main(string[] args)
         {
-            // Command Line Interface
-            new Builder().AppBuilder();
+            new Builder().AppBuilder(); // Command Line Interface
         }
     }
 }
