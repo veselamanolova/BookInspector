@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace BookInspector.Console.Commands.UserCommands
 {
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using BookInspector.Console.Contracts;
-    using BookInspector.Services.Interfaces;
-    using BookInspector.Data.Models;
+    using BookInspector.Services.Contracts;
 
     public class FindUser : ICommand
     {

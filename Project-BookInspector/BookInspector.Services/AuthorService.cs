@@ -1,11 +1,12 @@
-﻿namespace BookInspector.Services
+﻿
+namespace BookInspector.Services
 {
+    using System;
+    using System.Linq;
     using BookInspector.Data.Context;
     using BookInspector.Data.Models;
-    using BookInspector.Services.Interfaces;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using BookInspector.Services.Contracts;
 
     public class AuthorService : IAuthorService
     {

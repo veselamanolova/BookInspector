@@ -3,8 +3,7 @@
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using BookInspector.Console.Contracts;
-    using BookInspector.Services.Interfaces;
+    using BookInspector.Services.Contracts;
 
     public class AddUser : ICommand
     {

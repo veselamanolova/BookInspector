@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Services.Interfaces
+﻿
+namespace BookInspector.Services.Contracts
 {
     using BookInspector.Data.Models;
     using System.Collections.Generic;
