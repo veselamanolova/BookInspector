@@ -1,11 +1,15 @@
 ﻿
+
 namespace BookInspector.App
 {
     using Autofac;
     using System.Linq;
     using System.Reflection;
+    using BookInspector.Services;
+    using BookInspector.Data.Context;
     using BookInspector.App.Contracts;
     using BookInspector.App.Providers;
+    using BookInspector.Services.Contracts;
 
     public class Builder
     {
@@ -15,6 +19,11 @@ namespace BookInspector.App
             appBuilder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces();
+
+            appBuilder.RegisterType<BookInspectorContext>().AsSelf().InstancePerLifetimeScope();
+            appBuilder.RegisterType<AuthorService>().As<IAuthorService>();
+            appBuilder.RegisterType<PublisherService>().As<IPublisherService>();
+            appBuilder.RegisterType<UserService>().As<IUserService>();
 
             appBuilder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
             appBuilder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();

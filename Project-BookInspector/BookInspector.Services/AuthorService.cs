@@ -10,39 +10,33 @@ namespace BookInspector.Services
 
     public class AuthorService : IAuthorService
     {
-        private readonly BookInspectorContext context;
+        private readonly BookInspectorContext _context;
 
         public AuthorService(BookInspectorContext context)
         {
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public Author Add(string name)
         {
-            if(this.context.Author.Any(a=> a.Name == name))
-            {
+            if (_context.Author.Any(a => a.Name == name))
                 throw new ArgumentException($"Author {name} already exists");
-            }
 
-            var author = new Author()
-            {
-                Name = name
-            };
+            var author = new Author() { Name = name };
 
-            this.context.Author.Add(author);
-            this.context.SaveChanges();
+            _context.Author.Add(author);
+            _context.SaveChanges();
             return author; 
         }
 
         public Author FindByName(string name)
         {
-            return this.context.Author
-                 .FirstOrDefault(a => a.Name == name); 
+            return _context.Author.FirstOrDefault(a => a.Name == name); 
         }
 
         public IReadOnlyCollection<Author> GetAuthors(int skip, int take)
         {
-            return this.context.Author
+            return _context.Author
                 .Skip(skip)
                 .Take(take)
                 .ToList(); 

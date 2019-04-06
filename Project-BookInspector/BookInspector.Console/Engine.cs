@@ -28,3 +28,4 @@ namespace BookInspector.App
         }
     }
 }
+

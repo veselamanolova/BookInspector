@@ -21,10 +21,17 @@ namespace BookInspector.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string connectionString =
-                "Server=tcp:bookinspector.database.windows.net,1433;Initial Catalog=BookInspector;Persist Security Info=False;" +
-                "User ID=book;Password=Teler1kAcademy;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            optionsBuilder.UseSqlServer(connectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(
+                    "Server=tcp:bookinspector.database.windows.net,1433;" +
+                    "Initial Catalog=BookInspector;" +
+                    "Persist Security Info=False;" +
+                    "User ID=book;Password=Teler1kAcademy;" +
+                    "MultipleActiveResultSets=False;Encrypt=True;" +
+                    "TrustServerCertificate=False;" +
+                    "Connection Timeout=30;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,20 +47,7 @@ namespace BookInspector.Data.Context
 
                 modelBuilder.ApplyConfiguration(configurationInstance);
             }
-
-            /*
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new FavoriteBookConfiguration());
-            modelBuilder.ApplyConfiguration(new BookConfiguration());
-            modelBuilder.ApplyConfiguration(new BookByCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new BookByAuthorConfiguration());
-            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
-            modelBuilder.ApplyConfiguration(new PublisherConfiguration());
-            modelBuilder.ApplyConfiguration(new PublisherConfiguration());       
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new RatingForBookByUserConfiguration());
-            */
-
+            
             base.OnModelCreating(modelBuilder);
         }
     }
