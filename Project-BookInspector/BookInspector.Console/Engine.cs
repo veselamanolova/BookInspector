@@ -1,8 +1,8 @@
 ﻿
 namespace BookInspector.App
 {
-    using System;
     using BookInspector.App.Contracts;
+    using BookInspector.App.Providers;
 
     class Engine : IRun
     {
@@ -21,16 +21,9 @@ namespace BookInspector.App
         {
             while (true)
             {
-                try
-                {
-                    var commandLine = reader.ReadLine();
-                    var result = processor.ProcessCommand(commandLine);
-                    writer.WriteLine(result);
-                }
-                catch (Exception e)
-                {
-                    writer.WriteLine(e.Message);
-                }
+                string commandLine = Menu.Choice();
+                var result = processor.ProcessCommand(commandLine.Replace(" ", ""));
+                writer.WriteLine(result);
             }
         }
     }
