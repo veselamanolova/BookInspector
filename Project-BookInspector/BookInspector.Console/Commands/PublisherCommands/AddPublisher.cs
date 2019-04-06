@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookInspector.Console.Commands.PublisherCommands
-{
-    class AddPublisher
-    {
-    }
-}
-
-namespace BookInspector.Console.Commands.UserCommands
+﻿
+namespace BookInspector.Console.Commands
 {
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using BookInspector.Console.Contracts;
-    using BookInspector.Services.Interfaces;
+    using BookInspector.App.Contracts;
+    using BookInspector.Services.Contracts;
 
     public class AddPublisher : ICommand
     {

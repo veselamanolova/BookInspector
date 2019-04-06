@@ -1,11 +1,12 @@
-﻿namespace BookInspector.Console.Commands.AuthorCommands
+﻿
+namespace BookInspector.Console.Commands
 {
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using BookInspector.Console.Contracts;
-    using BookInspector.Services.Interfaces;
     using BookInspector.Services;
+    using BookInspector.App.Contracts;
+    using BookInspector.Services.Contracts;
 
     public class AddAuthor : ICommand
     {

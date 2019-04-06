@@ -1,16 +1,15 @@
 ﻿
-using BookInspector.Data.Context;
-
 namespace BookInspector.App
 {
     using Autofac;
     using System.Linq;
     using System.Reflection;
+    using BookInspector.Data.Context;
     using BookInspector.App.Contracts;
 
     public class Builder
     {
-        public void BuildApp()
+        public void AppBuilder()
         {
             var appBuilder = new ContainerBuilder();
             appBuilder
