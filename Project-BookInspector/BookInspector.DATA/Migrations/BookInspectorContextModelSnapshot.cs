@@ -40,12 +40,11 @@ namespace BookInspector.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
-
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int>("Isbn")
+                    b.Property<string>("Isbn")
+                        .IsRequired()
                         .HasMaxLength(13);
 
                     b.Property<int?>("PageCount")

@@ -67,10 +67,9 @@ namespace BookInspector.Data.Migrations
                     BookId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 200, nullable: false),
-                    AuthorId = table.Column<int>(nullable: false),
                     PublisherId = table.Column<int>(nullable: false),
                     PublishedDate = table.Column<DateTime>(nullable: false),
-                    Isbn = table.Column<int>(maxLength: 13, nullable: false),
+                    Isbn = table.Column<string>(maxLength: 13, nullable: false),
                     VolumeId = table.Column<int>(nullable: true),
                     PageCount = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false)
@@ -97,8 +96,8 @@ namespace BookInspector.Data.Migrations
                 {
                     table.PrimaryKey("PK_BookByAuthor", x => new { x.BookId, x.AuthorId });
                     table.ForeignKey(
-                        name: "FK_BookByAuthor_Author_BookId",
-                        column: x => x.BookId,
+                        name: "FK_BookByAuthor_Author_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "Author",
                         principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Cascade);
@@ -176,8 +175,8 @@ namespace BookInspector.Data.Migrations
                         principalColumn: "BookId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RatingByBook_User_BookId",
-                        column: x => x.BookId,
+                        name: "FK_RatingByBook_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -189,6 +188,11 @@ namespace BookInspector.Data.Migrations
                 column: "PublisherId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BookByAuthor_AuthorId",
+                table: "BookByAuthor",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BookByCategory_CategoryId",
                 table: "BookByCategory",
                 column: "CategoryId");
@@ -197,6 +201,11 @@ namespace BookInspector.Data.Migrations
                 name: "IX_FavoriteBook_BookId",
                 table: "FavoriteBook",
                 column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingByBook_UserId",
+                table: "RatingByBook",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

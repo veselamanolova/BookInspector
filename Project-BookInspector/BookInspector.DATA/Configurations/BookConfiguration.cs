@@ -13,9 +13,6 @@ namespace BookInspector.Data.Configurations
                 .HasMaxLength(200)
                 .IsRequired();
 
-            builder.Property(x => x.AuthorId)
-                .IsRequired();
-
             builder.Property(x => x.PublisherId)
                 .IsRequired();
 

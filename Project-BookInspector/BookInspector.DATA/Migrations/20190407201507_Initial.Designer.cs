@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookInspector.Data.Migrations
 {
     [DbContext(typeof(BookInspectorContext))]
-    [Migration("20190404135551_0404InitialForV")]
-    partial class _0404InitialForV
+    [Migration("20190407201507_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,12 +42,11 @@ namespace BookInspector.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
-
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int>("Isbn")
+                    b.Property<string>("Isbn")
+                        .IsRequired()
                         .HasMaxLength(13);
 
                     b.Property<int?>("PageCount")
@@ -77,6 +76,8 @@ namespace BookInspector.Data.Migrations
                     b.Property<int>("AuthorId");
 
                     b.HasKey("BookId", "AuthorId");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("BookByAuthor");
                 });
@@ -147,6 +148,8 @@ namespace BookInspector.Data.Migrations
 
                     b.HasKey("BookId", "UserId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("RatingByBook");
                 });
 
@@ -177,7 +180,7 @@ namespace BookInspector.Data.Migrations
                 {
                     b.HasOne("BookInspector.Data.Models.Author", "Author")
                         .WithMany("BookByAuthor")
-                        .HasForeignKey("BookId")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BookInspector.Data.Models.Book", "Book")
@@ -221,7 +224,7 @@ namespace BookInspector.Data.Migrations
 
                     b.HasOne("BookInspector.Data.Models.User", "User")
                         .WithMany("BookRatings")
-                        .HasForeignKey("BookId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
