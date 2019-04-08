@@ -34,7 +34,7 @@
                 throw new ArgumentException($"Book with title: {title} does not exists");
             }
 
-            if (this.context.RatingForBookByUser.Any(u => u.BookId == book.BookId && u.UserId == user.UserId))
+            if (this.context.RatingByBook.Any(u => u.BookId == book.BookId && u.UserId == user.UserId))
             {
                 throw new ArgumentException($"User {username} already has rated the book {book.BookId}");
             }
@@ -50,7 +50,7 @@
                 UserId = user.UserId, 
                 Rating = rating
             };
-            this.context.RatingForBookByUser.Add(ratingForBookByUser);
+            this.context.RatingByBook.Add(ratingForBookByUser);
             this.context.SaveChanges();
 
             return ratingForBookByUser;

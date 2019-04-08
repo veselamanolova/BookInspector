@@ -36,7 +36,7 @@ namespace BookInspector.Console.Commands
 
            // int rating;
 
-            bool success = Int32.TryParse(args[1], out int rating);
+            bool success = Int32.TryParse(args[2], out int rating);
 
             //check if it is correct
             if (!success)

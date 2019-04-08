@@ -16,7 +16,7 @@ namespace BookInspector.Data.Context
         public DbSet<Category> Category { get; set; }
         public DbSet<FavoriteBook> FavoriteBook { get; set; }
         public DbSet<Publisher> Publisher { get; set; }
-        public DbSet<RatingForBookByUser> RatingForBookByUser { get; set; }
+        public DbSet<RatingForBookByUser> RatingByBook { get; set; }
         public DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
