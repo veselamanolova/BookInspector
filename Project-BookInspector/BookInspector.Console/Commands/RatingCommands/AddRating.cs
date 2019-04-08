@@ -33,9 +33,7 @@ namespace BookInspector.Console.Commands
             {
                 throw new ArgumentException("Please provide a User name as a second parameter.");
             }
-
-           // int rating;
-
+            
             bool success = Int32.TryParse(args[2], out int rating);
 
             //check if it is correct
@@ -48,7 +46,6 @@ namespace BookInspector.Console.Commands
 
             return $"User {username} added rating {rating} to book {title}";
         }
-
     }
 }
 

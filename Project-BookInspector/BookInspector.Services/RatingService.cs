@@ -1,9 +1,9 @@
-﻿namespace BookInspector.Services
+﻿
+namespace BookInspector.Services
 {
     using System;
     using System.Linq;
     using BookInspector.Data.Models;
-    using System.Collections.Generic;
     using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
@@ -39,7 +39,7 @@
                 throw new ArgumentException($"User {username} already has rated the book {book.BookId}");
             }
 
-            Validation.IsInRange(rating, 0, 5); 
+            Validator.IsInRange(rating, 0, 5); 
            
 
             var ratingForBookByUser = new RatingForBookByUser()
@@ -67,8 +67,7 @@
            _context.SaveChanges();
 
            return averageRating;
-        }
-        
+        }      
     }
 }
 

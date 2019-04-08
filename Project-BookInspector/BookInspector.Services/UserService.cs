@@ -10,7 +10,6 @@ namespace BookInspector.Services
 
     public class UserService : IUserService
     {
-
         private readonly BookInspectorContext _context;
 
         public UserService(BookInspectorContext context)
@@ -20,23 +19,21 @@ namespace BookInspector.Services
 
         public User Register(string name)
         {
-            
-            if (_context.User.Any(u => u.Name == name))
-            {
-                throw new ArgumentException($"User {name} already exists");
-            }
+            Validator.IfNullOrEmpty<ArgumentNullException>(name);
+            Validator.IfIsNotInRange<ArgumentException>(name);
+            Validator.IfExist<ArgumentException>(name);
 
             var user = new User() { Name = name };
             _context.User.Add(user);
             _context.SaveChanges();
-
             return user;
         }
 
         public User FindByName(string name)
         {
-            return _context.User
-                .FirstOrDefault(u => u.Name == name);
+            Validator.IfNotExist<ArgumentException>(name);
+
+            return _context.User.Single(u => u.Name == name);
         }
 
         public IReadOnlyCollection<User> GetUsers(int skip, int take)
@@ -49,22 +46,22 @@ namespace BookInspector.Services
 
         public User DeteleUser(string name)
         {
-            var user = _context.User
-                .Where(x => x.Name.Equals(name))
-                .FirstOrDefault();
+            Validator.IfNotExist<ArgumentException>(name);
 
+            var user = _context.User.Where(x => x.Name.Equals(name)).First();
             _context.User.Remove(user);
             _context.SaveChanges();
-
             return user;
         }
 
-        public User Modify(string oldVal, string newVal)
+        public User Modify(string name, string newUsername)
         {
-            _context.User.FirstOrDefault(u => u.Name.Equals(oldVal)).Name = newVal;
+            Validator.IfNotExist<ArgumentException>(name);
+
+            _context.User.First(u => u.Name.Equals(name)).Name = newUsername;
             _context.SaveChanges();
             return _context.User
-                .FirstOrDefault(u => u.Name == newVal);
+                .FirstOrDefault(u => u.Name == newUsername);
         }
     }
 }
