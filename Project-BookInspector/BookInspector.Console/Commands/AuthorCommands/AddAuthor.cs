@@ -3,6 +3,7 @@ namespace BookInspector.Console.Commands
 {
     using System;
     using System.Linq;
+    using System.Collections.Generic;
     using BookInspector.Services;
     using System.Collections.Generic;
     using BookInspector.App.Contracts;
