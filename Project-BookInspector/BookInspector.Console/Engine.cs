@@ -1,9 +1,9 @@
 ﻿
 namespace BookInspector.App
 {
+    using System;
     using BookInspector.App.Contracts;
     using BookInspector.App.Providers;
-    using System;
 
     class Engine : IRun
     {
@@ -32,9 +32,9 @@ namespace BookInspector.App
                 {
                     _executeResult = processor.ProcessCommand(_command.Replace(" ", ""));
                 }
-                catch (ArgumentException e)
+                catch (ArgumentException ex)
                 {
-                    _executeResult = e.Message; 
+                    _executeResult = $"ERROR: {ex.Message}"; 
                 }
                 
                 _writer.Clear();

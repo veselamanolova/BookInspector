@@ -10,6 +10,8 @@ namespace BookInspector.Services.Contracts
 
         User FindByName(string name);
 
+        User DeteleUser(string name);
+
         IReadOnlyCollection<User> GetUsers(int skip, int take);
     }
 }

@@ -11,40 +11,52 @@ namespace BookInspector.Services
     public class UserService : IUserService
     {
 
-        private readonly BookInspectorContext context;
+        private readonly BookInspectorContext _context;
 
         public UserService(BookInspectorContext context)
         {
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public User Register(string name)
         {
             
-            if (this.context.User.Any(u => u.Name == name))
+            if (_context.User.Any(u => u.Name == name))
             {
                 throw new ArgumentException($"User {name} already exists");
             }
 
             var user = new User() { Name = name };
-            this.context.User.Add(user);
-            this.context.SaveChanges();
+            _context.User.Add(user);
+            _context.SaveChanges();
 
             return user;
         }
 
         public User FindByName(string name)
         {
-            return this.context.User
+            return _context.User
                 .FirstOrDefault(u => u.Name == name);
         }
 
         public IReadOnlyCollection<User> GetUsers(int skip, int take)
         {
-            return this.context.User
+            return _context.User
                 .Skip(skip)
                 .Take(take)
                 .ToList();
+        }
+
+        public User DeteleUser(string name)
+        {
+            var user = _context.User
+                .Where(x => x.Name.Equals(name))
+                .FirstOrDefault();
+
+            _context.User.Remove(user);
+            _context.SaveChanges();
+
+            return user;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace BookInspector.App.Providers
         public string ProcessCommand(string commandName)
         {
             var command = _parser.ParseCommand(commandName.ToLower());
-            _args = _reader.ReadLine().Split('*');
+            _args = _reader.ReadLine().Split();
             return command.Execute(_args);
         }
     }
