@@ -7,10 +7,9 @@ namespace BookInspector.App.Providers
     {
         public static string Choice()
         {
-            const int startX = 1;
+            const int startX = 0;
             const int startY = 1;
             const int optionsPerLine = 1;
-            const int spacingPerLine = 14;
 
             string[] options =
             {
@@ -19,7 +18,8 @@ namespace BookInspector.App.Providers
                 "Add Category",
                 "Show all Users",
                 "Show all Books",
-                "Show all Categories"
+                "Show all Categories",
+                "Find User"
             };
 
             int currentSelection = 0;
@@ -34,7 +34,7 @@ namespace BookInspector.App.Providers
 
                 for (int i = 0; i < options.Length; i++)
                 {
-                    Console.SetCursorPosition(startX + (i % optionsPerLine) * spacingPerLine,
+                    Console.SetCursorPosition(startX + (i % optionsPerLine),
                         startY + i / optionsPerLine);
 
                     if (i == currentSelection)
@@ -65,6 +65,7 @@ namespace BookInspector.App.Providers
             } while (key != ConsoleKey.Enter);
 
             Console.CursorVisible = true;
+            Console.WriteLine("\n");
 
             return options[currentSelection];
         }

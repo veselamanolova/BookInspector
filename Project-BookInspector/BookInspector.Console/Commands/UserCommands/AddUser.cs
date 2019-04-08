@@ -9,11 +9,11 @@ namespace BookInspector.Console.Commands
 
     public class AddUser : ICommand
     {
-        private readonly IUserService userService;
+        private readonly IUserService _userService;
 
         public AddUser(IUserService userService)
         {
-            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         public string Execute(IReadOnlyList<string> args)
@@ -23,7 +23,7 @@ namespace BookInspector.Console.Commands
                 throw new ArgumentException("Please provide a username as first parameter");
             }
 
-            var user = this.userService.Register(args[0]);
+            var user = _userService.Register(args[0]);
 
             return $"User {user.Name}, Id = {user.UserId} registered";
         }
