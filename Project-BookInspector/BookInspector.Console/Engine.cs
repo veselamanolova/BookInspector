@@ -7,8 +7,8 @@ namespace BookInspector.App
 
     class Engine : IRun
     {
-        private IReader _reader;
-        private IWriter _writer;
+        private readonly IReader _reader;
+        private readonly IWriter _writer;
         private ICommandProcessor processor;
 
         private string _command;
