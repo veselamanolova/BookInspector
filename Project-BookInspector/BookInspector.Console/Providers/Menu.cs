@@ -30,8 +30,6 @@ namespace BookInspector.App.Providers
 
             do
             {
-                // Console.Clear();
-
                 for (int i = 0; i < options.Length; i++)
                 {
                     Console.SetCursorPosition(startX + (i % optionsPerLine),
