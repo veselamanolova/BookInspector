@@ -8,7 +8,7 @@ namespace BookInspector.App.Providers
         public static string Choice()
         {
             const int startX = 0;
-            const int startY = 1;
+            const int startY = 4;
             const int optionsPerLine = 1;
 
             string[] options =
@@ -30,7 +30,7 @@ namespace BookInspector.App.Providers
 
             do
             {
-                Console.Clear();
+                // Console.Clear();
 
                 for (int i = 0; i < options.Length; i++)
                 {
