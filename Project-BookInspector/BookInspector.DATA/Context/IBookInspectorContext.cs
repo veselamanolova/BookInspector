@@ -13,7 +13,7 @@ namespace BookInspector.Data.Context
         DbSet<Category> Category { get; set; }
         DbSet<FavoriteBook> FavoriteBook { get; set; }
         DbSet<Publisher> Publisher { get; set; }
-        DbSet<RatingForBookByUser> RatingByBook { get; set; }
+        DbSet<RatingForBookByUser> RatingForBookByUser { get; set; }
         DbSet<User> User { get; set; }
     }
 }

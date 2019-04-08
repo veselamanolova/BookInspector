@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BookInspector.Services.Contracts
 {
-    interface IRatingService
+    public interface IRatingService
     {
         RatingForBookByUser AddRating(string title, string username, int rating);
 

@@ -24,8 +24,8 @@ namespace BookInspector.App
             appBuilder.RegisterType<AuthorService>().As<IAuthorService>();
             appBuilder.RegisterType<PublisherService>().As<IPublisherService>();
             appBuilder.RegisterType<UserService>().As<IUserService>();
-            appBuilder.RegisterType<CategoryService>().As<ICategoryService>();
-            appBuilder.RegisterType<UserService>().As<IRatingService>();
+            appBuilder.RegisterType<CategoryService>().As<ICategoryService>();           
+            appBuilder.RegisterType<RatingService>().As<IRatingService>();
 
             appBuilder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
             appBuilder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();
