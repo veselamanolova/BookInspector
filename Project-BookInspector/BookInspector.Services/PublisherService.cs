@@ -19,10 +19,7 @@ namespace BookInspector.Services
 
         public Publisher Add(string name)
         {
-            if (_context.Publisher.Any(u => u.Name == name))
-            {
-                throw new ArgumentException($"Publisher {name} already exists");
-            }
+            Validator.IfExist<ArgumentException>(name, $"Publisher {name} already exists");
 
             var publisher = new Publisher() { Name = name };
             _context.Publisher.Add(publisher);
@@ -31,18 +28,9 @@ namespace BookInspector.Services
             return publisher;
         }
 
-        public Publisher FindByName(string name)
+        public IReadOnlyCollection<Publisher> GetPublishers()
         {
-            return _context.Publisher
-                .FirstOrDefault(u => u.Name == name);
-        }
-
-        public IReadOnlyCollection<Publisher> GetPublishers(int skip, int take)
-        {
-            return _context.Publisher
-                .Skip(skip)
-                .Take(take)
-                .ToList();
+            return _context.Publisher.ToList();
         }       
     }
 }

@@ -19,8 +19,7 @@ namespace BookInspector.Services
 
         public Author Add(string name)
         {
-            if (_context.Author.Any(a => a.Name == name))
-                throw new ArgumentException($"Author {name} already exists");
+            Validator.IfExist<ArgumentException>(name, $"Author {name} already exists");
 
             var author = new Author() { Name = name };
 
