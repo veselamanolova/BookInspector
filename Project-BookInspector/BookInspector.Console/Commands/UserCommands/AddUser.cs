@@ -9,9 +9,9 @@ namespace BookInspector.Console.Commands
 
     public class AddUser : ICommand
     {
-        private readonly IRatingService _userService;
+        private readonly IUserService _userService;
 
-        public AddUser(IRatingService userService)
+        public AddUser(IUserService userService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
