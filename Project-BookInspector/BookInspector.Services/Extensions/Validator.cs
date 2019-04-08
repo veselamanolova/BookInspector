@@ -15,6 +15,12 @@ namespace BookInspector.Services
                 throw new T();
         }
 
+        public static void IfIsNotInRange<T>(string s) where T : Exception, new()
+        {
+            if (s.Length < 2 || s.Length >= 50)
+                throw new T();
+        }
+
         public static void IfExist<T>(string s) where T : Exception, new()
         {
             if (_context.User.Any(u => u.Name == s))

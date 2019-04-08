@@ -10,7 +10,6 @@ namespace BookInspector.Services
 
     public class UserService : IUserService
     {
-
         private readonly BookInspectorContext _context;
 
         public UserService(BookInspectorContext context)
@@ -21,6 +20,7 @@ namespace BookInspector.Services
         public User Register(string name)
         {
             Validator.IfNullOrEmpty<ArgumentNullException>(name);
+            Validator.IfIsNotInRange<ArgumentException>(name);
             Validator.IfExist<ArgumentException>(name);
 
             var user = new User() { Name = name };
@@ -31,8 +31,7 @@ namespace BookInspector.Services
 
         public User FindByName(string name)
         {
-            return _context.User
-                .FirstOrDefault(u => u.Name == name);
+            return _context.User.FirstOrDefault(u => u.Name == name);
         }
 
         public IReadOnlyCollection<User> GetUsers(int skip, int take)
