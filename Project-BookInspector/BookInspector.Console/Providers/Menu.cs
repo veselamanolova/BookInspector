@@ -18,7 +18,7 @@ namespace BookInspector.App.Providers
                 "Add Category",
                 "Show all Users",
                 "Show all Books",
-                "Show all Categories",
+                "Show All Categories",
                 "Find User"
             };
 
