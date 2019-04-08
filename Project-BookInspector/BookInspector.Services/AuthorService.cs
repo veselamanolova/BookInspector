@@ -29,17 +29,9 @@ namespace BookInspector.Services
             return author; 
         }
 
-        public Author FindByName(string name)
+        public IReadOnlyCollection<Author> GetAuthors()
         {
-            return _context.Author.FirstOrDefault(a => a.Name == name); 
-        }
-
-        public IReadOnlyCollection<Author> GetAuthors(int skip, int take)
-        {
-            return _context.Author
-                .Skip(skip)
-                .Take(take)
-                .ToList(); 
+            return _context.Author.ToList(); 
         }        
     }
 }

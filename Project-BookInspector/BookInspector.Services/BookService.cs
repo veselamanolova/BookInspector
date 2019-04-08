@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Services
+﻿
+namespace BookInspector.Services
 {
     using System;
     using System.Linq;

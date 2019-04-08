@@ -8,9 +8,7 @@ namespace BookInspector.Services.Contracts
     {
         Author Add(string name);
 
-        Author FindByName(string name);
-
-        IReadOnlyCollection<Author> GetAuthors(int skip, int take);
+        IReadOnlyCollection<Author> GetAuthors();
     }
 }
 
