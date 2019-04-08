@@ -1,9 +1,9 @@
-﻿namespace BookInspector.Services
+﻿
+namespace BookInspector.Services
 {
     using System;
     using System.Linq;
     using BookInspector.Data.Models;
-    using System.Collections.Generic;
     using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
@@ -67,8 +67,7 @@
            _context.SaveChanges();
 
            return averageRating;
-        }
-        
+        }      
     }
 }
 

@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Console.Commands
+﻿
+namespace BookInspector.Console.Commands
 {
     using System;
     using System.Collections.Generic;
@@ -31,6 +32,5 @@
 
             return $"The book: {title} has rating: {bookRating:F2}.";
         }
-
     }
 }
