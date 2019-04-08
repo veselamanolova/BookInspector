@@ -28,7 +28,6 @@ namespace BookInspector.Console.Commands
 
             return $"Author {author.Name}, Id = {author.Name} added";
         }
-
     }
 }
 

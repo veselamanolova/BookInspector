@@ -26,7 +26,6 @@ namespace BookInspector.Console.Commands
             var user = _userService.Register(args[0]);
 
             return $"User {user.Name}, Id = {user.UserId} registered";
-        }
-               
+        }          
     }
 }

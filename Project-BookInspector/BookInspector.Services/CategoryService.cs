@@ -33,6 +33,5 @@ namespace BookInspector.Services
         {
             return _context.Category.ToList();
         }
-
     }
 }

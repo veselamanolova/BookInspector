@@ -9,11 +9,11 @@ namespace BookInspector.Console.Commands
 
     public class AddPublisher : ICommand
     {
-        private readonly IPublisherService publisherService;
+        private readonly IPublisherService _publisherService;
 
         public AddPublisher(IPublisherService publisherService)
         {
-            this.publisherService = publisherService ?? throw new ArgumentNullException(nameof(publisherService));
+            _publisherService = publisherService ?? throw new ArgumentNullException(nameof(publisherService));
         }
 
         public string Execute(IReadOnlyList<string> args)
@@ -23,11 +23,10 @@ namespace BookInspector.Console.Commands
                 throw new ArgumentException("Please provide a publisher mame as first parameter");
             }
 
-            var publisher = this.publisherService.Add(args[0]);
+            var publisher = _publisherService.Add(args[0]);
 
             return $"Publisher {publisher.Name}, Id = {publisher.PublisherId} added";
         }
-
     }
 }
 

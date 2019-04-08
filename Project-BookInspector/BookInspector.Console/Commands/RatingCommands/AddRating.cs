@@ -1,11 +1,10 @@
-﻿namespace BookInspector.Console.Commands
+﻿
+namespace BookInspector.Console.Commands
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using BookInspector.App.Contracts;
     using BookInspector.Services.Contracts;
-    using BookInspector.Services;
 
     public class AddRating : ICommand
     {

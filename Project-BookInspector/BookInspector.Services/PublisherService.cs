@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Services
+﻿
+namespace BookInspector.Services
 {
     using System;
     using System.Linq;
@@ -9,7 +10,6 @@
 
     public class PublisherService : IPublisherService
     {
-
         private readonly BookInspectorContext context;
 
         public PublisherService(BookInspectorContext context)
@@ -19,7 +19,6 @@
 
         public Publisher Add(string name)
         {
-
             if (this.context.Publisher.Any(u => u.Name == name))
             {
                 throw new ArgumentException($"Publisher {name} already exists");
@@ -45,6 +44,5 @@
                 .Take(take)
                 .ToList();
         }       
-      
     }
 }

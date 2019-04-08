@@ -27,6 +27,7 @@ namespace BookInspector.App
             {
                 _writer.WriteLine($"\nLast command: {_command} \nResult: {_executeResult}");
                 _command = Menu.Choice();
+
                 try
                 {
                     _executeResult = processor.ProcessCommand(_command.Replace(" ", ""));
@@ -35,8 +36,7 @@ namespace BookInspector.App
                 {
                     _executeResult = e.Message; 
                 }
-
-
+                
                 _writer.Clear();
             }
         }

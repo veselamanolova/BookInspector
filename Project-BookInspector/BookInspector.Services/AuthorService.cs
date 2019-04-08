@@ -3,9 +3,9 @@ namespace BookInspector.Services
 {
     using System;
     using System.Linq;
-    using BookInspector.Data.Context;
     using BookInspector.Data.Models;
     using System.Collections.Generic;
+    using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
     public class AuthorService : IAuthorService
