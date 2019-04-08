@@ -17,9 +17,28 @@ namespace BookInspector.Services
         {
             if (value < min || value > max)
             {
-                throw new ArgumentException($"Allowed valuse are between {min} and {max}");
+                throw new ArgumentException($"Allowed values are between {min} and {max}");
             }
         }
+
+        public static void IsInRange(this int value, int min, int max, string stringType)
+        {
+            if (value < min || value > max)
+            {
+                throw new ArgumentException($"Allowed values for {stringType} are between {min} and {max}");
+            }
+        }
+
+        public static void CheckExactLength(this string value, int exact, string stringType)
+        {
+            if (value.Length != exact)
+            {
+                throw new ArgumentException($"{stringType} should be exactly {exact} characters!");
+            }
+        }
+       
+
+
 
     }
 }
