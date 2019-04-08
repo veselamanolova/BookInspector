@@ -21,10 +21,10 @@ namespace BookInspector.Console.Commands
         {
             if (!args.Any())
             {
-                throw new ArgumentException("Please provide a author name as first parameter");
+                throw new ArgumentException("Please provide a author name");
             }
 
-            var author = this.authorService.Add(args[0]);
+            var author = this.authorService.Add(string.Join(" ", args));
 
             return $"Author {author.Name}, Id = {author.Name} added";
         }

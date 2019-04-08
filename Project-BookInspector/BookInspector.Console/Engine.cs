@@ -3,6 +3,7 @@ namespace BookInspector.App
 {
     using BookInspector.App.Contracts;
     using BookInspector.App.Providers;
+    using System;
 
     class Engine : IRun
     {
@@ -26,7 +27,16 @@ namespace BookInspector.App
             {
                 _writer.WriteLine($"\nLast command: {_command} \nResult: {_executeResult}");
                 _command = Menu.Choice();
-                _executeResult = processor.ProcessCommand(_command.Replace(" ", ""));
+                try
+                {
+                    _executeResult = processor.ProcessCommand(_command.Replace(" ", ""));
+                }
+                catch (ArgumentException e)
+                {
+                    _executeResult = e.Message; 
+                }
+
+
                 _writer.Clear();
             }
         }

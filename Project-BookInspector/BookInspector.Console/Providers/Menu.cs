@@ -15,6 +15,8 @@ namespace BookInspector.App.Providers
             {
                 "Add User",
                 "Add Book",
+                "Add Author",
+                "Add Publisher",
                 "Add Category",
                 "Show all Users",
                 "Show all Books",
