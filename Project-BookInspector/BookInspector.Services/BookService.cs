@@ -11,16 +11,23 @@
     {
 
         private readonly BookInspectorContext _context;
+        private readonly IPublisherService _publisherService;
+        private readonly IAuthorService _authorService;
+        private readonly ICategoryService _categoryService;
 
-        public BookService(BookInspectorContext context)
+        public BookService(BookInspectorContext context, IPublisherService publisherService, 
+            IAuthorService authorService, ICategoryService categoryService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _publisherService = publisherService ?? throw new ArgumentNullException(nameof(publisherService));
+            _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
+            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
         public Book AddBook(string title, 
             List<string> authorsList, 
             List<string> categoryList, 
-            string publisher, 
+            string publisherName, 
             DateTime publishedDate, 
             string isbn, 
             int volumeId, 
@@ -36,15 +43,15 @@
             }
 
            
-            var _publisher = _context.Publisher.FirstOrDefault(p => p.Name == publisher);
-            if (_publisher == null)
+            var publisher = _context.Publisher.FirstOrDefault(p => p.Name == publisherName);
+            if (publisher == null)
             {
-                throw new ArgumentException($"The publisher: {publisher} does not exist. Please add the publisher first.");
+                publisher= _publisherService.Add(publisherName);                 
             }
 
-            if(publishedDate.Year>DateTime.Now.Year|| publishedDate.Year< (new DateTime(1900, 1, 1).Year))
+            if(publishedDate.Year>DateTime.Now.Year|| publishedDate.Year< (new DateTime(1500, 1, 1).Year))
             {
-                throw new ArgumentException($"The date should be bigger than 1899 and smaller than next year.");
+                throw new ArgumentException($"The date should be bigger than 1500 and smaller than next year.");
             }
 
             Validation.CheckExactLength(isbn, 13, "isbn");
@@ -59,7 +66,7 @@
             var book = new Book()
             {               
                 Title = title,
-                PublisherId = _publisher.PublisherId,
+                PublisherId = publisher.PublisherId,
                 PublishedDate= publishedDate,
                 Isbn = isbn,
                 VolumeId= volumeId,
@@ -67,7 +74,7 @@
                 Description= description
             };
             _context.Book.Add(book);
-            _context.SaveChanges();
+            
 
             foreach (var authorName in authorsList)
             {
@@ -75,18 +82,16 @@
                 
                 if (author == null)
                 {
-                    throw new ArgumentException($"The author: {authorName} does not exist. Please add the author first.");
+                    author = _authorService.Add(authorName); 
                 }
-                else
+               
+                var bookByAuthorEntry = new BookByAuthor()
                 {
-                    var bookByAuthorEntry = new BookByAuthor()
-                    {
-                        AuthorId = author.AuthorId,
-                        BookId = book.BookId
-                    };
-                    _context.BookByAuthor.Add(bookByAuthorEntry);
-                    _context.SaveChanges();
-                }
+                    Author = author,
+                    Book = book
+                };
+                _context.BookByAuthor.Add(bookByAuthorEntry);                    
+                
             }
 
             foreach (var categoryName in categoryList)
@@ -95,20 +100,19 @@
 
                 if (category == null)
                 {
-                    throw new ArgumentException($"The category: {categoryName} does not exist. Please add the category first.");
+                    category = _categoryService.AddCategory(categoryName);
                 }
-                else
+               
+                var bookByCategoryEntry = new BookByCategory()
                 {
-                    var bookByCategoryEntry = new BookByCategory()
-                    {
-                        CategoryId = category.CategoryId,
-                        BookId = book.BookId
-                    };
-                    _context.BookByCategory.Add(bookByCategoryEntry);
-                    _context.SaveChanges();
-                }
+                    Category = category,
+                    Book = book
+                };
+                _context.BookByCategory.Add(bookByCategoryEntry);                   
+               
             }
-            
+
+            _context.SaveChanges();
             return book;
         } 
     }
