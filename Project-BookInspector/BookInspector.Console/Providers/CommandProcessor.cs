@@ -1,20 +1,27 @@
 ﻿
 namespace BookInspector.App.Providers
 {
-    using System;
+    using System.Collections.Generic;
     using BookInspector.App.Contracts;
 
     public sealed class CommandProcessor : ICommandProcessor
     {
-        private ICommandParser parser;
+        private IReader _reader;
+        private ICommandParser _parser;
+        private IReadOnlyList<string> _args;
 
-        public CommandProcessor(ICommandParser parser)
+        public CommandProcessor(ICommandParser parser, IReader reader)
         {
-            this.parser = parser;
+            _parser = parser;
+            _reader = reader;
         }
-        public string ProcessCommand(string inputLine)
+
+        public string ProcessCommand(string commandName)
         {
-            throw new NotImplementedException();
+            var command = _parser.ParseCommand(commandName.ToLower());
+            _args = _reader.ReadLine().Split();
+            return command.Execute(_args);
         }
     }
 }
+

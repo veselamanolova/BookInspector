@@ -9,5 +9,10 @@ namespace BookInspector.App.Providers
         {
             System.Console.WriteLine(message);
         }
+
+        public void Clear()
+        {
+            System.Console.Clear();
+        }
     }
 }
