@@ -1,5 +1,5 @@
 ﻿
-namespace BookInspector.App.Commands.CategoryCommands
+namespace BookInspector.App.Commands
 {
     using System;
     using System.Linq;

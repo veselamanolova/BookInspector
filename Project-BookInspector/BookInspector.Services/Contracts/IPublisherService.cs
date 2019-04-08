@@ -8,8 +8,6 @@ namespace BookInspector.Services.Contracts
     {
         Publisher Add(string name);
 
-        Publisher FindByName(string name);
-
-        IReadOnlyCollection<Publisher> GetPublishers(int skip, int take);
+        IReadOnlyCollection<Publisher> GetPublishers();
     }
 }

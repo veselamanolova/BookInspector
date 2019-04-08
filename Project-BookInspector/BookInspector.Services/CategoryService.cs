@@ -19,11 +19,9 @@ namespace BookInspector.Services
 
         public Category AddCategory(string name)
         {
-            if (_context.Category.Any(c => c.Name.Equals(name)))
-                throw new ArgumentException($"Category {name} already exists");
+            Validator.IfExist<ArgumentException>(name, $"Category {name} already exists");
 
             var category = new Category() { Name = name };
-
             _context.Category.Add(category);
             _context.SaveChanges();
             return category;
@@ -35,3 +33,4 @@ namespace BookInspector.Services
         }
     }
 }
+

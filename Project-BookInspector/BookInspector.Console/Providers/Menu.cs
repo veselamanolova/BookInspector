@@ -22,6 +22,8 @@ namespace BookInspector.App.Providers
                 "Show Book Rating",
                 "Show all Users",
                 "Show all Books",
+                "Show All Authors",
+                "Show All Publishers",
                 "Show All Categories",
                 "Find User",
                 "Delete User",
