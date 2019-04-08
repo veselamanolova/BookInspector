@@ -9,7 +9,6 @@ namespace BookInspector.Services.Contracts
     {
         RatingForBookByUser AddRating(string title, string username, int rating);
 
-      //  IReadOnlyCollection<RatingForBookByUser> GetBookRating(int BookID);
-
+        double GetAvarageRating(string title); 
     }
 }

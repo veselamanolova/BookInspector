@@ -19,6 +19,7 @@ namespace BookInspector.App.Providers
                 "Add Publisher",
                 "Add Category",
                 "Add Rating",
+                "Show Book Rating",
                 "Show all Users",
                 "Show all Books",
                 "Show All Categories",
