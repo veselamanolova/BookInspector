@@ -9,9 +9,9 @@ namespace BookInspector.Console.Commands
 
     public class FindUser : ICommand
     {
-        private readonly IUserService userService;
+        private readonly IRatingService userService;
 
-        public FindUser(IUserService userService)
+        public FindUser(IRatingService userService)
         {
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
