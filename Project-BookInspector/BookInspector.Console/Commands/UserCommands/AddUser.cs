@@ -18,13 +18,7 @@ namespace BookInspector.Console.Commands
 
         public string Execute(IReadOnlyList<string> args)
         {
-            if (!args.Any())
-            {
-                throw new ArgumentException("Please provide a username as first parameter");
-            }
-
             var user = _userService.Register(args[0]);
-
             return $"User {user.Name}, Id = {user.UserId} registered";
         }          
     }

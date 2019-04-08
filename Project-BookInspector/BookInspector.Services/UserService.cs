@@ -20,16 +20,12 @@ namespace BookInspector.Services
 
         public User Register(string name)
         {
-            
-            if (_context.User.Any(u => u.Name == name))
-            {
-                throw new ArgumentException($"User {name} already exists");
-            }
+            Validator.IfNullOrEmpty<ArgumentNullException>(name);
+            Validator.IfExist<ArgumentException>(name);
 
             var user = new User() { Name = name };
             _context.User.Add(user);
             _context.SaveChanges();
-
             return user;
         }
 
