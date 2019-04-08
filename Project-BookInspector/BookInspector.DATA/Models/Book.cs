@@ -8,15 +8,13 @@ namespace BookInspector.Data.Models
     {
         public int BookId { get; set; }
 
-        public string Title { get; set; }
-
-        public int AuthorId { get; set; }
+        public string Title { get; set; }        
 
         public int PublisherId { get; set; }
 
         public DateTime PublishedDate { get; set; }
 
-        public int Isbn { get; set; }
+        public string Isbn { get; set; }
 
         public int? VolumeId { get; set; }
 
