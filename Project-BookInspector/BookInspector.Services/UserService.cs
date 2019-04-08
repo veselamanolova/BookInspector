@@ -44,22 +44,22 @@ namespace BookInspector.Services
 
         public User DeteleUser(string name)
         {
-            var user = _context.User
-                .Where(x => x.Name.Equals(name))
-                .FirstOrDefault();
+            Validator.IfNotExist<ArgumentException>(name);
 
+            var user = _context.User.Where(x => x.Name.Equals(name)).First();
             _context.User.Remove(user);
             _context.SaveChanges();
-
             return user;
         }
 
-        public User Modify(string oldVal, string newVal)
+        public User Modify(string name, string newUsername)
         {
-            _context.User.FirstOrDefault(u => u.Name.Equals(oldVal)).Name = newVal;
+            Validator.IfNotExist<ArgumentException>(name);
+
+            _context.User.First(u => u.Name.Equals(name)).Name = newUsername;
             _context.SaveChanges();
             return _context.User
-                .FirstOrDefault(u => u.Name == newVal);
+                .FirstOrDefault(u => u.Name == newUsername);
         }
     }
 }

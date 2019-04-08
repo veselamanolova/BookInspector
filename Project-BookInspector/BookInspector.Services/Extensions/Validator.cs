@@ -27,6 +27,12 @@ namespace BookInspector.Services
                 throw new ArgumentException($"User {s} already exist.");
         }
 
+        public static void IfNotExist<T>(string s) where T : Exception, new()
+        {
+            if (_context.User.Any(u => u.Name == s))
+                throw new ArgumentException($"User {s} does not exist.");
+        }
+
         public static void IsInRange(this string str, int min, int max)
         {
             if (str.Length < min || str.Length > max)
