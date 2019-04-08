@@ -47,7 +47,7 @@ namespace BookInspector.Services
             var publisher = _context.Publisher.FirstOrDefault(p => p.Name == publisherName);
             if (publisher == null)
             {
-                publisher= _publisherService.Add(publisherName);                 
+                publisher = _publisherService.Add(publisherName);                 
             }
 
             if(publishedDate.Year>DateTime.Now.Year|| publishedDate.Year< (new DateTime(1500, 1, 1).Year))
