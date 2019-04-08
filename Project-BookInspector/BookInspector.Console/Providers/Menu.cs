@@ -23,7 +23,9 @@ namespace BookInspector.App.Providers
                 "Show all Users",
                 "Show all Books",
                 "Show All Categories",
-                "Find User"
+                "Find User",
+                "Delete User",
+                "Modify User"
             };
 
             int currentSelection = 0;
