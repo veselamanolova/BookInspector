@@ -58,6 +58,14 @@ namespace BookInspector.Services
 
             return user;
         }
+
+        public User Modify(string oldVal, string newVal)
+        {
+            _context.User.FirstOrDefault(u => u.Name.Equals(oldVal)).Name = newVal;
+            _context.SaveChanges();
+            return _context.User
+                .FirstOrDefault(u => u.Name == newVal);
+        }
     }
 }
 
