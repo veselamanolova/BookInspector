@@ -31,7 +31,9 @@ namespace BookInspector.Services
 
         public User FindByName(string name)
         {
-            return _context.User.FirstOrDefault(u => u.Name == name);
+            Validator.IfNotExist<ArgumentException>(name);
+
+            return _context.User.Single(u => u.Name == name);
         }
 
         public IReadOnlyCollection<User> GetUsers(int skip, int take)

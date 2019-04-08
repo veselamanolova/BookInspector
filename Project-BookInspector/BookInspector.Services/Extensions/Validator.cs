@@ -29,7 +29,7 @@ namespace BookInspector.Services
 
         public static void IfNotExist<T>(string s) where T : Exception, new()
         {
-            if (_context.User.Any(u => u.Name == s))
+            if (!_context.User.Any(u => u.Name == s))
                 throw new ArgumentException($"User {s} does not exist.");
         }
 
