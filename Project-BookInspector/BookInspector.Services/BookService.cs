@@ -55,15 +55,10 @@ namespace BookInspector.Services
                 throw new ArgumentException($"The date should be bigger than 1500 and smaller than next year.");
             }
 
-            Validator.CheckExactLength(isbn, 13, "isbn");            
-
-            Validator.IsInRange(volumeId, 1, 100, "volume Id");
-           
-            Validator.IsInRange(pageCount, 1, 5000, "pageCount");
-
-                        
+            Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
+            Validator.IsInRange<ArgumentException>(volumeId, 1, 100, $"Allowed values for Volume Id are between 1 and 100");
+            Validator.IsInRange<ArgumentException>(pageCount, 1, 5000, $"Allowed values for pageCount are between 1 and 5000");
             
-
             var book = new Book()
             {               
                 Title = title,

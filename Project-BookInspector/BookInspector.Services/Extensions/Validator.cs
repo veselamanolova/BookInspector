@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System.Collections.Generic;
+
 namespace BookInspector.Services
 {
     using System;
@@ -21,34 +23,28 @@ namespace BookInspector.Services
                 throw new T();
         }
 
-        public static void IfExist<T>(string s, string ex) where T : Exception, new()
+        public static void IfExist<T>(List<string> list, string s, string ex) where T : Exception, new()
         {
-            if (_context.User.Any(u => u.Name == s))
+            if (list.Contains(s))
                 throw (T)Activator.CreateInstance(typeof(T), ex);
         }
 
-        public static void IfNotExist<T>(string s, string ex) where T : Exception, new()
+        public static void IfNotExist<T>(List<string> list, string s, string ex) where T : Exception, new()
         {
-            if (!_context.User.Any(u => u.Name == s))
+            if (!list.Contains(s))
                 throw (T)Activator.CreateInstance(typeof(T), ex);
         }
-    }
-}
 
-        public static void IsInRange(this int value, int min, int max, string stringType)
+        public static void IsInRange<T>(int value, int min, int max, string ex) where T : Exception, new()
         {
             if (value < min || value > max)
-            {
-                throw new ArgumentException($"Allowed values for {stringType} are between {min} and {max}");
-            }
+                throw (T)Activator.CreateInstance(typeof(T), ex);
         }
 
-        public static void CheckExactLength(this string value, int exact, string stringType)
+        public static void CheckExactLength<T>(string value, int exact, string ex) where T : Exception, new()
         {
             if (value.Length != exact)
-            {
-                throw new ArgumentException($"{stringType} should be exactly {exact} characters!");
-            }
+                throw (T)Activator.CreateInstance(typeof(T), ex);
         }
     }
 }

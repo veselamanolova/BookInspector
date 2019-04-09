@@ -19,7 +19,8 @@ namespace BookInspector.Services
 
         public Author Add(string name)
         {
-            Validator.IfExist<ArgumentException>(name, $"Author {name} already exists");
+            Validator.IfExist<ArgumentException>(
+                _context.Author.Select(x => x.Name).ToList(), name, $"Author {name} already exists");
 
             var author = new Author() { Name = name };
 
