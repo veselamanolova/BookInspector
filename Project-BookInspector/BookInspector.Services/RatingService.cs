@@ -39,7 +39,7 @@ namespace BookInspector.Services
                 throw new ArgumentException($"User {username} already has rated the book {book.BookId}");
             }
 
-            Validator.IsInRange(rating, 0, 5); 
+            // Validator.IsInRange(rating, 0, 5); 
            
 
             var ratingForBookByUser = new RatingForBookByUser()

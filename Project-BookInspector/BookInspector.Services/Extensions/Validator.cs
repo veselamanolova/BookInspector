@@ -24,45 +24,14 @@ namespace BookInspector.Services
         public static void IfExist<T>(string s, string ex) where T : Exception, new()
         {
             if (_context.User.Any(u => u.Name == s))
-                throw new ArgumentException(ex);
+                throw (T)Activator.CreateInstance(typeof(T), ex);
         }
 
         public static void IfNotExist<T>(string s, string ex) where T : Exception, new()
         {
             if (!_context.User.Any(u => u.Name == s))
-                throw new ArgumentException(ex);
-        }
-
-        public static void IsInRange(this string str, int min, int max)
-        {
-            if (str.Length < min || str.Length > max)
-            {
-                throw new ArgumentException($"The string length should be between {min} and {max}");
-            }
-        }
-
-        public static void IsInRange(this int value, int min, int max)
-        {
-            if (value < min || value > max)
-            {
-                throw new ArgumentException($"Allowed valuse are between {min} and {max}");
-            }
-        }
-
-        public static void IsInRange(this int value, int min, int max, string stringType)
-        {
-            if (value < min || value > max)
-            {
-                throw new ArgumentException($"Allowed values for {stringType} are between {min} and {max}");
-            }
-        }
-
-        public static void CheckExactLength(this string value, int exact, string stringType)
-        {
-            if (value.Length != exact)
-            {
-                throw new ArgumentException($"{stringType} should be exactly {exact} characters!");
-            }
+                throw (T)Activator.CreateInstance(typeof(T), ex);
         }
     }
 }
+
