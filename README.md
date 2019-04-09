@@ -38,19 +38,17 @@ The **book** should have the following fields:
 **The User should have the following fields:**
 * ID
 * Name 
-* List of Favourite books. The books can be 0 or more. 
 
+**The User can give a rating to a book**
 
 
 ****It will allow the user to:****
 
-**Search for a book or list of books** by:
+**Search for a books or list of books** by:
 * Title,
 * Author or 
 * Publisher
-* User’s favourite books
 * Category
-
 
 **Add:**
 * Books, 
@@ -59,13 +57,19 @@ The **book** should have the following fields:
 * Users
 * A book to user favourites list
 * Category
+* Add book from JSON file
 
 
 **Edit:**
-* Books, 
-* Authors, 
-* Publishers and 
+* Authors and 
 * Users
+
+**List:**
+* All Authors
+* Publishers
+* Users
+* Categories
+
 
 **Board Link:**
 https://dbprojecct.visualstudio.com/DBProject/_sprints/taskboard/DBProject%20Team/DBProject/Sprint%201
