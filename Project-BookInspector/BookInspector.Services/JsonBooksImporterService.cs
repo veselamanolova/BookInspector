@@ -27,7 +27,17 @@
                 throw new ArgumentException("File does not exist", nameof(filePath));
             }
             string fileContent = File.ReadAllText(filePath);
-            JObject jObject = JObject.Parse(fileContent);
+            JObject jObject; 
+            try
+            {
+                 jObject = JObject.Parse(fileContent);
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException($"Json file cannot be parsed. {e.Message}", nameof(filePath));
+            }
+            
             foreach (JToken bookToken in jObject["items"].Children())
             {
                 string title = FindTitle(bookToken);
@@ -39,11 +49,11 @@
                     continue;
 
                 List<string> categories= FindCategories(bookToken);
-                if (categories == null || categories.Count == 0) // skip importing this book without authors
+                if (categories == null || categories.Count == 0) // skip importing this book without categories
                     continue;
 
                 string publisher = FindPublisher(bookToken);
-                if (string.IsNullOrEmpty(publisher)) // skip importing this book without ISBN
+                if (string.IsNullOrEmpty(publisher)) // skip importing this book without publisher
                     continue;
 
                 string isbn = FindIsbn(bookToken);
@@ -60,13 +70,13 @@
                 int volumeId = 1;
 
                 string pageCountAsString = FindPageCount(bookToken);
-                if (string.IsNullOrEmpty(publishedDateAsString)) // skip importing this book without ISBN
+                if (string.IsNullOrEmpty(publishedDateAsString)) // skip importing this book without publishedDate
                     continue;
                 int.TryParse(pageCountAsString, out int pageCount); 
 
 
                 string description = FindDescription(bookToken);
-                if (string.IsNullOrEmpty(description)) // skip importing this book without ISBN
+                if (string.IsNullOrEmpty(description)) // skip importing this book without description
                     continue;
 
 
