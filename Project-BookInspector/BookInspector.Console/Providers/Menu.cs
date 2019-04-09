@@ -72,7 +72,6 @@ namespace BookInspector.App.Providers
             } while (key != ConsoleKey.Enter);
 
             Console.CursorVisible = true;
-            Console.WriteLine("\n");
 
             return options[currentSelection];
         }

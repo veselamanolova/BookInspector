@@ -18,35 +18,22 @@ namespace BookInspector.Services
 
         public RatingForBookByUser AddRating(string title, string username, int rating)
         {
-           
-            var user  = _context.User.FirstOrDefault(u => u.Name == username);
-
-            if (user==null)
-            {
-                throw new ArgumentException($"User {username} does not exists");
-            }            
-
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
+            var user = _context.User.FirstOrDefault(u => u.Name == username);
 
-            if (book==null)
-            {
-                throw new ArgumentException($"Book with title: {title} does not exists");
-            }
+            Validator.IfNullOrEmpty<ArgumentException>(book.Title);
+            Validator.IfNullOrEmpty<ArgumentException>(user.Name);
 
             if (_context.RatingByBook.Any(u => u.BookId == book.BookId && u.UserId == user.UserId))
-            {
                 throw new ArgumentException($"User {username} already has rated the book {book.BookId}");
-            }
-
-            // Validator.IsInRange(rating, 0, 5); 
-           
 
             var ratingForBookByUser = new RatingForBookByUser()
             {
-                BookId = book.BookId, 
-                UserId = user.UserId, 
+                BookId = book.BookId,
+                UserId = user.UserId,
                 Rating = rating
             };
+
             _context.RatingByBook.Add(ratingForBookByUser);
             _context.SaveChanges();
 
@@ -57,19 +44,15 @@ namespace BookInspector.Services
         {
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
 
-            if (book == null)
-            {
-                throw new ArgumentException($"Book with title: {title} does not exists");
-            }
+            Validator.IfNullOrEmpty<ArgumentException>(book.Title);
 
-           var  averageRating = _context
+            var averageRating = _context
                 .RatingByBook.Where(r => r.BookId == book.BookId)
-                .Average(b =>b.Rating);         
+                .Average(b => b.Rating);
 
-           return averageRating;
-        }      
+            return averageRating;
+        }
     }
 }
-
 
 
