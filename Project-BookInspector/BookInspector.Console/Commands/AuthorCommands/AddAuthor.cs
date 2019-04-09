@@ -19,10 +19,7 @@ namespace BookInspector.Console.Commands
 
         public string Execute(IReadOnlyList<string> args)
         {
-            if (!args.Any())
-            {
-                throw new ArgumentException("Please provide a author name");
-            }
+            if (!args.Any()) throw new ArgumentException("Please provide a author name");
 
             var author = _authorService.Add(string.Join(" ", args));
 

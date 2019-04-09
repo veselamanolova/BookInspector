@@ -21,8 +21,8 @@ namespace BookInspector.Services
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
             var user = _context.User.FirstOrDefault(u => u.Name == username);
 
-            Validator.IfNullOrEmpty<ArgumentException>(book.Title);
-            Validator.IfNullOrEmpty<ArgumentException>(user.Name);
+            Validator.IfNull<ArgumentException>(book);
+            Validator.IfNull<ArgumentException>(user);
 
             if (_context.RatingByBook.Any(u => u.BookId == book.BookId && u.UserId == user.UserId))
                 throw new ArgumentException($"User {username} already has rated the book {book.BookId}");
@@ -44,7 +44,7 @@ namespace BookInspector.Services
         {
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
 
-            Validator.IfNullOrEmpty<ArgumentException>(book.Title);
+            Validator.IfNull<ArgumentException>(book);
 
             var averageRating = _context
                 .RatingByBook.Where(r => r.BookId == book.BookId)

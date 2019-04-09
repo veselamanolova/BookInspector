@@ -18,10 +18,7 @@ namespace BookInspector.Console.Commands
 
         public string Execute(IReadOnlyList<string> args)
         {
-            if (!args.Any())
-            {
-                throw new ArgumentException("Please provide a publisher mame as first parameter");
-            }
+            if (!args.Any()) throw new ArgumentException("Please provide a publisher mame as first parameter");
 
             var publisher = _publisherService.Add(args[0]);
 

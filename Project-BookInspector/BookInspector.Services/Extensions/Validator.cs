@@ -9,10 +9,9 @@ namespace BookInspector.Services
     {
         private static readonly BookInspectorContext _context = new BookInspectorContext();
 
-        public static void IfNullOrEmpty<T>(object o) where T : Exception, new()
+        public static void IfNull<T>(object o) where T : Exception, new()
         {
-            if (o is null || o.Equals(string.Empty))
-                throw new T();
+            if (o is null) throw new T();
         }
 
         public static void IfIsNotInRange<T>(string s) where T : Exception, new()

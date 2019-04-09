@@ -19,7 +19,6 @@ namespace BookInspector.Services
 
         public User Register(string name)
         {
-            Validator.IfNullOrEmpty<ArgumentNullException>(name);
             Validator.IfIsNotInRange<ArgumentException>(name);
             Validator.IfExist<ArgumentException>(
                 _context.User.Select(x => x.Name).ToList(), name, $"User {name} already exist.");

@@ -114,8 +114,6 @@ namespace BookInspector.Services
         
         public Dictionary<string, List<string>> Search(string name)
         {
-            Validator.IfNullOrEmpty<ArgumentException>(name);
-
             var books = _context.Book.Where(x => x.Title.Contains(name)).Select(x => new
             {
                 Name = x.Title,
