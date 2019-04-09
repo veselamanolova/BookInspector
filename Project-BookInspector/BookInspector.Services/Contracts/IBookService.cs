@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Services.Contracts
+﻿
+namespace BookInspector.Services.Contracts
 {
     using System;
     using BookInspector.Data.Models;    
@@ -7,6 +8,7 @@
     public interface IBookService
     {
         Book AddBook(string title, List<string> authorsList, List<string> categoryList, string publisher, DateTime publishedDate, string isbn, int volumeId, int pageCount, string description);
+
+        Dictionary<string, List<string>> Search(string name);
     }
 }
-

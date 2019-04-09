@@ -19,7 +19,8 @@ namespace BookInspector.Services
 
         public Publisher Add(string name)
         {
-            Validator.IfExist<ArgumentException>(name, $"Publisher {name} already exists");
+            Validator.IfExist<ArgumentException>(
+                _context.Publisher.Select(x => x.Name).ToList(), name, $"Publisher {name} already exists");
 
             var publisher = new Publisher() { Name = name };
             _context.Publisher.Add(publisher);

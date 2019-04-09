@@ -19,10 +19,7 @@ namespace BookInspector.App.Commands
 
         public string Execute(IReadOnlyList<string> args)
         {
-            if (!args.Any())
-            {
-                throw new ArgumentException("Please provide a category name as first parameter");
-            }
+            if (!args.Any()) throw new ArgumentException("Please provide a category name as first parameter");
             
             var category = _categoryService.AddCategory(args[0]);
 
