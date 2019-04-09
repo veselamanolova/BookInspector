@@ -105,11 +105,25 @@ namespace BookInspector.Services
                     Book = book
                 };
                 _context.BookByCategory.Add(bookByCategoryEntry);                   
-               
             }
 
             _context.SaveChanges();
             return book;
-        } 
+        }
+
+        
+        public Dictionary<string, List<string>> Search(string name)
+        {
+            Validator.IfNullOrEmpty<ArgumentException>(name);
+
+            var books = _context.Book.Where(x => x.Title.Contains(name)).Select(x => new
+            {
+                Name = x.Title,
+                Authors = x.BookByAuthor.Select(b => b.Author.Name).ToList()
+            }).ToDictionary(key => key.Name, value => value.Authors);
+
+            return books;
+        }
     }
 }
+

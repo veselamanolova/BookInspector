@@ -1,10 +1,8 @@
 ﻿
-using System.Collections.Generic;
-
 namespace BookInspector.Services
 {
     using System;
-    using System.Linq;
+    using System.Collections.Generic;
     using BookInspector.Data.Context;
 
     public static class Validator

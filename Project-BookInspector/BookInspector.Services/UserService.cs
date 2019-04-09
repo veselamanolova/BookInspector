@@ -32,7 +32,8 @@ namespace BookInspector.Services
 
         public User FindByName(string name)
         {
-            Validator.IfNotExist<ArgumentException>(_context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
+            Validator.IfNotExist<ArgumentException>(
+                _context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
 
             return _context.User.Single(u => u.Name == name);
         }
@@ -47,7 +48,8 @@ namespace BookInspector.Services
 
         public User DeteleUser(string name)
         {
-            Validator.IfNotExist<ArgumentException>(_context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
+            Validator.IfNotExist<ArgumentException>(
+                _context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
 
             var user = _context.User.Where(x => x.Name.Equals(name)).First();
             _context.User.Remove(user);
@@ -57,7 +59,8 @@ namespace BookInspector.Services
 
         public User Modify(string name, string newUsername)
         {
-            Validator.IfNotExist<ArgumentException>(_context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
+            Validator.IfNotExist<ArgumentException>(
+                _context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
 
             _context.User.First(u => u.Name.Equals(name)).Name = newUsername;
             _context.SaveChanges();

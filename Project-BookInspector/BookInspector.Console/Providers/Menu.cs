@@ -8,18 +8,18 @@ namespace BookInspector.App.Providers
         public static string Choice()
         {
             const int startX = 0;
-            const int startY = 4;
+            const int startY = 1;
             const int optionsPerLine = 1;
 
             string[] options =
             {
                 "Add User",
                 "Add Book",
-                "Import Books From Json",
                 "Add Author",
                 "Add Publisher",
                 "Add Category",
                 "Add Rating",
+                "Search Book",
                 "Show Book Rating",
                 "Show all Users",
                 "Show all Books",
