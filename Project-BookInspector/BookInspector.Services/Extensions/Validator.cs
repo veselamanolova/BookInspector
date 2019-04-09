@@ -1,10 +1,10 @@
-﻿
+﻿using System;
 namespace BookInspector.Services
 {
     using System;
     using System.Linq;
     using BookInspector.Data.Context;
-    
+
     public static class Validator
     {
         private static readonly BookInspectorContext _context = new BookInspectorContext();
@@ -35,3 +35,20 @@ namespace BookInspector.Services
     }
 }
 
+        public static void IsInRange(this int value, int min, int max, string stringType)
+        {
+            if (value < min || value > max)
+            {
+                throw new ArgumentException($"Allowed values for {stringType} are between {min} and {max}");
+            }
+        }
+
+        public static void CheckExactLength(this string value, int exact, string stringType)
+        {
+            if (value.Length != exact)
+            {
+                throw new ArgumentException($"{stringType} should be exactly {exact} characters!");
+            }
+        }
+    }
+}

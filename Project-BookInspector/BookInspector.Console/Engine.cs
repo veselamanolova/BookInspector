@@ -32,6 +32,7 @@ namespace BookInspector.App
                 {
                     _executeResult = processor.ProcessCommand(_command.Replace(" ", ""));
                 }
+
                 catch (ArgumentException ex)
                 {
                     _executeResult = $"ERROR: {ex.Message}"; 

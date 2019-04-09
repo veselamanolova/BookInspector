@@ -9,7 +9,6 @@ namespace BookInspector.Services
 
     public class RatingService : IRatingService
     {
-
         private readonly BookInspectorContext _context;
 
         public RatingService(BookInspectorContext context)
@@ -63,8 +62,9 @@ namespace BookInspector.Services
                 throw new ArgumentException($"Book with title: {title} does not exists");
             }
 
-           var  averageRating = _context.RatingByBook.Where(r => r.BookId == book.BookId).Average(b =>b.Rating);
-           _context.SaveChanges();
+           var  averageRating = _context
+                .RatingByBook.Where(r => r.BookId == book.BookId)
+                .Average(b =>b.Rating);         
 
            return averageRating;
         }      
