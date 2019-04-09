@@ -5,6 +5,6 @@ namespace BookInspector.Services.Contracts
 {
     public interface IJsonBooksImporterService
     {
-        List<Book> ImportBooks(string filePath);
+        List<Book> ImportBooks(string filePath, bool isFromWeb);
     }
 }

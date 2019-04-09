@@ -8,7 +8,8 @@ namespace BookInspector.App
     using BookInspector.Services;
     using BookInspector.Data.Context;
     using BookInspector.App.Contracts;
-    using BookInspector.App.Providers;
+    using BookInspector.App.Providers;    
+    using BookInspector.Services.Json;
     using BookInspector.Services.Contracts;
 
     public class Builder
@@ -28,7 +29,7 @@ namespace BookInspector.App
             appBuilder.RegisterType<RatingService>().As<IRatingService>();
             appBuilder.RegisterType<BookService>().As<IBookService>();
             appBuilder.RegisterType<JsonBooksImporterService>().As<IJsonBooksImporterService>();
-            
+            appBuilder.RegisterType<JsonUsersImporterService>().As<IJsonUsersImporterService>();
 
 
             appBuilder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();

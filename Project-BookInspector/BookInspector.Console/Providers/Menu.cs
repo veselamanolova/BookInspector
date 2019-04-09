@@ -14,8 +14,10 @@ namespace BookInspector.App.Providers
             string[] options =
             {
                 "Add User",
+                "Import Users From Json",
                 "Add Book",
                 "Import Books From Json",
+                "Import Books From Json URL",
                 "Add Author",
                 "Add Publisher",
                 "Add Category",

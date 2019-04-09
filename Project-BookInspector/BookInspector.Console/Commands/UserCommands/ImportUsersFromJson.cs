@@ -7,13 +7,13 @@
     using BookInspector.App.Contracts;
     using BookInspector.Services.Contracts;
 
-    public class ImportBooksFromJson : ICommand
+    public class ImportUsersFromJson : ICommand
     {
-        private readonly IJsonBooksImporterService _jsonBooksImporterService;
+        private readonly IJsonUsersImporterService _jsonUsersImporterService;
 
-        public ImportBooksFromJson(IJsonBooksImporterService jsonBooksImporterService)
+        public ImportUsersFromJson(IJsonUsersImporterService jsonUsersImporterService)
         {
-            _jsonBooksImporterService = jsonBooksImporterService ?? throw new ArgumentNullException(nameof(jsonBooksImporterService));
+            _jsonUsersImporterService = jsonUsersImporterService ?? throw new ArgumentNullException(nameof(jsonUsersImporterService));
         }
 
         public string Execute(IReadOnlyList<string> args)
@@ -24,9 +24,9 @@
             }
 
             string filePath = args[0];
-            var books = _jsonBooksImporterService.ImportBooks(filePath, false);
+            var users = _jsonUsersImporterService.ImportUsers(filePath);
 
-            return $"{books.Count} books imported.";
+            return $"{users.Count} users imported.";
         }
     }
 }

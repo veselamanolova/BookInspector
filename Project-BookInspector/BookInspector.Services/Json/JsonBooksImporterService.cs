@@ -1,41 +1,59 @@
-﻿namespace BookInspector.Services
+﻿namespace BookInspector.Services.Json
 {
     using BookInspector.Data.Models;
     using BookInspector.Services.Contracts;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Text;
 
     public class JsonBooksImporterService : IJsonBooksImporterService
     {
         private readonly IBookService _bookService;
+        
 
         public JsonBooksImporterService(IBookService bookService)
         {
             _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
         }
 
-        public List<Book> ImportBooks(string filePath)
+        public List<Book> ImportBooks(string path, bool isFromWeb)
         {
             List<Book> result = new List<Book>();
+            string jsonContent; 
 
-            if (!File.Exists(filePath))
+            if (isFromWeb)
             {
-                throw new ArgumentException("File does not exist", nameof(filePath));
+                using (WebClient httpClient = new WebClient())
+                {
+                    jsonContent = httpClient.DownloadString(path);       
+                }
+               
             }
-            string fileContent = File.ReadAllText(filePath);
+
+            else
+            {
+                if (!File.Exists(path))
+                {
+                    throw new ArgumentException("File does not exist", nameof(path));
+                }
+                jsonContent = File.ReadAllText(path);
+
+            }
+           
             JObject jObject; 
             try
             {
-                 jObject = JObject.Parse(fileContent);
+                 jObject = JObject.Parse(jsonContent);
             }
             catch (Exception e)
             {
 
-                throw new ArgumentException($"Json file cannot be parsed. {e.Message}", nameof(filePath));
+                throw new ArgumentException($"Json file cannot be parsed. {e.Message}", nameof(path));
             }
             
             foreach (JToken bookToken in jObject["items"].Children())
