@@ -9,7 +9,6 @@ namespace BookInspector.Services
 
     public class RatingService : IRatingService
     {
-
         private readonly BookInspectorContext _context;
 
         public RatingService(BookInspectorContext context)

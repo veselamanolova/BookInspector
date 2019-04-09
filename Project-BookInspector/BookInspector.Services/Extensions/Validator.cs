@@ -1,10 +1,10 @@
-﻿
+﻿using System;
 namespace BookInspector.Services
 {
     using System;
     using System.Linq;
     using BookInspector.Data.Context;
-    
+
     public static class Validator
     {
         private static readonly BookInspectorContext _context = new BookInspectorContext();

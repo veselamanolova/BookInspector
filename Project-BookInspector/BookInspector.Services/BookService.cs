@@ -55,11 +55,11 @@ namespace BookInspector.Services
                 throw new ArgumentException($"The date should be bigger than 1500 and smaller than next year.");
             }
 
-            Validation.CheckExactLength(isbn, 13, "isbn");
+            Validator.CheckExactLength(isbn, 13, "isbn");            
 
-            Validation.IsInRange(volumeId, 1, 100, "volume Id");
-
-            Validation.IsInRange(pageCount, 1, 5000, "pageCount");
+            Validator.IsInRange(volumeId, 1, 100, "volume Id");
+           
+            Validator.IsInRange(pageCount, 1, 5000, "pageCount");
 
                         
             
