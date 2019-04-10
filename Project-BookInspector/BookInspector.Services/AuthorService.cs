@@ -34,11 +34,15 @@ namespace BookInspector.Services
         public Dictionary<string, List<string>> Search(string args)
         {
             var authors = _context.Author.Where(a => a.Name.Contains(args))
-                .Select(authorBook => new
+                .Select(authorBook => new 
                 {
                     Author = authorBook.Name,
-                    Books = authorBook.BookByAuthor.Select(book => book.Book.Title).ToList()
-                }).ToDictionary(key => key.Author, value => value.Books);
+                    Books = authorBook.BookByAuthor.Select(book => new
+                    {
+                        bookCategory = book.Book.Title + " \nCategory: " + 
+                                       string.Join(", ", book.Book.BookByCategory.Select(x => x.Category.Name))
+                    }).ToList()
+                }).ToDictionary(key => key.Author, value => value.Books.Select(x => x.bookCategory).ToList());
 
             return authors;
         }

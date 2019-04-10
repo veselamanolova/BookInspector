@@ -29,7 +29,7 @@ namespace BookInspector.App.Commands.AuthorCommands
             {
                 if (!author.Value.Any()) continue;
 
-                bookBuilder.AppendLine($"{author.Key}: {string.Join(", ", author.Value)}");
+                bookBuilder.AppendLine($"{author.Key}: {string.Join(", ", author.Value)}\n");
             }
 
             return bookBuilder.ToString();
