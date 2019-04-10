@@ -9,6 +9,19 @@ namespace BookInspector.Data.Context
     
     public class BookInspectorContext : DbContext, IBookInspectorContext
     {
+        //for autofack
+        public BookInspectorContext()
+        {
+
+        }
+
+        //for testing
+        public BookInspectorContext(DbContextOptions options)
+            :base(options)
+        {
+
+        }
+
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
         public DbSet<BookByAuthor> BookByAuthor { get; set; }
