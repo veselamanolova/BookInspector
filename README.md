@@ -48,9 +48,10 @@ The **book** should have the following fields:
 * file and 
 * www.googleapis.com/books/
 
-* The URL should be in the following format: 
-* https://www.googleapis.com/books/v1/volumes?q=[serch_string]&maxResults=[returned_books_numbers]
-* Example URLs: 
+The URL should be in the following format: 
+https://www.googleapis.com/books/v1/volumes?q=[serch_string]&maxResults=[returned_books_numbers]
+
+Example URLs: 
 * https://www.googleapis.com/books/v1/volumes?q=AngularJS&maxResults=2
 * https://www.googleapis.com/books/v1/volumes?q=ReactJS&maxResults=5
 * https://www.googleapis.com/books/v1/volumes?q=typescript&maxResults=5
