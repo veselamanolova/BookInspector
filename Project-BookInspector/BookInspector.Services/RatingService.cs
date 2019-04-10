@@ -21,8 +21,8 @@ namespace BookInspector.Services
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
             var user = _context.User.FirstOrDefault(u => u.Name == username);
 
-            Validator.IfNull<ArgumentException>(book);
-            Validator.IfNull<ArgumentException>(user);
+            Validator.IfNull<ArgumentException>(book, "The book does not exist!" );
+            Validator.IfNull<ArgumentException>(user, "The user does not exist!");
 
             if (_context.RatingByBook.Any(u => u.BookId == book.BookId && u.UserId == user.UserId))
                 throw new ArgumentException($"User {username} already has rated the book {book.BookId}");

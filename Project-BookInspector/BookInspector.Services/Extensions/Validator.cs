@@ -12,6 +12,13 @@ namespace BookInspector.Services
         public static void IfNull<T>(object o) where T : Exception, new()
         {
             if (o is null) throw new T();
+
+        }
+
+        public static void IfNull<T>(object o, string ex) where T : Exception, new()
+        {
+            if (o is null)
+                throw (T)Activator.CreateInstance(typeof(T), ex);
         }
 
         public static void IfIsNotInRange<T>(string s) where T : Exception, new()
