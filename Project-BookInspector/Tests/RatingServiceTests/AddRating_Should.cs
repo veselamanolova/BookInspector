@@ -7,44 +7,72 @@
     using BookInspector.Services;
     using BookInspector.Data.Models; 
     using BookInspector.Data.Context;
-    using Microsoft.EntityFrameworkCore; 
+    using Microsoft.EntityFrameworkCore;
 
     [TestClass]
     public class AddRating_Should
     {
-        public const string userName = "User1";
-        public const string title = "TestTitle";
 
         [TestMethod]
         public void Suceed_WhenUserExists()
         {
-            var options = new DbContextOptionsBuilder()
-                .UseInMemoryDatabase(databaseName: "Suceed_WhenUserExists")
-                .Options; 
+            //var options = new DbContextOptionsBuilder()
+            //    .UseInMemoryDatabase(databaseName: "Suceed_WhenUserExists")
+            //    .Options;
 
-            BookInspectorContext context = new BookInspectorContext(options);
-            context.User.Add(new User()
+            using (var arrangeContext = new BookInspectorContext(TestUtils.GetOptions(nameof(Suceed_WhenUserExists))))
             {
-                UserId = 1,
-                Name = userName
-            });
+                arrangeContext.User.Add(new User()
+                {
+                    UserId = 1,
+                    Name = "User1"
+                });
 
-            context.Book.Add(new Book()
+                arrangeContext.Book.Add(new Book()
+                {
+                    BookId = 1,
+                    Title = "TestTitle"
+                });
+
+                arrangeContext.SaveChanges();
+            }
+
+            using (var actAndAssertContext = new BookInspectorContext(TestUtils.GetOptions(nameof(Suceed_WhenUserExists))))
             {
-                BookId =1,
-                Title = title
-            });
+                var sut = new RatingService(actAndAssertContext);
 
-            context.SaveChanges(); 
+                var rating = sut.AddRating("TestTitle", "User1", 4);
 
-            var sut = new RatingService(context);
-
-            var rating = sut.AddRating("TestTitle", "User1", 4);
-
-            Assert.AreEqual(4, rating.Rating);
-            Assert.AreEqual(title, rating.Book.Title);
-            Assert.AreEqual(userName, rating.User.Name);
+                Assert.AreEqual(4, rating.Rating);
+                Assert.AreEqual("TestTitle", rating.Book.Title);
+                Assert.AreEqual("User1", rating.User.Name);
+                Assert.AreEqual(1, rating.BookId);
+                Assert.AreEqual(1, rating.UserId);
+            }
         }
 
+
+        [TestMethod]
+        public void Fail_WhenUserDoesNotExist()
+        {
+
+            using (var arrangeContext = new BookInspectorContext(TestUtils.GetOptions(nameof(Fail_WhenUserDoesNotExist))))
+            {
+
+                arrangeContext.Book.Add(new Book()
+                {
+                    Title = "TestTitle"
+                });
+
+                arrangeContext.SaveChanges();
+            }
+
+            using (var actAndAssertContext = new BookInspectorContext(TestUtils.GetOptions(nameof(Fail_WhenUserDoesNotExist))))
+            {
+                var sut = new RatingService(actAndAssertContext);                             
+                var exception = Assert.ThrowsException<ArgumentException>(() => sut.AddRating("TestTitle", "User1", 4),"Expected Arguement exception not thrown");
+                Assert.AreEqual($"The user does not exist!", exception.Message, "Arguement exception message is not correct");
+            }
+        }
     }
 }
