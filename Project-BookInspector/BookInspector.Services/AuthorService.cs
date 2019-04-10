@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace BookInspector.Services
 {
     using System;
@@ -29,9 +31,16 @@ namespace BookInspector.Services
             return author; 
         }
 
-        public Dictionary<string, List<Book>> Search(string name)
+        public Dictionary<string, List<string>> Search(string args)
         {
-            throw new NotImplementedException();
+            var authors = _context.Author.Where(a => a.Name.Contains(args))
+                .Select(authorBook => new
+                {
+                    Author = authorBook.Name,
+                    Books = authorBook.BookByAuthor.Select(book => book.Book.Title).ToList()
+                }).ToDictionary(key => key.Author, value => value.Books);
+
+            return authors;
         }
 
         public IReadOnlyCollection<Author> GetAuthors()

@@ -1,4 +1,6 @@
 ﻿
+using System.Linq;
+
 namespace BookInspector.App.Commands.AuthorCommands
 {
     using System;
@@ -25,6 +27,8 @@ namespace BookInspector.App.Commands.AuthorCommands
 
             foreach (var author in authorCollection)
             {
+                if (!author.Value.Any()) continue;
+
                 bookBuilder.AppendLine($"{author.Key}: {string.Join(", ", author.Value)}");
             }
 
