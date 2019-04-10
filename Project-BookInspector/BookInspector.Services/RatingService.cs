@@ -21,6 +21,7 @@ namespace BookInspector.Services
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
             var user = _context.User.FirstOrDefault(u => u.Name == username);
 
+           
             Validator.IfNull<ArgumentException>(book, "The book does not exist!" );
             Validator.IfNull<ArgumentException>(user, "The user does not exist!");
 
