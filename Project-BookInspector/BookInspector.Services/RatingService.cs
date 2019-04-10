@@ -20,13 +20,14 @@ namespace BookInspector.Services
         {
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
             var user = _context.User.FirstOrDefault(u => u.Name == username);
-
            
+
             Validator.IfNull<ArgumentException>(book, "The book does not exist!" );
             Validator.IfNull<ArgumentException>(user, "The user does not exist!");
+            Validator.IsInRange<ArgumentException>(rating, 1, 5, "Invalid rating. Rating should be between 1 and 5.");
 
             if (_context.RatingByBook.Any(u => u.BookId == book.BookId && u.UserId == user.UserId))
-                throw new ArgumentException($"User {username} already has rated the book {book.BookId}");
+                throw new ArgumentException($"User {username} already has rated the book {book.Title}");
 
             var ratingForBookByUser = new RatingForBookByUser()
             {
@@ -45,7 +46,7 @@ namespace BookInspector.Services
         {
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
 
-            Validator.IfNull<ArgumentException>(book);
+            Validator.IfNull<ArgumentException>(book, "The book does not exist!");
 
             var averageRating = _context
                 .RatingByBook.Where(r => r.BookId == book.BookId)
