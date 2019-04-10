@@ -31,12 +31,6 @@ namespace BookInspector.Data.Context
                     "MultipleActiveResultSets=False;Encrypt=True;" +
                     "TrustServerCertificate=False;" +
                     "Connection Timeout=30;");
-
-                //optionsBuilder.UseSqlServer(
-                //    "Server=localhost\\SQLEXPRESS;" +
-                //    "Initial Catalog=BookInspector;" +                   
-                //    "Trusted_Connection=True;" 
-                //   );
             }
         }
 

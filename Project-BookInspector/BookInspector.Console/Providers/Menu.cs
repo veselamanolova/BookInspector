@@ -16,13 +16,12 @@ namespace BookInspector.App.Providers
                 "Add User",
                 "Import Users From Json",
                 "Add Book",
-                "Import Books From Json",
-                "Import Books From Json URL",
                 "Add Author",
                 "Add Publisher",
                 "Add Category",
                 "Add Rating",
                 "Search Book",
+                "Search Author",
                 "Show Book Rating",
                 "Show all Users",
                 "Show all Books",
@@ -31,7 +30,10 @@ namespace BookInspector.App.Providers
                 "Show All Categories",
                 "Find User",
                 "Delete User",
-                "Modify User"
+                "Modify User",
+                "Import Books From Json",
+                "Import Books From Json URL",
+                "List Books To PDF"
             };
 
             int currentSelection = 0;

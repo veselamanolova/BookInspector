@@ -29,10 +29,15 @@ namespace BookInspector.Services
             return author; 
         }
 
+        public Dictionary<string, List<Book>> Search(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyCollection<Author> GetAuthors()
         {
             return _context.Author.ToList(); 
-        }        
+        }
     }
 }
 

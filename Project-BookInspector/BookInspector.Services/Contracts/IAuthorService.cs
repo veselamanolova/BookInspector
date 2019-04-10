@@ -8,6 +8,8 @@ namespace BookInspector.Services.Contracts
     {
         Author Add(string name);
 
+        Dictionary<string, List<Book>> Search(string name);
+
         IReadOnlyCollection<Author> GetAuthors();
     }
 }

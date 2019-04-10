@@ -1,16 +1,17 @@
 ﻿
-
 namespace BookInspector.App
 {
     using Autofac;
     using System.Linq;
     using System.Reflection;
     using BookInspector.Services;
+    using BookInspector.Data.Models;
     using BookInspector.Data.Context;
     using BookInspector.App.Contracts;
     using BookInspector.App.Providers;    
     using BookInspector.Services.Json;
     using BookInspector.Services.Contracts;
+    using BookInspector.Services.Repository;
 
     public class Builder
     {
@@ -30,6 +31,8 @@ namespace BookInspector.App
             appBuilder.RegisterType<BookService>().As<IBookService>();
             appBuilder.RegisterType<JsonBooksImporterService>().As<IJsonBooksImporterService>();
             appBuilder.RegisterType<JsonUsersImporterService>().As<IJsonUsersImporterService>();
+            appBuilder.RegisterType<ExportService>().As<IExportService>();
+            appBuilder.RegisterType<Repository<Book>>().As<IRepository<Book>>();
 
 
             appBuilder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();

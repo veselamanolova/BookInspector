@@ -10,7 +10,6 @@ namespace BookInspector.Services
 
     public class BookService : IBookService
     {
-
         private readonly BookInspectorContext _context;
         private readonly IPublisherService _publisherService;
         private readonly IAuthorService _authorService;
