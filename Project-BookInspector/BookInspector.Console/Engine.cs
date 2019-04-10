@@ -26,7 +26,7 @@ namespace BookInspector.App
             while (true)
             {
                 _writer.Clear();
-                _writer.WriteLine(new string('\n', 18));
+                _writer.WriteLine(new string('\n', 23));
                 _writer.WriteLine($"\nLast command: {_command} \nResult: {_executeResult}");
                 _command = Menu.Choice();
 
@@ -43,4 +43,5 @@ namespace BookInspector.App
         }
     }
 }
+
 
