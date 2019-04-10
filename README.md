@@ -42,26 +42,28 @@ The **book** should have the following fields:
 **The User can give a rating to a book**
 
 
-****It will allow the user to:****
+****It will have the following functionality:****
 
-**Search for a books or list of books** by:
-* Title,
-* Author or 
-* Publisher
-* Category
+**Import Books from JSON:**
+* file and 
+* www.googleapis.com/books/
+
+The URL should be in the following format: 
+https://www.googleapis.com/books/v1/volumes?q=[serch_string]&maxResults=[returned_books_numbers]
+Example URLs: 
+https://www.googleapis.com/books/v1/volumes?q=AngularJS&maxResults=2
+https://www.googleapis.com/books/v1/volumes?q=ReactJS&maxResults=5
+https://www.googleapis.com/books/v1/volumes?q=typescript&maxResults=5
+
 
 **Add:**
 * Books, 
 * Authors, 
 * Publishers 
 * Users
-* A book to user favourites list
 * Category
-* Add book from JSON file
-
 
 **Edit:**
-* Authors and 
 * Users
 
 **List:**
@@ -70,6 +72,9 @@ The **book** should have the following fields:
 * Users
 * Categories
 
+**Search for a books or list of books** by:
+* Title,
+* Author 
 
 **Board Link:**
 https://dbprojecct.visualstudio.com/DBProject/_sprints/taskboard/DBProject%20Team/DBProject/Sprint%201
