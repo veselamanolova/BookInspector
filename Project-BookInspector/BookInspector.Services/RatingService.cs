@@ -42,7 +42,7 @@ namespace BookInspector.Services
             return ratingForBookByUser;
         }
 
-        public double GetAvarageRating(string title)
+        public double GetAverageRating(string title)
         {
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
 
