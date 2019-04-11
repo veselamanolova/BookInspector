@@ -1,8 +1,6 @@
-﻿namespace Tests
+﻿
+namespace Tests
 {
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
 
     public static class TestUtils

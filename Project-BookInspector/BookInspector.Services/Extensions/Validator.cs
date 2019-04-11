@@ -12,7 +12,6 @@ namespace BookInspector.Services
         public static void IfNull<T>(object o) where T : Exception, new()
         {
             if (o is null) throw new T();
-
         }
 
         public static void IfNull<T>(object o, string ex) where T : Exception, new()
