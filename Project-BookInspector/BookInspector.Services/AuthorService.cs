@@ -39,7 +39,7 @@ namespace BookInspector.Services
                     Author = authorBook.Name,
                     Books = authorBook.BookByAuthor.Select(book => new
                     {
-                        bookCategory = book.Book.Title + " \nCategory: " + 
+                        bookCategory = "\n" + book.Book.Title + " \nCategory: " + 
                                        string.Join(", ", book.Book.BookByCategory.Select(x => x.Category.Name))
                     }).ToList()
                 }).ToDictionary(key => key.Author, value => value.Books.Select(x => x.bookCategory).ToList());
