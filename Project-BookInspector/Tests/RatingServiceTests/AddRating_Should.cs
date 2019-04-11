@@ -1,13 +1,10 @@
 ﻿namespace Tests.RatingServiceTests
 {
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;    
     using BookInspector.Services;
     using BookInspector.Data.Models; 
-    using BookInspector.Data.Context;
-    using Microsoft.EntityFrameworkCore;
+    using BookInspector.Data.Context;    
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class AddRating_Should

@@ -29,8 +29,15 @@ namespace BookInspector.Console.Commands
             }      
 
             double bookRating = _ratingService.GetAvarageRating(title);
-
-            return $"The book: {title} has rating: {bookRating:F2}.";
+            if (bookRating == 0)
+            {
+                return $"The book: {title} has no rating.";
+            }
+            else
+            {
+                return $"The book: {title} has rating: {bookRating:F2}.";
+            }
+            
         }
     }
 }
