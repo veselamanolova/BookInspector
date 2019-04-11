@@ -28,9 +28,16 @@ namespace BookInspector.Console.Commands
                 throw new ArgumentException("Please provide a book Title.");
             }      
 
-            double bookRating = _ratingService.GetAvarageRating(title);
-
-            return $"The book: {title} has rating: {bookRating:F2}.";
+            double bookRating = _ratingService.GetAverageRating(title);
+            if (bookRating == 0)
+            {
+                return $"The book: {title} has no rating.";
+            }
+            else
+            {
+                return $"The book: {title} has rating: {bookRating:F2}.";
+            }
+            
         }
     }
 }

@@ -42,15 +42,21 @@ namespace BookInspector.Services
             return ratingForBookByUser;
         }
 
-        public double GetAvarageRating(string title)
+        public double GetAverageRating(string title)
         {
             var book = _context.Book.FirstOrDefault(b => b.Title == title);
 
             Validator.IfNull<ArgumentException>(book, "The book does not exist!");
 
-            var averageRating = _context
-                .RatingByBook.Where(r => r.BookId == book.BookId)
-                .Average(b => b.Rating);
+            var ratingQuery = _context
+                .RatingByBook.Where(r => r.BookId == book.BookId);
+
+            if (ratingQuery.LongCount() == 0)
+            {
+                return 0; 
+            }
+            double averageRating = ratingQuery
+                .Average(b => b.Rating);            
 
             return averageRating;
         }
