@@ -4,8 +4,8 @@ namespace BookInspector.Services
     using System.Linq;
     using SautinSoft.Document;
     using BookInspector.Data.Models;
+    using BookInspector.Data.Repository;
     using BookInspector.Services.Contracts;
-    using BookInspector.Services.Repository;
 
     public sealed class ExportService : IExportService
     {

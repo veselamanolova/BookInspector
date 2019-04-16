@@ -1,12 +1,10 @@
 ﻿
-using System;
-
 namespace Tests.UserServiceTests
 {
     using BookInspector.Services;
+    using BookInspector.Data.Models;
     using BookInspector.Data.Context;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using BookInspector.Data.Models;
 
     [TestClass]
     public class Register_Should
@@ -28,21 +26,24 @@ namespace Tests.UserServiceTests
         }
 
         [TestMethod]
-        [DataRow("u")]
-        [DataRow("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")]
-        public void RegisterUserThrowIfIsNotInRange(string name)
+        public void FindByNameReturnCorrect()
         {
-            var options = TestUtils.GetOptions(nameof(RegisterUserThrowIfIsNotInRange));
+            var options = TestUtils.GetOptions(nameof(FindByNameReturnCorrect));
+
+            using (var arrange = new BookInspectorContext(options))
+            {
+                var user = new User() { Name = "Tedi"};
+                arrange.User.Add(user);
+                arrange.SaveChanges();
+            }
 
             using (var actAndAssertContext = new BookInspectorContext(options))
             {
                 var sut = new UserService(actAndAssertContext);
 
-                var ex = Assert.ThrowsException<ArgumentException>(() => sut.Register(name));
+                var fndUser = sut.FindByName("Tedi");
 
-                string exEx = "Value does not fall within the expected range.";
-
-                Assert.AreEqual(exEx, ex.Message);
+                Assert.IsTrue(fndUser.Name.Equals("Tedi"));
             }
         }
     }

@@ -5,13 +5,12 @@ namespace BookInspector.App
     using System.Linq;
     using System.Reflection;
     using BookInspector.Services;
-    using BookInspector.Data.Models;
     using BookInspector.Data.Context;
     using BookInspector.App.Contracts;
     using BookInspector.App.Providers;    
     using BookInspector.Services.Json;
+    using BookInspector.Data.Repository;
     using BookInspector.Services.Contracts;
-    using BookInspector.Services.Repository;
 
     public class Builder
     {
@@ -21,6 +20,8 @@ namespace BookInspector.App
             appBuilder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces();
+
+            appBuilder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
 
             appBuilder.RegisterType<BookInspectorContext>().AsSelf().InstancePerLifetimeScope();
             appBuilder.RegisterType<AuthorService>().As<IAuthorService>();
@@ -32,9 +33,7 @@ namespace BookInspector.App
             appBuilder.RegisterType<JsonBooksImporterService>().As<IJsonBooksImporterService>();
             appBuilder.RegisterType<JsonUsersImporterService>().As<IJsonUsersImporterService>();
             appBuilder.RegisterType<ExportService>().As<IExportService>();
-            appBuilder.RegisterType<Repository<Book>>().As<IRepository<Book>>();
-
-
+            
             appBuilder.RegisterType<CommandParser>().As<ICommandParser>().SingleInstance();
             appBuilder.RegisterType<CommandProcessor>().As<ICommandProcessor>().SingleInstance();
             appBuilder.RegisterType<ConsoleReader>().As<IReader>().SingleInstance();

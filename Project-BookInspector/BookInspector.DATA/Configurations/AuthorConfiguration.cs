@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Data.Configurations
+﻿
+namespace BookInspector.Data.Configurations
 {
     using BookInspector.Data.Models;
     using Microsoft.EntityFrameworkCore;
@@ -14,3 +15,6 @@
         }
     }
 }
+
+// var books = context.Books.ToList();
+// var books = context.Books.Include(b => b.Author).ToList(); 

@@ -5,22 +5,35 @@ namespace BookInspector.Services
     using System.Linq;
     using BookInspector.Data.Models;
     using System.Collections.Generic;
-    using BookInspector.Data.Context;
+    using BookInspector.Data.Repository;
     using BookInspector.Services.Contracts;
 
     public class BookService : IBookService
     {
-        private readonly BookInspectorContext _context;
-        private readonly IPublisherService _publisherService;
-        private readonly IAuthorService _authorService;
-        private readonly ICategoryService _categoryService;
+        private readonly IRepository<Book> _bookRepository;
+        private readonly IRepository<Publisher> _publisherRepository;
+        private readonly IRepository<Author> _authorRepository;
+        private readonly IRepository<Category> _categoryRepository;
 
-        public BookService(BookInspectorContext context, IPublisherService publisherService, 
-            IAuthorService authorService, ICategoryService categoryService)
+        private IAuthorService _authorService;
+        private IPublisherService _publisherService;
+        private ICategoryService _categoryService;
+
+        public BookService(
+            IRepository<Book> bookRepository,
+            IRepository<Publisher> publisherRepository, 
+            IRepository<Author> authorRepository,
+            IRepository<Category> categoryRepository,
+            IAuthorService authorService,
+            IPublisherService publisherService,
+            ICategoryService categoryService)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _publisherService = publisherService ?? throw new ArgumentNullException(nameof(publisherService));
+            _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+            _publisherRepository = publisherRepository ?? throw new ArgumentNullException(nameof(publisherRepository));
+            _authorRepository = authorRepository ?? throw new ArgumentNullException(nameof(authorRepository));
+            _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
             _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
+            _publisherService = publisherService ?? throw new ArgumentNullException(nameof(publisherService));
             _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
@@ -35,28 +48,24 @@ namespace BookInspector.Services
             string description)
         {
 
-            var existingbook = _context.Book.FirstOrDefault(b => b.Title == title);
+            var existingbook = _bookRepository.All().FirstOrDefault(b => b.Title == title);
+            var publisher = _publisherRepository.All().FirstOrDefault(p => p.Name == publisherName);
+            
 
-            if (existingbook != null)
+            Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");
+            Validator.IsInRange<ArgumentException>(volumeId, 1, 100, $"Allowed values for Volume Id are between 1 and 100");
+            Validator.IsInRange<ArgumentException>(pageCount, 1, 5000, $"Allowed values for pageCount are between 1 and 5000");
+            Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
+
+            if (publisher is null)
             {
-                throw new ArgumentException($"Book with title: {existingbook.Title} already exists");
-            }
+                publisher = _publisherService.Add(publisherName);
+            }             
 
-           
-            var publisher = _context.Publisher.FirstOrDefault(p => p.Name == publisherName);
-            if (publisher == null)
-            {
-                publisher = _publisherService.Add(publisherName);                 
-            }
-
-            if(publishedDate.Year>DateTime.Now.Year|| publishedDate.Year< (new DateTime(1500, 1, 1).Year))
+            if (publishedDate.Year > DateTime.Now.Year|| publishedDate.Year < (new DateTime(1500, 1, 1).Year))
             {
                 throw new ArgumentException($"The date should be bigger than 1500 and smaller than next year.");
             }
-
-            Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
-            Validator.IsInRange<ArgumentException>(volumeId, 1, 100, $"Allowed values for Volume Id are between 1 and 100");
-            Validator.IsInRange<ArgumentException>(pageCount, 1, 5000, $"Allowed values for pageCount are between 1 and 5000");
             
             var book = new Book()
             {               
@@ -68,14 +77,15 @@ namespace BookInspector.Services
                 PageCount= pageCount,
                 Description= description
             };
-            _context.Book.Add(book);
+
+            _bookRepository.Add(book);
             
 
             foreach (var authorName in authorsList)
             {
-                var author = _context.Author.FirstOrDefault(a => a.Name == authorName);
+                var author = _authorRepository.All().FirstOrDefault(a => a.Name == authorName);
                 
-                if (author == null)
+                if (author is null)
                 {
                     author = _authorService.Add(authorName); 
                 }
@@ -85,13 +95,12 @@ namespace BookInspector.Services
                     Author = author,
                     Book = book
                 };
-                _context.BookByAuthor.Add(bookByAuthorEntry);                    
-                
+                // _context.BookByAuthor.Add(bookByAuthorEntry);                    
             }
 
             foreach (var categoryName in categoryList)
             {
-                var category = _context.Category.FirstOrDefault(c => c.Name == categoryName);
+                var category = _categoryRepository.All().FirstOrDefault(c => c.Name == categoryName);
 
                 if (category == null)
                 {
@@ -103,17 +112,19 @@ namespace BookInspector.Services
                     Category = category,
                     Book = book
                 };
-                _context.BookByCategory.Add(bookByCategoryEntry);                   
+                // _context.BookByCategory.Add(bookByCategoryEntry);                   
             }
 
-            _context.SaveChanges();
+            _bookRepository.Save();
+            _authorRepository.Save();
+            _publisherRepository.Save();
             return book;
         }
 
         
         public Dictionary<string, List<string>> Search(string args)
         {
-            var books = _context.Book.Where(x => x.Title.Contains(args)).Select(x => new
+            var books = _bookRepository.All().Where(x => x.Title.Contains(args)).Select(x => new
             {
                 Name = x.Title,
                 Authors = x.BookByAuthor.Select(b => b.Author.Name).ToList()

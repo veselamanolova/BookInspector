@@ -5,41 +5,42 @@ namespace BookInspector.Services
     using System.Linq;
     using BookInspector.Data.Models;
     using System.Collections.Generic;
-    using BookInspector.Data.Context;
+    using BookInspector.Data.Repository;
     using BookInspector.Services.Contracts;
 
     public class UserService : IUserService
     {
-        private readonly BookInspectorContext _context;
+        private readonly IRepository<User> _userRepository;
 
-        public UserService(BookInspectorContext context)
+        public UserService(IRepository<User> userRepository)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public User Register(string name)
         {
-            Validator.IfIsNotInRange<ArgumentException>(name);
-            Validator.IfExist<ArgumentException>(
-                _context.User.Select(x => x.Name).ToList(), name, $"User {name} already exist.");
+            var user = _userRepository.All().Where(u => u.Name == name).SingleOrDefault();
 
-            var user = new User() { Name = name };
-            _context.User.Add(user);
-            _context.SaveChanges();
+            Validator.IfIsNotInRange<ArgumentException>(name);
+            Validator.IfNotNull<ArgumentException>(user, $"User {name} already exist.");
+
+            user = new User() { Name = name };
+            _userRepository.Add(user);
+            _userRepository.Save();
             return user;
         }
 
         public User FindByName(string name)
         {
-            Validator.IfNotExist<ArgumentException>(
-                _context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
+            var user = _userRepository.All().Where(x => x.Name.Equals(name)).SingleOrDefault();
+            Validator.IfNull<ArgumentException>(user, $"User {name} does not exist.");
 
-            return _context.User.Single(u => u.Name == name);
+            return user;
         }
 
         public IReadOnlyCollection<User> GetUsers(int skip, int take)
         {
-            return _context.User
+            return _userRepository.All()
                 .Skip(skip)
                 .Take(take)
                 .ToList();
@@ -47,24 +48,24 @@ namespace BookInspector.Services
 
         public User DeteleUser(string name)
         {
-            Validator.IfNotExist<ArgumentException>(
-                _context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
-
-            var user = _context.User.Where(x => x.Name.Equals(name)).First();
-            _context.User.Remove(user);
-            _context.SaveChanges();
+            var user = _userRepository.All().Where(u => u.Name.Equals(name)).SingleOrDefault();
+            Validator.IfNull<ArgumentException>(user, $"User {name} does not exist.");
+            
+            _userRepository.Remove(user);
+            _userRepository.Save();
             return user;
         }
 
         public User Modify(string name, string newUsername)
         {
-            Validator.IfNotExist<ArgumentException>(
-                _context.User.Select(x => x.Name).ToList(), name, $"User {name} does not exist.");
+            var user = _userRepository.All().Where(u => u.Name.Equals(name)).SingleOrDefault();
+            user.Name = newUsername;
 
-            _context.User.First(u => u.Name.Equals(name)).Name = newUsername;
-            _context.SaveChanges();
-            return _context.User
-                .FirstOrDefault(u => u.Name == newUsername);
+            Validator.IfNull<ArgumentException>(user, $"User {name} does not exist.");
+
+            _userRepository.All().First(u => u.Name.Equals(name)).Name = newUsername;
+            _userRepository.Save();
+            return user;
         }
     }
 }

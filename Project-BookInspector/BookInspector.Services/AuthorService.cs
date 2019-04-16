@@ -1,39 +1,37 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
-
 namespace BookInspector.Services
 {
     using System;
     using System.Linq;
-    using BookInspector.Data.Models;
     using System.Collections.Generic;
-    using BookInspector.Data.Context;
+    using BookInspector.Data.Models;
+    using BookInspector.Data.Repository;
     using BookInspector.Services.Contracts;
 
     public class AuthorService : IAuthorService
     {
-        private readonly BookInspectorContext _context;
+        private readonly IRepository<Author> _authorsRepository;
 
-        public AuthorService(BookInspectorContext context)
+        public AuthorService(IRepository<Author> authorsRepository)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _authorsRepository = authorsRepository ?? throw new ArgumentNullException(nameof(authorsRepository));
         }
 
         public Author Add(string name)
         {
-            Validator.IfExist<ArgumentException>(
-                _context.Author.Select(x => x.Name).ToList(), name, $"Author {name} already exists");
+            var author = _authorsRepository.All().Where(x => x.Name.Equals(name)).SingleOrDefault();
+            Validator.IfNotNull<ArgumentException>(author, $"Author {name} already exists");
 
-            var author = new Author() { Name = name };
+            author = new Author() { Name = name };
 
-            _context.Author.Add(author);
-            _context.SaveChanges();
+            _authorsRepository.Add(author);
+            _authorsRepository.Save();
             return author; 
         }
 
         public Dictionary<string, List<string>> Search(string args)
         {
-            var authors = _context.Author.Where(a => a.Name.Contains(args))
+            var authors = _authorsRepository.All().Where(a => a.Name.Contains(args))
                 .Select(authorBook => new 
                 {
                     Author = authorBook.Name,
@@ -49,7 +47,7 @@ namespace BookInspector.Services
 
         public IReadOnlyCollection<Author> GetAuthors()
         {
-            return _context.Author.ToList(); 
+            return _authorsRepository.All().ToList(); 
         }
     }
 }
