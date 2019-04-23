@@ -2,12 +2,9 @@
 namespace BookInspector.Services
 {
     using System;
-    using BookInspector.Data.Context;
 
     public static class Validator
     {
-        private static readonly BookInspectorContext _context = new BookInspectorContext();
-
         public static void IfNull<TSource>(object o) where TSource : Exception, new()
         {
             if (o is null) throw new TSource();

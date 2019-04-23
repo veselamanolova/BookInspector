@@ -5,32 +5,32 @@ namespace BookInspector.Services
     using System.Linq;
     using BookInspector.Data.Models;
     using System.Collections.Generic;
-    using BookInspector.Data.Repository;
+    using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
     public class CategoryService : ICategoryService
     {
-        private readonly IRepository<Category> _categoryRepository;
+        private readonly BookInspectorContext _context;
 
-        public CategoryService(IRepository<Category> categoryRepository)
+        public CategoryService(BookInspectorContext context)
         {
-            _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public Category AddCategory(string name)
         {
-            var category = _categoryRepository.All().Where(x => x.Name.Equals(name)).SingleOrDefault();
+            var category = _context.Category.Where(x => x.Name.Equals(name)).SingleOrDefault();
             Validator.IfNotNull<ArgumentException>(category, $"Category {name} already exists");
 
             category = new Category() { Name = name };
-            _categoryRepository.Add(category);
-            _categoryRepository.Save();
+            _context.Category.Add(category);
+            _context.SaveChanges();
             return category;
         }
 
         public IReadOnlyCollection<Category> ShowAllCategories()
         {
-            return _categoryRepository.All().ToList();
+            return _context.Category.ToList();
         }
     }
 }

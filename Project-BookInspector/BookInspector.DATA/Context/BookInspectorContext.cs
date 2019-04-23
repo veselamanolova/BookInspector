@@ -17,10 +17,7 @@ namespace BookInspector.Data.Context
 
         //for testing
         public BookInspectorContext(DbContextOptions options)
-            :base(options)
-        {
-
-        }
+            :base(options) { }
 
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }

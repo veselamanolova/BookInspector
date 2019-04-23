@@ -5,34 +5,34 @@ namespace BookInspector.Services
     using System.Linq;
     using BookInspector.Data.Models;
     using System.Collections.Generic;
-    using BookInspector.Data.Repository;
+    using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
     public class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly BookInspectorContext _context;
 
-        public UserService(IRepository<User> userRepository)
+        public UserService(BookInspectorContext context)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public User Register(string name)
         {
-            var user = _userRepository.All().Where(u => u.Name == name).SingleOrDefault();
+            var user = _context.User.Where(u => u.Name == name).SingleOrDefault();
 
             Validator.IfIsNotInRange<ArgumentException>(name);
             Validator.IfNotNull<ArgumentException>(user, $"User {name} already exist.");
 
             user = new User() { Name = name };
-            _userRepository.Add(user);
-            _userRepository.Save();
+            _context.User.Add(user);
+            _context.SaveChanges();
             return user;
         }
 
         public User FindByName(string name)
         {
-            var user = _userRepository.All().Where(x => x.Name.Equals(name)).SingleOrDefault();
+            var user = _context.User.Where(x => x.Name.Equals(name)).SingleOrDefault();
             Validator.IfNull<ArgumentException>(user, $"User {name} does not exist.");
 
             return user;
@@ -40,7 +40,7 @@ namespace BookInspector.Services
 
         public IReadOnlyCollection<User> GetUsers(int skip, int take)
         {
-            return _userRepository.All()
+            return _context.User
                 .Skip(skip)
                 .Take(take)
                 .ToList();
@@ -48,23 +48,23 @@ namespace BookInspector.Services
 
         public User DeteleUser(string name)
         {
-            var user = _userRepository.All().Where(u => u.Name.Equals(name)).SingleOrDefault();
+            var user = _context.User.Where(u => u.Name.Equals(name)).SingleOrDefault();
             Validator.IfNull<ArgumentException>(user, $"User {name} does not exist.");
             
-            _userRepository.Remove(user);
-            _userRepository.Save();
+            _context.User.Remove(user);
+            _context.SaveChanges();
             return user;
         }
 
         public User Modify(string name, string newUsername)
         {
-            var user = _userRepository.All().Where(u => u.Name.Equals(name)).SingleOrDefault();
+            var user = _context.User.Where(u => u.Name.Equals(name)).SingleOrDefault();
             user.Name = newUsername;
 
             Validator.IfNull<ArgumentException>(user, $"User {name} does not exist.");
 
-            _userRepository.All().First(u => u.Name.Equals(name)).Name = newUsername;
-            _userRepository.Save();
+            _context.User.First(u => u.Name.Equals(name)).Name = newUsername;
+            _context.SaveChanges();
             return user;
         }
     }

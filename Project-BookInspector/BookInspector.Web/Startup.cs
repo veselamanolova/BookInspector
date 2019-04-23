@@ -7,8 +7,8 @@ namespace BookInspector.Web
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using BookInspector.Data.Repository;
     using BookInspector.Services.Contracts;
+    using BookInspector.Data.Repository;
     using BookInspector.Services;
 
     public class Startup

@@ -1,24 +1,24 @@
 ﻿
 namespace BookInspector.Services
 {
+    using System;
     using System.Linq;
     using SautinSoft.Document;
-    using BookInspector.Data.Models;
-    using BookInspector.Data.Repository;
+    using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
     public sealed class ExportService : IExportService
     {
-        private IRepository<Book> _bookRepo;
+        private readonly BookInspectorContext _context;
 
-        public ExportService(IRepository<Book> bookRepo)
+        public ExportService(BookInspectorContext context)
         {
-            _bookRepo = bookRepo;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
         
         public void ListBooksToPDF()
         {
-            var books = _bookRepo.All()
+            var books = _context.Book
                 .Select(book => new
                 {
                     ID = book.BookId + "\n",

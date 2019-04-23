@@ -5,33 +5,33 @@ namespace BookInspector.Services
     using System.Linq;
     using System.Collections.Generic;
     using BookInspector.Data.Models;
-    using BookInspector.Data.Repository;
+    using BookInspector.Data.Context;
     using BookInspector.Services.Contracts;
 
     public class PublisherService : IPublisherService
     {
-        private readonly IRepository<Publisher> _publisherRepository;
+        private readonly BookInspectorContext _context;
 
-        public PublisherService(IRepository<Publisher> publisherRepository)
+        public PublisherService(BookInspectorContext context)
         {
-            _publisherRepository = publisherRepository ?? throw new ArgumentNullException(nameof(publisherRepository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public Publisher Add(string name)
         {
-            var publisher = _publisherRepository.All().Where(x => x.Name.Equals(name)).SingleOrDefault();
+            var publisher = _context.Publisher.Where(x => x.Name.Equals(name)).SingleOrDefault();
             Validator.IfNotNull<ArgumentException>(publisher, $"Publisher {name} already exists");
 
             publisher = new Publisher() { Name = name };
-            _publisherRepository.Add(publisher);
-            _publisherRepository.Save();
+            _context.Publisher.Add(publisher);
+            _context.SaveChanges();
 
             return publisher;
         }
 
         public IReadOnlyCollection<Publisher> GetPublishers()
         {
-            return _publisherRepository.All().ToList();
+            return _context.Publisher.ToList();
         }       
     }
 }
