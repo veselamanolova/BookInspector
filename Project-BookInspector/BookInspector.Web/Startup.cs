@@ -8,8 +8,13 @@ namespace BookInspector.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using BookInspector.Services.Contracts;
-    using BookInspector.Data.Repository;
     using BookInspector.Services;
+    using BookInspector.Data.Context;
+    using Microsoft.EntityFrameworkCore;
+    using BookInspector.Web.Mappers.Contracts;
+    using BookInspector.Web.Models;
+    using BookInspector.Data.Models;
+    using BookInspector.Web.Mappers;
 
     public class Startup
     {
@@ -30,8 +35,10 @@ namespace BookInspector.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddDbContext<BookInspectorContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IBookInspectorContext, BookInspectorContext>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -39,6 +46,8 @@ namespace BookInspector.Web
             services.AddScoped<IPublisherService, PublisherService>();
             services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddSingleton<IViewModelMapper<Book, BookViewModel>, ViewModelMapper>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -56,7 +65,7 @@ namespace BookInspector.Web
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            // app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {

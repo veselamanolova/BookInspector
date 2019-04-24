@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Data", "BookInspector.DATA\BookInspector.Data.csproj", "{4D293550-337C-457C-9E42-D46BEAB783D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.App", "BookInspector.Console\BookInspector.App.csproj", "{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Console", "BookInspector.Console\BookInspector.Console.csproj", "{CC5CF620-3C88-4C3D-A635-DBA65951ADA9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Services", "BookInspector.Services\BookInspector.Services.csproj", "{C8192377-7968-4706-996A-72A86DCFE277}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{87326C7C-2BD2-4560-B0F8-526B229776D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Tests", "Tests\BookInspector.Tests.csproj", "{87326C7C-2BD2-4560-B0F8-526B229776D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.Web", "BookInspector.Web\BookInspector.Web.csproj", "{3E52BB97-F1C0-4DCA-8EC7-4780D46D9B28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.Web", "BookInspector.Web\BookInspector.Web.csproj", "{3E52BB97-F1C0-4DCA-8EC7-4780D46D9B28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
