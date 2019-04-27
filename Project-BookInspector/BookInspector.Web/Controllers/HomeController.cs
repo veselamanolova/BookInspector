@@ -9,35 +9,24 @@ namespace BookInspector.Web.Controllers
     using BookInspector.Services.Contracts;
     using BookInspector.Web.Mappers.Contracts;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
 
     public class HomeController : Controller
     {
         private readonly IBookService _bookService;
-        private readonly IViewModelMapper<Book, BookViewModel> _searchMapper;
+        private readonly IBookViewModelMapper<Book, BookViewModel> _bookViewMapper;
 
-        public HomeController(IBookService bookService, IViewModelMapper<Book, BookViewModel> searchMapper)
+        public HomeController(IBookService bookService, IBookViewModelMapper<Book, BookViewModel> bookViewMapper)
         {
             _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
-            _searchMapper = searchMapper ?? throw new ArgumentNullException(nameof(searchMapper));
+            _bookViewMapper = bookViewMapper ?? throw new ArgumentNullException(nameof(bookViewMapper));
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery]BookViewModel model)
         {
-            return View();
-        }
-
-        public IActionResult Search([FromQuery]SearchModel model)
-        {
-            if (string.IsNullOrWhiteSpace(model.SearchBook) ||
-                model.SearchBook.Length < 1)
-            {
-                return View();
-            }
-
-            model.SearchResults = 
-                _bookService.Search(model.SearchBook)
-                            .Select(_searchMapper.MapFrom)
-                            .ToList();
+            model._results = _bookService.GetAll()
+                .Select(_bookViewMapper.MapFrom)
+                .ToList();
 
             return View(model);
         }

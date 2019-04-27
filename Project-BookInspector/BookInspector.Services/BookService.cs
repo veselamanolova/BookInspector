@@ -118,19 +118,14 @@ namespace BookInspector.Services
             return list;
         }
 
+        public ICollection<Book> GetAll()
+        {
+            var list = _context.Book
+                   .Select(b => b)
+                   .ToList();
 
-        /*
-public Dictionary<string, List<string>> Search(string args)
-{
-   var books = _context.Book.Where(x => x.Title.Contains(args)).Select(x => new
-   {
-       Name = x.Title,
-       Authors = x.BookByAuthor.Select(b => b.Author.Name).ToList()
-   }).ToDictionary(key => key.Name, value => value.Authors);
-
-   return books;
-}
-*/
+            return list;
+        }
     }
 }
 

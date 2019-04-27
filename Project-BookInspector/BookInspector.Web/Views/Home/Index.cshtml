@@ -1,65 +1,83 @@
 ﻿
-@model SearchModel
+@model BookViewModel
 
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Dimension by HTML5 UP</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="/css/main.css" />
-        <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
-    </head>
-    <body class="is-preload">
+<head>
+    <title>Dimension by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <noscript><link rel="stylesheet" href="/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
 
-        <div id="wrapper">
-            <header id="header">
-                <div class="content">
-                    <div class="inner">
-                        <h1>Book Inspector</h1>
-                        <p>Discover our full range of books</p>
-                    </div>
+    <div id="wrapper">
+        <header id="header">
+            <div class="content">
+                <div class="inner">
+                    <h1>Book Inspector</h1>
+                    <p>Discover our full range of books</p>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="#intro">Books</a></li>
-                        <li><a href="#work">Authors</a></li>
-                        <li><a href="#about">Category</a></li>
-                        <li><a href="#search">Search</a></li>
-                    </ul>
-                </nav>
-                <div class="content">
-                    <div class="inner">
-                        <p>Made by team Sea Wolves</p>
-                    </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#books">Books</a></li>
+                    <li><a href="#work">Authors</a></li>
+                    <li><a href="#about">Category</a></li>
+                    <li><a href="#export">Export</a></li>
+                </ul>
+            </nav>
+            <div class="content">
+                <div class="inner">
+                    <p>Made by team Sea Wolves</p>
                 </div>
-            </header>
+            </div>
+        </header>
 
-            <div id="main">
-                <article id="search">
-                    <h2 class="major">Enter a book name</h2>
+        <div id="main">
 
-                    <form asp-controller="Home" asp-action="Search" method="get">
-                        <div>
-                            <input asp-for="@Model.SearchBook" class="submit" />
-                        </div>
-                        <br>
-                        <div>
-                            <button type="submit">Search</button>
+            <!-- Books tab -->
+            <article id="books">
+                <h2 class="major">Books</h2>
+                <span class="image main"><img src="img/books.jpg" alt="" /></span>
+
+
+                @foreach (var book in Model._results)
+                {
+                    <br>
+                    <form method="post" action="#">
+                        <h2>@book._title</h2>
+                        <div class="fields">
+                            <div class="field quarter">
+                                <img src="~/img/img1.jpg" alt="" />
+                            </div>
+                            <div class="field right">
+                                <h3>Description:</h3>
+                                <h6><span>@book._description</span></h6>
+                                <button class="btn-hover color-8" href="#books">Details</button>
+                            </div>
                         </div>
                     </form>
-                </article>
-            </div>
+                }
+
+
+
+            </article>
+
+            <!-- Authors tab -->
+            <!-- Category tab -->
 
         </div>
+    </div>
 
-        <div id="bg"></div>
+    <div id="bg"></div>
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/browser.min.js"></script>
-        <script src="/js/breakpoints.min.js"></script>
-        <script src="/js/util.js"></script>
-        <script src="/js/main.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/browser.min.js"></script>
+    <script src="/js/breakpoints.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
 
-    </body>
+</body>
 </html>

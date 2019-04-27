@@ -10,5 +10,7 @@ namespace BookInspector.Services.Contracts
         Book AddBook(string title, List<string> authorsList, List<string> categoryList, string publisher, DateTime publishedDate, string isbn, int volumeId, int pageCount, string description);
 
         IReadOnlyCollection<Book> Search(string criteria);
+
+        ICollection<Book> GetAll();
     }
 }

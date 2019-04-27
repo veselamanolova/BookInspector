@@ -36,7 +36,9 @@ namespace BookInspector.Web
             });
 
             services.AddDbContext<BookInspectorContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddSingleton<IBookViewModelMapper<Book, BookViewModel>, BookViewModelMapper>();
 
             services.AddScoped<IBookInspectorContext, BookInspectorContext>();
             services.AddScoped<IAuthorService, AuthorService>();
@@ -47,7 +49,7 @@ namespace BookInspector.Web
             services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddSingleton<IViewModelMapper<Book, BookViewModel>, ViewModelMapper>();
+            // services.AddSingleton<IViewModelMapper<Book, BookViewModel>, ViewModelMapper>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
