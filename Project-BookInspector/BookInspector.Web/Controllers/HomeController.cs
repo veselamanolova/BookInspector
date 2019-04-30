@@ -1,37 +1,34 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using BookInspector.Web.Models;
+
 namespace BookInspector.Web.Controllers
 {
-    using System;
-    using System.Linq;
-    using System.Diagnostics;
-    using BookInspector.Web.Models;
-    using BookInspector.Data.Models;
-    using BookInspector.Services.Contracts;
-    using BookInspector.Web.Mappers.Contracts;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-
     public class HomeController : Controller
     {
-        private readonly IBookService _bookService;
-        private readonly IBookViewModelMapper<Book, BookViewModel> _bookViewMapper;
-
-        public HomeController(IBookService bookService, IBookViewModelMapper<Book, BookViewModel> bookViewMapper)
+        public IActionResult Index()
         {
-            _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
-            _bookViewMapper = bookViewMapper ?? throw new ArgumentNullException(nameof(bookViewMapper));
+            return View();
         }
 
-        public IActionResult Index([FromQuery]BookViewModel model)
+        public IActionResult About()
         {
-            model._results = _bookService.GetAll()
-                .Select(_bookViewMapper.MapFrom)
-                .ToList();
+            ViewData["Message"] = "Your application description page.";
 
-            return View(model);
+            return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

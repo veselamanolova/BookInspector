@@ -1,20 +1,15 @@
 ﻿
 namespace BookInspector.Web
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using BookInspector.Services.Contracts;
-    using BookInspector.Services;
-    using BookInspector.Data.Context;
-    using Microsoft.EntityFrameworkCore;
-    using BookInspector.Web.Mappers.Contracts;
-    using BookInspector.Web.Models;
+    using BookInspector.Web.Services;
     using BookInspector.Data.Models;
-    using BookInspector.Web.Mappers;
+    using BookInspector.Data.Context;
 
     public class Startup
     {
@@ -28,30 +23,18 @@ namespace BookInspector.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
             services.AddDbContext<BookInspectorContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSingleton<IBookViewModelMapper<Book, BookViewModel>, BookViewModelMapper>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<BookInspectorContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddScoped<IBookInspectorContext, BookInspectorContext>();
-            services.AddScoped<IAuthorService, AuthorService>();
-            services.AddScoped<IBookService, BookService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IExportService, ExportService>();
-            services.AddScoped<IPublisherService, PublisherService>();
-            services.AddScoped<IRatingService, RatingService>();
-            services.AddScoped<IUserService, UserService>();
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
 
-            // services.AddSingleton<IViewModelMapper<Book, BookViewModel>, ViewModelMapper>();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +50,8 @@ namespace BookInspector.Web
             }
 
             app.UseStaticFiles();
-            // app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
