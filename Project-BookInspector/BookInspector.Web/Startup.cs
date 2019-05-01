@@ -2,14 +2,14 @@
 namespace BookInspector.Web
 {
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using BookInspector.Web.Services;
     using BookInspector.Data.Models;
     using BookInspector.Data.Context;
+    using BookInspector.Web.Services;
 
     public class Startup
     {
