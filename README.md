@@ -10,11 +10,66 @@
 
 **Project: Book database**
 
+**Board Link:**
+https://dbprojecct.visualstudio.com/DBProject/_sprints/taskboard/DBProject%20Team/DBProject/Sprint%201
 
-**Application Features**: 
-**The application will consist of the following elements: **
 
-The **book** should have the following fields: 
+**Second sprint - Web Application Features**
+
+
+1. **Common Layout will consist of:** 
+
+    * **Menu tabs visible to all users:** 
+
+        * Home
+        * Books
+        * Categories 
+        * Login tab  -  shows as login when the user is not logged in and Welcome, username when the user is logged in    
+        
+
+    *  **Menu tab visble only to logged in users:**
+
+        * Community - it will be visible for logged in users  
+
+2. **Home:** 
+    * **There will be a global search book on the top**
+    * **In the middle of the page it will list tob 5 books by rating**
+    
+3. **Books:** 
+    * **There will be a search book tab on the top**
+    * **In the middle of the page it will list books. It will show for ach book the following information:**
+        * Title,
+        * Image,
+        * Description, 
+        * Rating, 
+        * Button Details which will redirect to Book page and
+        * Rating control which will save a rating to the book if the user is loggged in. If not it will be redirected to log it first. 
+
+4. **Book:** 
+    * It will show the full information about the book 
+    * And there will be a button to read part of the book online
+
+
+5.  **Category Page**
+    * **There will be a search books by category tab on the top**
+    * **In the middle of the page all categories will be listes. It will show for each category the following information:**
+        * Category Name,
+        * View all books button - which will redirect to Books page but will list only the books from the selected category
+
+6.  **Community**
+    * **This page will be visible only to the logged in users**
+    * It will list all Users and the books they liked
+
+
+
+
+**First Sprint**: 
+
+**Console Application Features**: 
+
+**The application will consist of the following elements:**
+    
+**The **book** should have the following fields:**
 * ID
 * Title 
 * List of Authors: The book can have one or more authors.  
@@ -77,5 +132,7 @@ Example URLs:
 * Title,
 * Author 
 
-**Board Link:**
-https://dbprojecct.visualstudio.com/DBProject/_sprints/taskboard/DBProject%20Team/DBProject/Sprint%201
+
+
+
+
