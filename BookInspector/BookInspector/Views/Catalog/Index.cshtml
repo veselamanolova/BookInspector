@@ -1,0 +1,27 @@
+﻿
+@model BookInspector.Models.Catalog.CatalogIndexModel
+
+    <h3>Library Catalog</h3>
+
+    <table class="table table-hover" id="forumIndexTable">
+        <tbody>
+            @foreach (var book in Model.BooksList)
+            {
+                <tr>
+                    <td>
+                        <img src="@book.ImageURL" alt="" height="150" width="115">
+                    </td>
+                    <td>
+                        <a asp-controller="Catalog" asp-action="Details" asp-route-id="@book.Id">
+                            <h5><strong>@book.Title</strong></h5>
+                        </a>
+                        <p>Publisher: @book.Publisher</p>
+                        <p>Publish Date: @book.PublishedDate</p>
+                    </td>
+                    <td>
+                        @book.Category
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

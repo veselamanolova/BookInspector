@@ -11,10 +11,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BookInspector.DATA\BookInspector.DATA.csproj" />
+    <ProjectReference Include="..\BookInspector.SERVICES\BookInspector.SERVICES.csproj" />
   </ItemGroup>
 
 </Project>

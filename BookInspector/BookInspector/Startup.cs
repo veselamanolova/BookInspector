@@ -10,7 +10,9 @@ namespace BookInspector
     using Microsoft.Extensions.DependencyInjection;
     using BookInspector.DATA;
     using BookInspector.DATA.Models;
-    
+    using BookInspector.SERVICES;
+    using BookInspector.SERVICES.Contracts;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -36,6 +38,8 @@ namespace BookInspector
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IBookService, BookService>();
 
             services.AddMvc();
         }
