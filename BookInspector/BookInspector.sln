@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector", "BookInspector\BookInspector.csproj", "{DB5EE001-3C58-4E2D-99A1-43D3D672623B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector", "BookInspector\BookInspector.csproj", "{DB5EE001-3C58-4E2D-99A1-43D3D672623B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.DATA", "BookInspector.DATA\BookInspector.DATA.csproj", "{A991985C-3AD2-43F3-9DA2-797ABB223F72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DB5EE001-3C58-4E2D-99A1-43D3D672623B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB5EE001-3C58-4E2D-99A1-43D3D672623B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB5EE001-3C58-4E2D-99A1-43D3D672623B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A991985C-3AD2-43F3-9DA2-797ABB223F72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A991985C-3AD2-43F3-9DA2-797ABB223F72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A991985C-3AD2-43F3-9DA2-797ABB223F72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A991985C-3AD2-43F3-9DA2-797ABB223F72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
