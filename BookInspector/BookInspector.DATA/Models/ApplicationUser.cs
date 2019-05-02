@@ -1,5 +1,5 @@
 ﻿
-namespace BookInspector.Models
+namespace BookInspector.DATA.Models
 {
     using Microsoft.AspNetCore.Identity;
 

@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using BookInspector.Models;
-using BookInspector.Models.ManageViewModels;
-using BookInspector.Services;
-
+﻿
 namespace BookInspector.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Text.Encodings.Web;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Authentication;
+    using BookInspector.Services;
+    using BookInspector.DATA.Models;
+    using BookInspector.Models.ManageViewModels;
+
     [Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller

@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using BookInspector.Services;
 
 namespace BookInspector.Services
 {
+    using System.Threading.Tasks;
+    using System.Text.Encodings.Web;
+
     public static class EmailSenderExtensions
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
