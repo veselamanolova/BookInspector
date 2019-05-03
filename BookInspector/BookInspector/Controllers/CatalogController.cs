@@ -24,6 +24,7 @@ namespace BookInspector.Controllers
                     Id = book.Id,
                     Title = book.Title,
                     PublishedDate = book.PublishedDate,
+                    Publisher = book.Publisher.PublisherName,
                     Category = book.Category.CategoryName,
                     ImageURL = book.ImageURL
                 });

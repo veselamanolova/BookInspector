@@ -18,7 +18,10 @@ namespace BookInspector.SERVICES
 
         public IEnumerable<Book> GetAll()
         {
-            return _context.Books.Include(book => book.Category);
+            return _context.Books
+                .Include(book => book.Category)
+                .Include(book => book.Publisher)
+                .Include(book => book.Authors);
         }
     }
 }

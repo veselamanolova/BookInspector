@@ -13,10 +13,10 @@
                     </td>
                     <td>
                         <a asp-controller="Catalog" asp-action="Details" asp-route-id="@book.Id">
-                            <h5><strong>@book.Title</strong></h5>
+                            <h4><strong>@book.Title</strong></h4>
                         </a>
-                        <p>Publisher: @book.Publisher</p>
-                        <p>Publish Date: @book.PublishedDate</p>
+                        <p><strong>Publisher:</strong> @book.Publisher</p>
+                        <p><strong>Publish Date:</strong> @book.PublishedDate</p>
                     </td>
                     <td>
                         @book.Category

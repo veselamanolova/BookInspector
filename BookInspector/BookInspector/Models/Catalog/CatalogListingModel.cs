@@ -2,6 +2,8 @@
 namespace BookInspector.Models.Catalog
 {
     using System;
+    using System.Collections.Generic;
+    using BookInspector.DATA.Models;
 
     public class CatalogListingModel
     {
@@ -16,7 +18,5 @@ namespace BookInspector.Models.Catalog
         public string Category { get; set; }
 
         public string ImageURL { get; set; }
-
-        // public virtual IEnumerable<BookAuthor> Authors { get; set; }
     }
 }
