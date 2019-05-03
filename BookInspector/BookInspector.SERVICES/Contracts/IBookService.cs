@@ -6,6 +6,8 @@ namespace BookInspector.SERVICES.Contracts
 
     public interface IBookService
     {
+        Book GetById(int id);
+
         IEnumerable<Book> GetAll();
     }
 }

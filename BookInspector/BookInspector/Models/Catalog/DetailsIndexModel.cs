@@ -2,8 +2,9 @@
 namespace BookInspector.Models.Catalog
 {
     using System;
+    using System.Collections.Generic;
 
-    public class CatalogListingModel
+    public class DetailsIndexModel
     {
         public int Id { get; set; }
 
@@ -16,5 +17,7 @@ namespace BookInspector.Models.Catalog
         public string Category { get; set; }
 
         public string ImageURL { get; set; }
+
+        public IEnumerable<string> Authors { get; set; }
     }
 }

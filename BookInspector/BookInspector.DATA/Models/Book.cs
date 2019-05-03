@@ -9,6 +9,8 @@
 
         public string Title { get; set; }       
 
+        public int PublisherId { get; set; }
+
         public DateTime PublishedDate { get; set; }
 
         public string ImageURL { get; set; }
@@ -35,6 +37,11 @@
         public virtual IEnumerable<UserBookRating> RatingByBook { get; set; }
        
        
+
+        public object Select()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
