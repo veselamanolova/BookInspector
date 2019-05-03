@@ -21,6 +21,11 @@ namespace BookInspector.DATA.Models
         public virtual Category Category { get; set; }
 
         public virtual IEnumerable<BookAuthor> Authors { get; set; }
+
+        public object Select()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

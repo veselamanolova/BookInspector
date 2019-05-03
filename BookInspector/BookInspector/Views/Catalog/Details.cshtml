@@ -1,0 +1,44 @@
+﻿
+@model BookInspector.Models.Catalog.DetailsIndexModel
+@{
+    ViewBag.Title = @Model.Title;
+}
+
+<div class="container">
+    <div class="header clearfix detailHeading">
+        <h2 class="text-muted">Details</h2>
+    </div>
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <img class="detailImage" src="@Model.ImageURL" alt="" height="400"  />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p id="itemTitle"><strong>@Model.Title</strong></p>
+                <p id="itemAuthor">@Model.Publisher</p>
+
+            </div>
+            <div class="col-md-4 detailInfo">
+                <table>
+                    <tr>
+                        <td class="itemLabel"><strong>Publish Date: </strong></td>
+                        <td class="itemValue">@Model.PublishedDate</td>
+                    </tr>
+                    <tr>
+                        <td class="itemLabel"><strong>Category: </strong></td>
+                        <td class="itemValue">@Model.Category</td>
+                    </tr>
+                    <tr>
+                        <td class="itemLabel"><strong>Authors: </strong></td>
+                        @*<td class="itemValue">@string.Join(" ", Model.Authors)</td>*@
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
