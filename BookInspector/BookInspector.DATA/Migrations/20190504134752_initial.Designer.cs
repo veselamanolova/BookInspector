@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookInspector.DATA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190503115208_initial")]
+    [Migration("20190504134752_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,9 +30,6 @@ namespace BookInspector.DATA.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -73,8 +70,6 @@ namespace BookInspector.DATA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Author", b =>
@@ -96,8 +91,6 @@ namespace BookInspector.DATA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId");
-
                     b.Property<string>("Description");
 
                     b.Property<string>("ImageURL");
@@ -113,8 +106,6 @@ namespace BookInspector.DATA.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("PublisherId");
 
@@ -144,7 +135,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategory");
+                    b.ToTable("BookCategories");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Category", b =>
@@ -160,6 +151,44 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("BookInspector.DATA.Models.DbUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DbUser");
+                });
+
             modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
                 {
                     b.Property<string>("DbUserId");
@@ -170,7 +199,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("FavoriteBook");
+                    b.ToTable("FavoriteBooks");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Publisher", b =>
@@ -198,7 +227,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasIndex("DbUserId");
 
-                    b.ToTable("UserBookRating");
+                    b.ToTable("UserBookRatings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -311,19 +340,8 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BookInspector.DATA.Models.DbUser", b =>
-                {
-                    b.HasBaseType("BookInspector.DATA.Models.ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("DbUser");
-                });
-
             modelBuilder.Entity("BookInspector.DATA.Models.Book", b =>
                 {
-                    b.HasOne("BookInspector.DATA.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
                     b.HasOne("BookInspector.DATA.Models.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId")
@@ -333,12 +351,12 @@ namespace BookInspector.DATA.Migrations
             modelBuilder.Entity("BookInspector.DATA.Models.BookAuthor", b =>
                 {
                     b.HasOne("BookInspector.DATA.Models.Author", "Author")
-                        .WithMany("Books")
+                        .WithMany("BooksAuthors")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BookInspector.DATA.Models.Book", "Book")
-                        .WithMany("Authors")
+                        .WithMany("BooksAuthors")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -346,7 +364,7 @@ namespace BookInspector.DATA.Migrations
             modelBuilder.Entity("BookInspector.DATA.Models.BookCategory", b =>
                 {
                     b.HasOne("BookInspector.DATA.Models.Book", "Book")
-                        .WithMany("BookCategory")
+                        .WithMany("BooksCategories")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -359,7 +377,7 @@ namespace BookInspector.DATA.Migrations
             modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
                 {
                     b.HasOne("BookInspector.DATA.Models.Book", "Book")
-                        .WithMany("FavoriteBook")
+                        .WithMany("FavoriteBooks")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -372,7 +390,7 @@ namespace BookInspector.DATA.Migrations
             modelBuilder.Entity("BookInspector.DATA.Models.UserBookRating", b =>
                 {
                     b.HasOne("BookInspector.DATA.Models.Book", "Book")
-                        .WithMany("RatingByBook")
+                        .WithMany("BooksRatings")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 

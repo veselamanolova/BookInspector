@@ -1,4 +1,8 @@
-﻿
+﻿namespace BookInspector.DATA.Models
+{
+    using Microsoft.AspNetCore.Identity;
+    using System.Collections.Generic;
+
 namespace BookInspector.DATA.Models
 {
     using System.Collections.Generic;

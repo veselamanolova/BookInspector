@@ -14,7 +14,7 @@ namespace BookInspector.Data.Configurations
 
             builder
                 .HasOne(fb => fb.Book)
-                .WithMany(b => b.FavoriteBook)
+                .WithMany(b => b.FavoriteBooks)
                 .HasForeignKey(fb => fb.BookId)
                 .IsRequired();
 

@@ -17,6 +17,8 @@ namespace BookInspector.Controllers
             _bookService = bookService;
         }
 
+
+
         public IActionResult Index()
         {
             IEnumerable<CatalogListingModel> books = _bookService.GetAll()
@@ -34,10 +36,12 @@ namespace BookInspector.Controllers
 
             return View(model);
         }
-
+      
         public IActionResult Details(int id)
         {
-            var book = _bookService.GetById(id);
+            //var book = _bookService.GetById(id);
+
+            var book = _bookService.GetBookDetailsById(id); 
 
             var model = new DetailsIndexModel
             {
@@ -62,6 +66,20 @@ namespace BookInspector.Controllers
 
             return list;
         }
+
+
+        //private IEnumerable<string> GetAuthorsFromBook(ShortBook book)
+        //{
+        //    var list = new List<string>();
+
+        //    foreach (var author in book)
+        //    {
+        //            list.Add(author.AuthorName);
+        //    }
+                
+
+        //    return list;
+        //}
     }
 }
 

@@ -15,7 +15,7 @@ namespace BookInspector.Data.Configurations
 
             builder
             .HasOne(ubr => ubr.Book)
-            .WithMany(b => b.RatingByBook)
+            .WithMany(b => b.BooksRatings)
             .HasForeignKey(ubr => ubr.BookId);
 
             builder
@@ -27,7 +27,6 @@ namespace BookInspector.Data.Configurations
             builder
                 .Property(rb => rb.Rating)
                 .IsRequired();
-
         }
     }
 }
