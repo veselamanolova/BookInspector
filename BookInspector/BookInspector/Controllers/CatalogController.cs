@@ -7,7 +7,6 @@ namespace BookInspector.Controllers
     using BookInspector.Models.Catalog;
     using BookInspector.SERVICES.Contracts;
     using BookInspector.DATA.Models;
-    using System;
 
     public class CatalogController : Controller
     {

@@ -17,18 +17,21 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <p id="itemTitle"><strong>@Model.Title</strong></p>
-                <p id="itemAuthor">@Model.Publisher</p>
+                <h3 id="itemTitle"><strong><font color="#5f93e8">@Model.Title</font></strong></h3>
+                <h5><strong>Publisher:</strong> @Model.Publisher</h5>
 
             </div>
             <div class="col-md-4 detailInfo">
+                <br>
+                <strong>Other book details</strong>
+                <br><br>
                 <table>
                     <tr>
-                        <td class="itemLabel"><strong>Publish Date: </strong></td>
+                        <td class="itemLabel"><strong><font color="#5f93e8">Publish Date: </font></strong></td>
                         <td class="itemValue">@Model.PublishedDate</td>
                     </tr>
                     <tr>
-                        <td class="itemLabel"><strong>Category: </strong></td>
+                        <td class="itemLabel"><strong><font color="#5f93e8">Category: </font></strong></td>
                         <td class="itemValue">@Model.Category</td>
                     </tr>
                     <tr>

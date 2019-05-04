@@ -12,6 +12,7 @@ namespace BookInspector
     using BookInspector.DATA.Models;
     using BookInspector.SERVICES;
     using BookInspector.SERVICES.Contracts;
+    using BookInspector.Services;
 
     public class Startup
     {
@@ -40,6 +41,7 @@ namespace BookInspector
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddMvc();
         }

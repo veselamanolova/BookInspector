@@ -9,6 +9,6 @@ namespace BookInspector.DATA.Models
 
         public string AuthorName { get; set; }
 
-        public virtual ICollection<BookAuthor> Books { get; set; }
+        public virtual IEnumerable<BookAuthor> Books { get; set; }
     }
 }

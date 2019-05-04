@@ -31,8 +31,7 @@ namespace BookInspector.SERVICES
             return _context.Books
                 .Include(book => book.Category)
                 .Include(book => book.Publisher)
-                .Include(book => book.Authors)
-                    .ThenInclude(author => author.Author);
+                .Include(book => book.Authors);
         }
     }
 }
