@@ -19,6 +19,7 @@
             <div class="col-md-4">
                 <p id="itemTitle"><strong>@Model.Title</strong></p>
                 <p id="itemAuthor">@Model.Publisher</p>
+                <p id="itemAuthor">@Model.Publisher</p>
 
             </div>
             <div class="col-md-4 detailInfo">
@@ -33,7 +34,13 @@
                     </tr>
                     <tr>
                         <td class="itemLabel"><strong>Authors: </strong></td>
-                        @*<td class="itemValue">@string.Join(" ", Model.Authors)</td>*@
+                        <td class="itemValue">
+                            @foreach (var author in @Model.Authors)
+                            {
+                                <span>@author</span>
+                            }
+                        </td>
+                            @*<td class="itemValue">@string.Join(" ", Model.Authors)</td>*@
                     </tr>
                 </table>
             </div>

@@ -5,10 +5,14 @@ namespace BookInspector.DATA.Models
 
     public class Author
     {
+        public Author()
+        {
+            BooksAuthors = new List<BookAuthor>(); 
+        }
         public int Id { get; set; }
 
         public string AuthorName { get; set; }
 
-        public virtual ICollection<BookAuthor> Books { get; set; }
+        public virtual IEnumerable<BookAuthor> BooksAuthors { get; set; }
     }
 }

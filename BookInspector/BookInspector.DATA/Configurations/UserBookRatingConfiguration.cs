@@ -14,7 +14,7 @@
 
             builder
             .HasOne(ubr => ubr.Book)
-            .WithMany(b => b.RatingByBook)
+            .WithMany(b => b.BooksRatings)
             .HasForeignKey(ubr => ubr.BookId);
 
             builder
@@ -26,7 +26,6 @@
             builder
                 .Property(rb => rb.Rating)
                 .IsRequired();
-
         }
     }
 }

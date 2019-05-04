@@ -40,8 +40,7 @@ namespace BookInspector.DATA.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,6 +71,31 @@ namespace BookInspector.DATA.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DbUser",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    NormalizedUserName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DbUser", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,18 +229,11 @@ namespace BookInspector.DATA.Migrations
                     Isbn = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     ShortDescription = table.Column<string>(nullable: true),
-                    PublisherId = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: true)
+                    PublisherId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Books_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
@@ -250,7 +267,7 @@ namespace BookInspector.DATA.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookCategory",
+                name: "BookCategories",
                 columns: table => new
                 {
                     BookId = table.Column<int>(nullable: false),
@@ -258,15 +275,15 @@ namespace BookInspector.DATA.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookCategory", x => new { x.BookId, x.CategoryId });
+                    table.PrimaryKey("PK_BookCategories", x => new { x.BookId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_BookCategory_Books_BookId",
+                        name: "FK_BookCategories_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BookCategory_Categories_CategoryId",
+                        name: "FK_BookCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -274,7 +291,7 @@ namespace BookInspector.DATA.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FavoriteBook",
+                name: "FavoriteBooks",
                 columns: table => new
                 {
                     DbUserId = table.Column<string>(nullable: false),
@@ -282,23 +299,23 @@ namespace BookInspector.DATA.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FavoriteBook", x => new { x.DbUserId, x.BookId });
+                    table.PrimaryKey("PK_FavoriteBooks", x => new { x.DbUserId, x.BookId });
                     table.ForeignKey(
-                        name: "FK_FavoriteBook_Books_BookId",
+                        name: "FK_FavoriteBooks_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FavoriteBook_AspNetUsers_DbUserId",
+                        name: "FK_FavoriteBooks_DbUser_DbUserId",
                         column: x => x.DbUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "DbUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserBookRating",
+                name: "UserBookRatings",
                 columns: table => new
                 {
                     BookId = table.Column<int>(nullable: false),
@@ -307,17 +324,17 @@ namespace BookInspector.DATA.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserBookRating", x => new { x.BookId, x.DbUserId });
+                    table.PrimaryKey("PK_UserBookRatings", x => new { x.BookId, x.DbUserId });
                     table.ForeignKey(
-                        name: "FK_UserBookRating_Books_BookId",
+                        name: "FK_UserBookRatings_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserBookRating_AspNetUsers_DbUserId",
+                        name: "FK_UserBookRatings_DbUser_DbUserId",
                         column: x => x.DbUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "DbUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -367,13 +384,8 @@ namespace BookInspector.DATA.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookCategory_CategoryId",
-                table: "BookCategory",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_CategoryId",
-                table: "Books",
+                name: "IX_BookCategories_CategoryId",
+                table: "BookCategories",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -382,13 +394,13 @@ namespace BookInspector.DATA.Migrations
                 column: "PublisherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteBook_BookId",
-                table: "FavoriteBook",
+                name: "IX_FavoriteBooks_BookId",
+                table: "FavoriteBooks",
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserBookRating_DbUserId",
-                table: "UserBookRating",
+                name: "IX_UserBookRatings_DbUserId",
+                table: "UserBookRatings",
                 column: "DbUserId");
         }
 
@@ -413,28 +425,31 @@ namespace BookInspector.DATA.Migrations
                 name: "BookAuthors");
 
             migrationBuilder.DropTable(
-                name: "BookCategory");
+                name: "BookCategories");
 
             migrationBuilder.DropTable(
-                name: "FavoriteBook");
+                name: "FavoriteBooks");
 
             migrationBuilder.DropTable(
-                name: "UserBookRating");
+                name: "UserBookRatings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Books");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
+                name: "DbUser");
 
             migrationBuilder.DropTable(
                 name: "Publishers");

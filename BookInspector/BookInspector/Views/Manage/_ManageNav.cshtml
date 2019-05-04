@@ -1,5 +1,5 @@
 ﻿@using BookInspector.Views.Manage
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<DbUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

@@ -12,12 +12,12 @@ public class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthor>
 
         builder
             .HasOne(rb => rb.Book)
-            .WithMany(b => b.Authors)
+            .WithMany(b => b.BooksAuthors)
             .HasForeignKey(rb => rb.BookId);
 
         builder
             .HasOne(rb => rb.Author)
-            .WithMany(a => a.Books)
+            .WithMany(a => a.BooksAuthors)
             .HasForeignKey(rb => rb.AuthorId);
     }
 }

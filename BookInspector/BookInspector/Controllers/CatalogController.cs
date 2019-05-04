@@ -18,18 +18,45 @@ namespace BookInspector.Controllers
             _bookService = bookService;
         }
 
+
+
         public IActionResult Index()
         {
-            IEnumerable<CatalogListingModel> books = _bookService.GetAll()
-                .Select(book => new CatalogListingModel
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    PublishedDate = book.PublishedDate,
-                    Publisher = book.Publisher.PublisherName,
-                    Category = book.Category.CategoryName,
-                    ImageURL = book.ImageURL
+            // IEnumerable<CatalogListingModel> books = _bookService.GetAll()
+            IEnumerable<CatalogListingModel> books = _bookService.GetShortBooks()
+                 .Select(book => new CatalogListingModel
+                 {
+                     Id = book.Id,
+                     Title = book.Title,
+                     PublishedDate = book.PublishedDate,
+                     ShortDescription = book.ShortDescription,
+                     Publisher = book.PublisherName,
+                     // Category = String.Join(", ", GetCategoriesFromBook(book)),
+                     AuthorNames = book.AuthorNames, 
+                     ImageURL = book.ImageURL
                 });
+
+            var model = new CatalogIndexModel { BooksList = books };
+
+            return View(model);
+        }
+
+
+        public IActionResult ListAllBooks()
+        {
+            // IEnumerable<CatalogListingModel> books = _bookService.GetAll()
+            IEnumerable<CatalogListingModel> books = _bookService.GetShortBooks()
+                 .Select(book => new CatalogListingModel
+                 {
+                     Id = book.Id,
+                     Title = book.Title,
+                     PublishedDate = book.PublishedDate,
+                     ShortDescription = book.ShortDescription,
+                     Publisher = book.PublisherName,
+                     // Category = String.Join(", ", GetCategoriesFromBook(book)),
+                     AuthorNames = book.AuthorNames,
+                     ImageURL = book.ImageURL
+                 });
 
             var model = new CatalogIndexModel { BooksList = books };
 
@@ -46,23 +73,38 @@ namespace BookInspector.Controllers
                 Title = book.Title,
                 Publisher = book.Publisher.PublisherName,
                 PublishedDate = book.PublishedDate,
-                Category = book.Category.CategoryName,
-                ImageURL = book.ImageURL,
-                // Authors = GetAuthorsFromBook(book)
+                Category = String.Join(", ", GetCategoriesFromBook(book)),
+                ImageURL = book.ImageURL
+                //Authors = book.
             };
 
             return View(model);
         }
 
-        private IEnumerable<string> GetAuthorsFromBook(Book book)
+        private IEnumerable<string> GetCategoriesFromBook(Book book)
         {
             var list = new List<string>();
 
-            foreach (var author in book.Authors)
-                list.Add(author.Author.AuthorName);
+            foreach (var category in book.BooksCategories)
+                list.Add(category.Category.CategoryName);
+            
 
             return list;
         }
+
+
+        //private IEnumerable<string> GetAuthorsFromBook(ShortBook book)
+        //{
+        //    var list = new List<string>();
+
+        //    foreach (var author in book)
+        //    {
+        //            list.Add(author.AuthorName);
+        //    }
+                
+
+        //    return list;
+        //}
     }
 }
 

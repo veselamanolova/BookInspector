@@ -15,8 +15,14 @@
                         <a asp-controller="Catalog" asp-action="Details" asp-route-id="@book.Id">
                             <h4><strong>@book.Title</strong></h4>
                         </a>
-                        <p><strong>Publisher:</strong> @book.Publisher</p>
+                        @*<p><strong>Publisher:</strong> @book.Publisher</p>*@
                         <p><strong>Publish Date:</strong> @book.PublishedDate</p>
+                        <p><strong>Description:</strong> @book.ShortDescription</p>                       
+                        <p><strong>Authors:</strong></p>
+                        @foreach (var author in @book.AuthorNames)
+                        {
+                            <p> @author</p>
+                        }
                     </td>
                     <td>
                         @book.Category

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookInspector.DATA.Models
+﻿namespace BookInspector.DATA.Models
 {
-    public class DbUser: ApplicationUser
+    using Microsoft.AspNetCore.Identity;
+    using System.Collections.Generic;
+
+    public class DbUser: IdentityUser
     {
         public virtual IEnumerable<FavoriteBook> FavoriteBook { get; set; }
 

@@ -5,11 +5,16 @@
 
     public class Book
     {
+        public Book()
+        {
+            BooksCategories = new List<BookCategory>();
+            BooksAuthors = new List<BookAuthor>(); 
+
+            
+        }
         public int Id { get; set; }
 
-        public string Title { get; set; }       
-
-        public int PublisherId { get; set; }
+        public string Title { get; set; }           
 
         public DateTime PublishedDate { get; set; }
 
@@ -22,21 +27,17 @@
         //textSnippet
         public string ShortDescription { get; set; }
 
-        public virtual int PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         public virtual Publisher Publisher { get; set; }
 
-        public virtual Category Category { get; set; }     
+        public virtual IEnumerable<BookCategory> BooksCategories { get; set; }
 
-        public virtual IEnumerable<BookAuthor> Authors { get; set; }
+        public virtual ICollection<BookAuthor> BooksAuthors { get; set; }
 
-        public virtual IEnumerable<BookCategory> BookCategory { get; set; }
+        public virtual IEnumerable<FavoriteBook> FavoriteBooks { get; set; }
 
-        public virtual IEnumerable<FavoriteBook> FavoriteBook { get; set; }
-
-        public virtual IEnumerable<UserBookRating> RatingByBook { get; set; }
-       
-       
+        public virtual IEnumerable<UserBookRating> BooksRatings { get; set; }
 
         public object Select()
         {
