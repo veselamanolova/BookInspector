@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookInspector.DATA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190502173711_Add Books Image prop")]
-    partial class AddBooksImageprop
+    [Migration("20190503115208_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,9 @@ namespace BookInspector.DATA.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -70,6 +73,8 @@ namespace BookInspector.DATA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Author", b =>
@@ -93,11 +98,17 @@ namespace BookInspector.DATA.Migrations
 
                     b.Property<int?>("CategoryId");
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("ImageURL");
+
+                    b.Property<string>("Isbn");
 
                     b.Property<DateTime>("PublishedDate");
 
                     b.Property<int>("PublisherId");
+
+                    b.Property<string>("ShortDescription");
 
                     b.Property<string>("Title");
 
@@ -123,6 +134,19 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("BookAuthors");
                 });
 
+            modelBuilder.Entity("BookInspector.DATA.Models.BookCategory", b =>
+                {
+                    b.Property<int>("BookId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("BookId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("BookCategory");
+                });
+
             modelBuilder.Entity("BookInspector.DATA.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -136,6 +160,19 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
+                {
+                    b.Property<string>("DbUserId");
+
+                    b.Property<int>("BookId");
+
+                    b.HasKey("DbUserId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("FavoriteBook");
+                });
+
             modelBuilder.Entity("BookInspector.DATA.Models.Publisher", b =>
                 {
                     b.Property<int>("Id")
@@ -147,6 +184,21 @@ namespace BookInspector.DATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Publishers");
+                });
+
+            modelBuilder.Entity("BookInspector.DATA.Models.UserBookRating", b =>
+                {
+                    b.Property<int>("BookId");
+
+                    b.Property<string>("DbUserId");
+
+                    b.Property<int>("Rating");
+
+                    b.HasKey("BookId", "DbUserId");
+
+                    b.HasIndex("DbUserId");
+
+                    b.ToTable("UserBookRating");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -259,10 +311,17 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BookInspector.DATA.Models.DbUser", b =>
+                {
+                    b.HasBaseType("BookInspector.DATA.Models.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("DbUser");
+                });
+
             modelBuilder.Entity("BookInspector.DATA.Models.Book", b =>
                 {
                     b.HasOne("BookInspector.DATA.Models.Category", "Category")
-                        .WithMany("Books")
+                        .WithMany()
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("BookInspector.DATA.Models.Publisher", "Publisher")
@@ -281,6 +340,45 @@ namespace BookInspector.DATA.Migrations
                     b.HasOne("BookInspector.DATA.Models.Book", "Book")
                         .WithMany("Authors")
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookInspector.DATA.Models.BookCategory", b =>
+                {
+                    b.HasOne("BookInspector.DATA.Models.Book", "Book")
+                        .WithMany("BookCategory")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookInspector.DATA.Models.Category", "Category")
+                        .WithMany("BookCategory")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
+                {
+                    b.HasOne("BookInspector.DATA.Models.Book", "Book")
+                        .WithMany("FavoriteBook")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookInspector.DATA.Models.DbUser", "User")
+                        .WithMany("FavoriteBook")
+                        .HasForeignKey("DbUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookInspector.DATA.Models.UserBookRating", b =>
+                {
+                    b.HasOne("BookInspector.DATA.Models.Book", "Book")
+                        .WithMany("RatingByBook")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookInspector.DATA.Models.DbUser", "User")
+                        .WithMany("RatingByBook")
+                        .HasForeignKey("DbUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

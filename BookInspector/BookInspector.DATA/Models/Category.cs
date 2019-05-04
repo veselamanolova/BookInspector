@@ -9,6 +9,6 @@ namespace BookInspector.DATA.Models
 
         public string CategoryName { get; set; }
 
-        public virtual IEnumerable<Book> Books { get; set; }
+        public virtual IEnumerable<BookCategory> BookCategory { get; set; }
     }
 }
