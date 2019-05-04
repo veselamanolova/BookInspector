@@ -1,4 +1,5 @@
-﻿namespace BookInspector.DATA.Models
+﻿
+namespace BookInspector.DATA.Models
 {
     public class UserBookRating
     {
@@ -11,7 +12,5 @@
         public Book Book { get; set; }
 
         public DbUser User { get; set; }
-
-
     }
 }

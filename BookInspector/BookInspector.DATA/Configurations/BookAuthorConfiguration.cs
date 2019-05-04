@@ -1,23 +1,26 @@
 ﻿
-using BookInspector.DATA.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-public class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthor>
+namespace BookInspector.Data.Configurations
 {
-    public void Configure(EntityTypeBuilder<BookAuthor> builder)
+    using BookInspector.DATA.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    public class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthor>
     {
-        builder
-            .HasKey(rb => new { rb.BookId, rb.AuthorId });
+        public void Configure(EntityTypeBuilder<BookAuthor> builder)
+        {
+            builder
+                .HasKey(rb => new { rb.BookId, rb.AuthorId });
 
-        builder
-            .HasOne(rb => rb.Book)
-            .WithMany(b => b.Authors)
-            .HasForeignKey(rb => rb.BookId);
+            builder
+                .HasOne(rb => rb.Book)
+                .WithMany(b => b.Authors)
+                .HasForeignKey(rb => rb.BookId);
 
-        builder
-            .HasOne(rb => rb.Author)
-            .WithMany(a => a.Books)
-            .HasForeignKey(rb => rb.AuthorId);
+            builder
+                .HasOne(rb => rb.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(rb => rb.AuthorId);
+        }
     }
 }

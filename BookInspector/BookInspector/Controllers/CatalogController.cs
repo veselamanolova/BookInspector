@@ -26,7 +26,7 @@ namespace BookInspector.Controllers
                     Title = book.Title,
                     PublishedDate = book.PublishedDate,
                     Publisher = book.Publisher.PublisherName,
-                    Category = book.Category.CategoryName,
+                    // Category = GetCategories(book),
                     ImageURL = book.ImageURL
                 });
 
@@ -45,7 +45,7 @@ namespace BookInspector.Controllers
                 Title = book.Title,
                 Publisher = book.Publisher.PublisherName,
                 PublishedDate = book.PublishedDate,
-                Category = book.Category.CategoryName,
+                // Category = GetCategories(book),
                 ImageURL = book.ImageURL,
                 // Authors = GetAuthorsFromBook(book)
             };
@@ -53,12 +53,12 @@ namespace BookInspector.Controllers
             return View(model);
         }
 
-        private IEnumerable<string> GetAuthorsFromBook(Book book)
+        private IEnumerable<string> GetCategories(Book book)
         {
             var list = new List<string>();
 
-            foreach (var author in book.Authors)
-                list.Add(author.Author.AuthorName);
+            foreach (var category in book.BookCategory)
+                list.Add(category.Category.CategoryName);
 
             return list;
         }

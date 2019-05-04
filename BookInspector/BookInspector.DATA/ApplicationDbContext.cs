@@ -15,9 +15,13 @@ namespace BookInspector.DATA
 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<BookAuthor> BookAuthors { get; set; }
+        public DbSet<BookAuthor> BookAuthor { get; set; }
+        public DbSet<BookCategory> BookCategory { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<DbUser> DBUsers { get; set; }
+        public DbSet<FavoriteBook> FavoriteBooks { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<UserBookRating> UserBookRating { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

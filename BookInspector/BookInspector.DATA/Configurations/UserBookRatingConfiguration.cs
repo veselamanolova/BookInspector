@@ -1,4 +1,5 @@
-﻿namespace BookInspector.Data.Configurations
+﻿
+namespace BookInspector.Data.Configurations
 {
     using BookInspector.DATA.Models;
     using Microsoft.EntityFrameworkCore;

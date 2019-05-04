@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace BookInspector.DATA.Models
 {
+    using System.Collections.Generic;
+
     public class DbUser: ApplicationUser
     {
         public virtual IEnumerable<FavoriteBook> FavoriteBook { get; set; }

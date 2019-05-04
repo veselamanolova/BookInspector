@@ -1,4 +1,5 @@
-﻿namespace BookInspector.DATA.Models
+﻿
+namespace BookInspector.DATA.Models
 {
     public class FavoriteBook
     {

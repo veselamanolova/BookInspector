@@ -14,10 +14,10 @@ namespace BookInspector.Models.Catalog
 
         public DateTime PublishedDate { get; set; }
 
-        public string Category { get; set; }
-
         public string ImageURL { get; set; }
 
         public IEnumerable<string> Authors { get; set; }
+
+        public IEnumerable<string> Category { get; set; }
     }
 }

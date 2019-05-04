@@ -20,16 +20,16 @@ namespace BookInspector.SERVICES
         public Book GetById(int id)
         {
             return _context.Books.Where(book => book.Id.Equals(id))
-                .Include(book => book.Category)
                 .Include(book => book.Publisher)
                 .Include(book => book.Authors)
+                .Include(book => book.BookCategory)
                 .First();
         }
 
         public IEnumerable<Book> GetAll()
         {
             return _context.Books
-                .Include(book => book.Category)
+                .Include(book => book.BookCategory)
                 .Include(book => book.Publisher)
                 .Include(book => book.Authors);
         }
