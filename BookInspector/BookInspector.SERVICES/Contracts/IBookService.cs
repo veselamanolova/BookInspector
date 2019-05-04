@@ -12,5 +12,7 @@ namespace BookInspector.SERVICES.Contracts
         IEnumerable<Book> GetAll();
 
         IEnumerable<BookShortDTO> GetShortBooks();
+
+        BookDetailsDTO GetBookDetailsById(int id);
     }
 }

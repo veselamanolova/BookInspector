@@ -18,19 +18,26 @@
             </div>
             <div class="col-md-4">
                 <p id="itemTitle"><strong>@Model.Title</strong></p>
-                <p id="itemAuthor">@Model.Publisher</p>
-                <p id="itemAuthor">@Model.Publisher</p>
-
+                
             </div>
             <div class="col-md-4 detailInfo">
                 <table>
+                    <tr>
+                        <td class="itemLabel"><strong>Publisher: </strong></td>
+                        <td class="itemValue">@Model.Publisher</td>
+                    </tr>
                     <tr>
                         <td class="itemLabel"><strong>Publish Date: </strong></td>
                         <td class="itemValue">@Model.PublishedDate</td>
                     </tr>
                     <tr>
                         <td class="itemLabel"><strong>Category: </strong></td>
-                        <td class="itemValue">@Model.Category</td>
+                        <td class="itemValue">
+                            @foreach (var category in @Model.Categories)
+                            {
+                                <span>@category</span>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <td class="itemLabel"><strong>Authors: </strong></td>
@@ -40,7 +47,12 @@
                                 <span>@author</span>
                             }
                         </td>
-                            @*<td class="itemValue">@string.Join(" ", Model.Authors)</td>*@
+                    <tr>
+                        <td class="itemLabel"><strong>Description: </strong></td>
+                        <td class="itemValue">@Model.Description</td>
+                    </tr>
+                    <tr>
+                        <td><a href=@Model.PreviewLink><strong>Get a book preview</strong></a></td>
                     </tr>
                 </table>
             </div>

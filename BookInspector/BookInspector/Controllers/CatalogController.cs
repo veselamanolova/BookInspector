@@ -30,8 +30,7 @@ namespace BookInspector.Controllers
                      Title = book.Title,
                      PublishedDate = book.PublishedDate,
                      ShortDescription = book.ShortDescription,
-                     Publisher = book.PublisherName,
-                     // Category = String.Join(", ", GetCategoriesFromBook(book)),
+                     Publisher = book.PublisherName,                    
                      AuthorNames = book.AuthorNames, 
                      ImageURL = book.ImageURL
                 });
@@ -40,42 +39,24 @@ namespace BookInspector.Controllers
 
             return View(model);
         }
-
-
-        public IActionResult ListAllBooks()
-        {
-            // IEnumerable<CatalogListingModel> books = _bookService.GetAll()
-            IEnumerable<CatalogListingModel> books = _bookService.GetShortBooks()
-                 .Select(book => new CatalogListingModel
-                 {
-                     Id = book.Id,
-                     Title = book.Title,
-                     PublishedDate = book.PublishedDate,
-                     ShortDescription = book.ShortDescription,
-                     Publisher = book.PublisherName,
-                     // Category = String.Join(", ", GetCategoriesFromBook(book)),
-                     AuthorNames = book.AuthorNames,
-                     ImageURL = book.ImageURL
-                 });
-
-            var model = new CatalogIndexModel { BooksList = books };
-
-            return View(model);
-        }
-
+      
         public IActionResult Details(int id)
         {
-            var book = _bookService.GetById(id);
+            //var book = _bookService.GetById(id);
+
+            var book = _bookService.GetBookDetailsById(id); 
 
             var model = new DetailsIndexModel
             {
                 Id = book.Id,
                 Title = book.Title,
-                Publisher = book.Publisher.PublisherName,
-                PublishedDate = book.PublishedDate,
-                Category = String.Join(", ", GetCategoriesFromBook(book)),
+                PublishedDate = book.PublishedDate,                
+                Publisher = book.PublisherName,
+                Description = book.Description,
+                Authors = book.AuthorNames,
+                Categories = book.Categories,
+                PreviewLink = book.PreviewLink,
                 ImageURL = book.ImageURL
-                //Authors = book.
             };
 
             return View(model);

@@ -48,7 +48,6 @@ namespace BookInspector.SERVICES
 
         }
 
-
         public IEnumerable<BookShortDTO> GetShortBooks()
         {
             var books = from b in _context.Books
@@ -61,14 +60,34 @@ namespace BookInspector.SERVICES
                             ShortDescription = b.ShortDescription,
                             PublisherName = b.Publisher.PublisherName,
                             AuthorNames = b.BooksAuthors.Select(x => x.Author.AuthorName).ToList()
-                        };           
+                        };
 
-            return books.ToList(); 
+            return books.ToList();
 
         }
 
 
 
+        public BookDetailsDTO GetBookDetailsById(int id)
+        {
+            var book = from b in _context.Books
+                       where b.Id == id
+                       select new BookDetailsDTO()
+                       {
+                           Id = b.Id,
+                           Title = b.Title,
+                           PublishedDate = b.PublishedDate,
+                           PublisherName = b.Publisher.PublisherName,
+                           ImageURL = b.ImageURL,
+                           Categories = b.BooksCategories.Select(x => x.Category.CategoryName).ToList(),
+                           PreviewLink = b.PreviewLink,
+                           Description = b.Description,                          
+                           AuthorNames = b.BooksAuthors.Select(x => x.Author.AuthorName).ToList()
+                       };             
+
+            return book.FirstOrDefault(); 
+
+        }
 
     }
 }

@@ -27,6 +27,8 @@
         //textSnippet
         public string ShortDescription { get; set; }
 
+        public string PreviewLink { get; set; }
+
         public int PublisherId { get; set; }
 
         public virtual Publisher Publisher { get; set; }

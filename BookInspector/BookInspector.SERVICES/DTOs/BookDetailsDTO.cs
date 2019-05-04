@@ -17,21 +17,15 @@ namespace BookInspector.SERVICES.DTOs
 
         public string Isbn { get; set; }
 
-        public string Description { get; set; }
-        
-        public string ShortDescription { get; set; }
+        public string Description { get; set; }      
 
-        public int PublisherId { get; set; }
+        public string PublisherName { get; set; }
 
-        public virtual Publisher Publisher { get; set; }
+        public string PreviewLink { get; set; }
 
-        public virtual IEnumerable<BookCategory> BookCategories { get; set; }
+        public ICollection<string> AuthorNames { get; set; }
 
-        public virtual IEnumerable<BookAuthor> Authors { get; set; }
-
-        public virtual IEnumerable<FavoriteBook> FavoriteBook { get; set; }
-
-        public virtual IEnumerable<UserBookRating> RatingByBook { get; set; }
+        public ICollection<string> Categories { get; set; }       
 
     }
 }
