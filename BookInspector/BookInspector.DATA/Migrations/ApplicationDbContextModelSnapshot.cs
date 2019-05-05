@@ -29,6 +29,9 @@ namespace BookInspector.DATA.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -68,6 +71,8 @@ namespace BookInspector.DATA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Author", b =>
@@ -122,7 +127,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("BookAuthor");
+                    b.ToTable("BooksAuthors");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.BookCategory", b =>
@@ -135,7 +140,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategories");
+                    b.ToTable("BooksCategories");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Category", b =>
@@ -149,44 +154,6 @@ namespace BookInspector.DATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("BookInspector.DATA.Models.DbUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Email");
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail");
-
-                    b.Property<string>("NormalizedUserName");
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DbUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
@@ -227,7 +194,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasIndex("DbUserId");
 
-                    b.ToTable("UserBookRatings");
+                    b.ToTable("UserBookRating");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -338,6 +305,13 @@ namespace BookInspector.DATA.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BookInspector.DATA.Models.DbUser", b =>
+                {
+                    b.HasBaseType("BookInspector.DATA.Models.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("DbUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Book", b =>

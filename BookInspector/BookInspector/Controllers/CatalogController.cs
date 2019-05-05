@@ -21,21 +21,26 @@ namespace BookInspector.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<CatalogListingModel> books = _bookService.GetAll()
-                .Select(book => new CatalogListingModel
+            // IEnumerable<CatalogListingModel> books = _bookService.GetAll() 
+            IEnumerable<CatalogListingModel> books = _bookService.GetShortBooks()
+              .Select(book => new CatalogListingModel
                 {
                     Id = book.Id,
                     Title = book.Title,
                     PublishedDate = book.PublishedDate,
-                    Publisher = book.Publisher.PublisherName,
-                    // Category = GetCategories(book),
-                    ImageURL = book.ImageURL
+                    Publisher = book.PublisherName,
+                    // Category = GetCategories(book),                  
+                    AuthorNames = book.AuthorNames,
+                    ImageURL = book.ImageURL, 
+                    ShortDescription = book.ShortDescription
                 });
 
             var model = new CatalogIndexModel { BooksList = books };
 
             return View(model);
         }
+
+
       
         public IActionResult Details(int id)
         {
@@ -47,11 +52,15 @@ namespace BookInspector.Controllers
             {
                 Id = book.Id,
                 Title = book.Title,
-                Publisher = book.Publisher.PublisherName,
+                Publisher = book.PublisherName,
                 PublishedDate = book.PublishedDate,
+                Categories = book.Categories,
                 // Category = GetCategories(book),
                 ImageURL = book.ImageURL,
+                Authors = book.AuthorNames,                 
                 // Authors = GetAuthorsFromBook(book)
+                Description = book.Description, 
+                PreviewLink = book.PreviewLink
             };
 
             return View(model);
@@ -61,7 +70,7 @@ namespace BookInspector.Controllers
         {
             var list = new List<string>();
 
-            foreach (var category in book.BookCategory)
+            foreach (var category in book.BooksCategories)
                 list.Add(category.Category.CategoryName);
 
             return list;
