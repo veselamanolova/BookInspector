@@ -1,0 +1,6 @@
+Sample web requststs: 
+https://www.googleapis.com/books/v1/volumes?q=AngularJS&maxResults=2
+https://www.googleapis.com/books/v1/volumes?q=ReactJS&maxResults=5
+https://www.googleapis.com/books/v1/volumes?q=typescript&maxResults=5
+
+Please note that if a book exists an exception will be thrown. 

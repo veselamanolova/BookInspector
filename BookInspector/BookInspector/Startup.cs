@@ -42,7 +42,10 @@ namespace BookInspector
 
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IEmailSender, EmailSender>();
-
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IPublisherService, PublisherService>();
+         
             services.AddMvc();
         }
 
