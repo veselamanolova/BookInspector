@@ -16,6 +16,15 @@ namespace BookInspector.SERVICES.Contracts
 
         BookDetailsDTO GetBookDetailsById(int id);
 
-        Book AddBook(string title, List<string> authorsList, List<string> categoryList, string publisher, DateTime publishedDate, string isbn, string description);
+        Book AddBook(string title,
+             List<string> authorsList,
+             List<string> categoryList,
+             string publisherName,
+             DateTime publishedDate,
+             string isbn,
+             string imageUrl,
+             string description,
+             string shortDescription,
+             string previewLink);
     }
 }

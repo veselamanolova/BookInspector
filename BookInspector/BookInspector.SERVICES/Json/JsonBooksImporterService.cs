@@ -95,12 +95,41 @@
                 if (string.IsNullOrEmpty(description)) // skip importing this book without description
                     continue;
 
+                string shortDescription = FindShortDescription(bookToken);
+                if (string.IsNullOrEmpty(description)) // skip importing this book without description
+                    continue;
 
-                var book = _bookService.AddBook(title, authors, categories, publisher, publishedDate, isbn, description);
+                string imageUrl = FindImageUrl(bookToken);
+                if (string.IsNullOrEmpty(description)) // skip importing this book without description
+                    continue;
+
+                string previewLink = FindPreviewLink(bookToken);
+                if (string.IsNullOrEmpty(description)) // skip importing this book without description
+                    continue;
+
+                var book = _bookService.AddBook(title, authors, categories, 
+                                                publisher, publishedDate, 
+                                                isbn, imageUrl, description,
+                                                shortDescription, previewLink);
                 result.Add(book);
             }
 
             return result;
+        }
+
+        private string FindPreviewLink(JToken bookToken)
+        {
+            return bookToken.SelectToken("volumeInfo.previewLink").ToString();
+        }
+
+        private string FindImageUrl(JToken bookToken)
+        {
+            return bookToken.SelectToken("volumeInfo.imageLinks.thumbnail").ToString();
+        }
+
+        private string FindShortDescription(JToken bookToken)
+        {
+            return bookToken.SelectToken("searchInfo.textSnippet").ToString();
         }
 
         private string FindPageCount(JToken bookToken)
@@ -144,17 +173,23 @@
         private static List<string> FindCategories(JToken bookToken)
         {
             var categories = new List<string>();
-            foreach (JToken categoryToken in bookToken.SelectToken("volumeInfo.categories"))
+            var categoriesToken = bookToken.SelectToken("volumeInfo.categories");
+            if (categoriesToken != null)
             {
-                categories.Add(categoryToken.ToString());
-            }
+                foreach (JToken categoryToken in categoriesToken)
+                {
+                    categories.Add(categoryToken.ToString());
+                }
+            }           
             return categories;
         }
 
         private static List<string> FindAuthors(JToken bookToken)
         {
             var authors = new List<string>();
-            foreach (JToken authorToken in bookToken.SelectToken("volumeInfo.authors"))
+
+            var authorsToken = bookToken.SelectToken("volumeInfo.authors"); 
+            foreach (JToken authorToken in authorsToken)
             {
                 authors.Add(authorToken.ToString());
             }
@@ -164,7 +199,9 @@
         private static string FindIsbn(JToken bookToken)
         {
             string isbn = null;
-            foreach (JToken identifierToken in bookToken.SelectToken("volumeInfo.industryIdentifiers"))
+            var identifiersTockens = bookToken.SelectToken("volumeInfo.industryIdentifiers"); 
+
+            foreach (JToken identifierToken in identifiersTockens)
             {
                 string identifierType = identifierToken["type"].ToString();
                 if (identifierType == "ISBN_13")

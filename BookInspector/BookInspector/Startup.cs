@@ -13,6 +13,7 @@ namespace BookInspector
     using BookInspector.SERVICES;
     using BookInspector.SERVICES.Contracts;
     using BookInspector.Services;
+    using BookInspector.SERVICES.Json;
 
     public class Startup
     {
@@ -45,6 +46,7 @@ namespace BookInspector
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPublisherService, PublisherService>();
+            services.AddScoped<IJsonBooksImporterService, JsonBooksImporterService>(); 
          
             services.AddMvc();
         }

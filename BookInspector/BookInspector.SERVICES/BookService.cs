@@ -105,14 +105,20 @@ namespace BookInspector.SERVICES
            string publisherName,
            DateTime publishedDate,
            string isbn,
-           string description)
+           string imabeUrl,
+           string description, 
+           string shortDescription,
+           string previewLink)
         {
 
             var existingbook = _context.Books.FirstOrDefault(b => b.Title == title);
             var publisher = _context.Publishers.FirstOrDefault(p => p.PublisherName == publisherName);
+            if(existingbook !=null)
+            {
+                throw new ArgumentException($"Book with title: {existingbook.Title} already exists");
+            }
 
-
-            Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");
+         // Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");
             Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
 
             if (publisher is null)
@@ -131,7 +137,10 @@ namespace BookInspector.SERVICES
                 PublisherId = publisher.Id,
                 PublishedDate = publishedDate,
                 Isbn = isbn,                
-                Description = description
+                Description = description, 
+                ImageURL = imabeUrl,
+                ShortDescription = shortDescription,
+                PreviewLink = previewLink
             };
 
             _context.Books.Add(book);
@@ -141,16 +150,17 @@ namespace BookInspector.SERVICES
             {
                 var author = _context.Authors.FirstOrDefault(a => a.AuthorName == authorName);
 
-                if (author is null)
+                if (author == null)
                 {
                     author = _authorService.Add(authorName);
                 }
 
-                var bookByAuthorEntry = new BookAuthor()
+                var bookAuthorEntry = new BookAuthor()
                 {
                     Author = author,
                     Book = book
                 };
+                _context.BooksAuthors.Add(bookAuthorEntry); 
             }
 
             foreach (var categoryName in categoryList)
@@ -162,16 +172,20 @@ namespace BookInspector.SERVICES
                     category = _categoryService.AddCategory(categoryName);
                 }
 
-                var bookByCategoryEntry = new BookCategory()
+                var bookByAuthorEntry = new BookCategory()
                 {
                     Category = category,
                     Book = book
                 };
+                _context.BooksCategories.Add(bookByAuthorEntry); 
             }
 
             _context.SaveChanges();
             return book;
         }
+
+
+
     }
 }
 
