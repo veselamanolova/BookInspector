@@ -117,9 +117,9 @@ namespace BookInspector.SERVICES
             {
                 throw new ArgumentException($"Book with title: {existingbook.Title} already exists");
             }
-
+         //The validation does not work correctly. Although existingbook.Title is null it enters in the validation and throws exception
          // Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");
-            Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
+         //   Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
 
             if (publisher is null)
             {

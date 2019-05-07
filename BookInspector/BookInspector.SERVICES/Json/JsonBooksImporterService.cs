@@ -67,16 +67,15 @@
                     continue;
 
                 List<string> categories= FindCategories(bookToken);
-                if (categories == null || categories.Count == 0) // skip importing this book without categories
-                    continue;
+                //if (categories == null || categories.Count == 0) // skip importing this book without categories                   
 
                 string publisher = FindPublisher(bookToken);
                 if (string.IsNullOrEmpty(publisher)) // skip importing this book without publisher
                     continue;
 
                 string isbn = FindIsbn(bookToken);
-                if (string.IsNullOrEmpty(isbn)) // skip importing this book without ISBN
-                    continue;
+                //if (string.IsNullOrEmpty(isbn)) // skip importing this book without ISBN
+                //    continue;
 
               
 
@@ -188,26 +187,33 @@
         {
             var authors = new List<string>();
 
-            var authorsToken = bookToken.SelectToken("volumeInfo.authors"); 
-            foreach (JToken authorToken in authorsToken)
+            var authorsToken = bookToken.SelectToken("volumeInfo.authors");
+            if (authorsToken != null)
             {
-                authors.Add(authorToken.ToString());
+                foreach (JToken authorToken in authorsToken)
+                {
+                    authors.Add(authorToken.ToString());
+                }
             }
+
             return authors;
         }
 
         private static string FindIsbn(JToken bookToken)
         {
             string isbn = null;
-            var identifiersTockens = bookToken.SelectToken("volumeInfo.industryIdentifiers"); 
+            var identifiersTockens = bookToken.SelectToken("volumeInfo.industryIdentifiers");
 
-            foreach (JToken identifierToken in identifiersTockens)
+            if (identifiersTockens != null)
             {
-                string identifierType = identifierToken["type"].ToString();
-                if (identifierType == "ISBN_13")
+                foreach (JToken identifierToken in identifiersTockens)
                 {
-                    isbn = identifierToken["identifier"].ToString();
-                    break;
+                    string identifierType = identifierToken["type"].ToString();
+                    if (identifierType == "ISBN_13")
+                    {
+                        isbn = identifierToken["identifier"].ToString();
+                        break;
+                    }
                 }
             }
             return isbn;
