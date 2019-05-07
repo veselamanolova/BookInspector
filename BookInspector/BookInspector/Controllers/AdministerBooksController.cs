@@ -33,7 +33,7 @@
                 var books = _jsonBooksImporterService.ImportBooks(url, true);
                 //return View();
 
-                return RedirectToAction(nameof(CatalogController));
+                return RedirectToAction("Index","Catalog");
 
             }
             catch (ArgumentException ex)
