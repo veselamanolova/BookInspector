@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector", "BookInspector\BookInspector.csproj", "{22AAD121-4C4A-4CA9-92F2-B271C79014DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.DATA", "BookInspector.DATA\BookInspector.DATA.csproj", "{3C2D36AB-B3AA-4703-82AF-36B45418E332}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.SERVICES", "BookInspector.SERVICES\BookInspector.SERVICES.csproj", "{828E102E-4789-453B-BB43-C29CBD8ED603}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.SERVICES", "BookInspector.SERVICES\BookInspector.SERVICES.csproj", "{828E102E-4789-453B-BB43-C29CBD8ED603}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

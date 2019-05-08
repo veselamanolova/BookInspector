@@ -5,6 +5,8 @@
     using BookInspector.Models.AdministerBooksViewModels;
     using BookInspector.SERVICES.Contracts;
     using BookInspector.SERVICES.Json;
+    using Microsoft.AspNetCore.Authorization;
+   
     using Microsoft.AspNetCore.Mvc;
 
     public class AdministerBooksController : Controller
@@ -16,6 +18,7 @@
             _jsonBooksImporterService = jsonBooksImporterService ?? throw new ArgumentNullException(nameof(_jsonBooksImporterService)); ;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,6 +27,7 @@
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Index(string url)
         {
