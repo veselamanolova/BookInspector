@@ -12,6 +12,8 @@ namespace BookInspector
     using BookInspector.DATA.Models;
     using Microsoft.AspNetCore.Identity;
     using BookInspector.SERVICES.Contracts;
+    using System.IO;
+    using System.Reflection;
 
     public class Program
     {
@@ -68,10 +70,26 @@ namespace BookInspector
                 return;
             }
             var bookManager = scope.ServiceProvider.GetRequiredService<IJsonBooksImporterService> ();
-            bookManager.ImportBooks(@"C:\Projects\DB\BooksInspector\BookInspector\BookInspector\BookInspector.DATA\Json\booksSeed.json", false);      
+            //GetDirecoryInfo(); 
+            var buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+           
+            var filePath =Path.Combine("Json", "booksSeed.json");            
+            bookManager.ImportBooks(filePath, false);      
         }
 
+        private static string GetDirecoryInfo(string filepath)
+        {
+            // DirectoryInfo d = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+ @"..\..\..\..\");//Assuming Test is your Folder
+            DirectoryInfo d = new DirectoryInfo(filepath); 
+             FileInfo[] Files = d.GetFiles(" * "); //Getting Text files
+            string str = "";
+            foreach (FileInfo file in Files)
+            {
+                str = str + ", " + file.Name;
+            }
 
+            return str; 
+        }
 
 
         public static IWebHost BuildWebHost(string[] args) =>

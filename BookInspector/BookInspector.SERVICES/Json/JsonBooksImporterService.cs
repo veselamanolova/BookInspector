@@ -193,12 +193,24 @@
         private DateTime ConvertStringToDate(string dateAsString)
         {
             int[] dateAsArr = dateAsString.ToString().Split('-').Select(int.Parse).ToArray();
+            var dateElements = dateAsArr.Count(); 
+
             if (dateAsArr.Count() == 1)
             {
                 return new DateTime(dateAsArr[0], 1,1);
             }
 
-            return new DateTime(dateAsArr[0], dateAsArr[1] , dateAsArr[2]=1 );
+            else if(dateAsArr.Count() == 2)
+            {
+                return new DateTime(dateAsArr[0], dateAsArr[1], 1);
+            }
+
+            else if (dateAsArr.Count() == 3)
+            {
+                return new DateTime(dateAsArr[0], dateAsArr[1], 1);
+            }
+
+            return new DateTime();
 
         }
 
