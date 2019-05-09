@@ -45,6 +45,10 @@ namespace BookInspector
 
             var adminUser = new DbUser { UserName = "Admin", Email = "admin@admin.admin" };
             userManager.CreateAsync(adminUser, "Admin123@").Wait();
+            roleManager.CreateAsync(new IdentityRole()
+            {
+                Name = "Admin"
+            }); 
 
             userManager.AddToRoleAsync(adminUser, "Admin").Wait();
           
