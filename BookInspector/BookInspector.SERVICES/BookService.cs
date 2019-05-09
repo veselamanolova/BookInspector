@@ -111,11 +111,11 @@ namespace BookInspector.SERVICES
            string previewLink)
         {
 
-            var existingbook = _context.Books.FirstOrDefault(b => b.Title == title);
+            var existingbook = _context.Books.FirstOrDefault(b => (b.Title == title&&b.Publisher.PublisherName== publisherName&&b.PublishedDate==publishedDate));
             var publisher = _context.Publishers.FirstOrDefault(p => p.PublisherName == publisherName);
             if(existingbook !=null)
             {
-                throw new ArgumentException($"Book with title: {existingbook.Title} already exists");
+                throw new ArgumentException($"Book with title: {existingbook.Title}, publisher {publisherName} and date {publishedDate} already exists");
             }
          //The validation does not work correctly. Although existingbook.Title is null it enters in the validation and throws exception
          // Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");

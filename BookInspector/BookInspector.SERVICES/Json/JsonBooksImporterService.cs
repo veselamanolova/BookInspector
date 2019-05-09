@@ -73,9 +73,7 @@
                 if (string.IsNullOrEmpty(publisher)) // skip importing this book without publisher
                     continue;
 
-                string isbn = FindIsbn(bookToken);
-                //if (string.IsNullOrEmpty(isbn)) // skip importing this book without ISBN
-                //    continue;
+                string isbn = FindIsbn(bookToken);           
 
               
 
@@ -118,32 +116,77 @@
 
         private string FindPreviewLink(JToken bookToken)
         {
-            return bookToken.SelectToken("volumeInfo.previewLink").ToString();
+            var previewLink = bookToken.SelectToken("volumeInfo.previewLink");
+            if (previewLink != null)
+            {
+                return bookToken.SelectToken("volumeInfo.previewLink").ToString();
+            }
+            else
+            {
+                return ""; 
+            }
         }
 
         private string FindImageUrl(JToken bookToken)
         {
-            return bookToken.SelectToken("volumeInfo.imageLinks.thumbnail").ToString();
+            var thumbnail = bookToken.SelectToken("volumeInfo.imageLinks.thumbnail");
+            if (thumbnail != null)
+            {
+                return bookToken.SelectToken("volumeInfo.imageLinks.thumbnail").ToString();
+            }
+            else
+            {
+                return ""; 
+            }
+            
         }
 
         private string FindShortDescription(JToken bookToken)
         {
-            return bookToken.SelectToken("searchInfo.textSnippet").ToString();
+            var shortDescription = bookToken.SelectToken("searchInfo.textSnippet");
+            if (shortDescription != null)
+            {
+                shortDescription.ToString(); 
+            }
+            return "";
         }
 
         private string FindPageCount(JToken bookToken)
         {
-            return bookToken.SelectToken("volumeInfo.pageCount").ToString();
+            var pageCount = bookToken.SelectToken("volumeInfo.pageCount");
+            if (pageCount != null)
+            {
+                return pageCount.ToString();
+            }
+            else return "0";            
         }
 
         private string FindDescription(JToken bookToken)
         {
-            return bookToken.SelectToken("volumeInfo.description").ToString();
+            var description = bookToken.SelectToken("volumeInfo.description");
+            if (description != null)
+            {
+                return bookToken.SelectToken("volumeInfo.description").ToString();
+            }
+            else
+            {
+                return ""; 
+            }
+            
+       
         }
 
         private string FindPublishedDateAsString(JToken bookToken)
         {
-           return bookToken.SelectToken("volumeInfo.publishedDate").ToString();    
+            var publishDate = bookToken.SelectToken("volumeInfo.publishedDate");
+            if (publishDate != null)
+            {
+                return bookToken.SelectToken("volumeInfo.publishedDate").ToString();
+            }
+            else
+            {
+                return ""; 
+            }
            
         }
 
@@ -155,18 +198,31 @@
                 return new DateTime(dateAsArr[0], 1,1);
             }
 
-            return new DateTime(dateAsArr[0], dateAsArr[1] , dateAsArr[2] );
+            return new DateTime(dateAsArr[0], dateAsArr[1] , dateAsArr[2]=1 );
 
         }
 
         private string FindPublisher(JToken bookToken)
         {
-            return bookToken.SelectToken("volumeInfo.publisher").ToString();
+            var publisher = bookToken.SelectToken("volumeInfo.publisher");
+            if (publisher != null)
+            {
+                return bookToken.SelectToken("volumeInfo.publisher").ToString();
+            }
+            else
+            {
+                return ""; 
+            }
         }
 
         private static string FindTitle(JToken bookToken)
         {
-            return bookToken.SelectToken("volumeInfo.title").ToString();
+            var title = bookToken.SelectToken("volumeInfo.title");
+            if (title != null)
+            {
+                return bookToken.SelectToken("volumeInfo.title").ToString();
+            }
+            return ""; 
         }
 
         private static List<string> FindCategories(JToken bookToken)

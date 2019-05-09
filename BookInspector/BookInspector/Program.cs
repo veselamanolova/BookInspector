@@ -1,6 +1,7 @@
 ﻿
 namespace BookInspector
 {
+
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using BookInspector.DATA;
@@ -10,9 +11,11 @@ namespace BookInspector
     using System.Linq;
     using BookInspector.DATA.Models;
     using Microsoft.AspNetCore.Identity;
+    using BookInspector.SERVICES.Contracts;
 
     public class Program
     {
+
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
@@ -27,6 +30,7 @@ namespace BookInspector
             using (var scope = host.Services.CreateScope())
             {
                 SeedAdmin(scope);
+                SeedBooks(scope);
             }
         }
 
@@ -53,7 +57,22 @@ namespace BookInspector
             userManager.AddToRoleAsync(adminUser, "Admin").Wait();
           
         }
-    
+
+
+        private static void SeedBooks(IServiceScope scope)
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            if (dbContext.Books.Any())
+            {
+                return;
+            }
+            var bookManager = scope.ServiceProvider.GetRequiredService<IJsonBooksImporterService> ();
+            bookManager.ImportBooks(@"C:\Projects\DB\BooksInspector\BookInspector\BookInspector\BookInspector.DATA\Json\booksSeed.json", false);      
+        }
+
+
+
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
