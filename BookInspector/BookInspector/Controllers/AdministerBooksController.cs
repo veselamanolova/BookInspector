@@ -18,7 +18,7 @@
             _jsonBooksImporterService = jsonBooksImporterService ?? throw new ArgumentNullException(nameof(_jsonBooksImporterService)); ;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -27,7 +27,7 @@
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult Index(string url)
         {

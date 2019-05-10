@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookInspector.DATA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190505183409_initial8")]
-    partial class initial8
+    [Migration("20190510140002_Initial2")]
+    partial class Initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,9 +30,6 @@ namespace BookInspector.DATA.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -73,8 +70,6 @@ namespace BookInspector.DATA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Author", b =>
@@ -160,11 +155,11 @@ namespace BookInspector.DATA.Migrations
 
             modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
                 {
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("BookId");
 
-                    b.HasKey("ApplicationUserId", "BookId");
+                    b.HasKey("UserId", "BookId");
 
                     b.HasIndex("BookId");
 
@@ -188,13 +183,13 @@ namespace BookInspector.DATA.Migrations
                 {
                     b.Property<int>("BookId");
 
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("Rating");
 
-                    b.HasKey("BookId", "ApplicationUserId");
+                    b.HasKey("BookId", "UserId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserBookRating");
                 });
@@ -309,13 +304,6 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BookInspector.DATA.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("BookInspector.DATA.Models.ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
             modelBuilder.Entity("BookInspector.DATA.Models.Book", b =>
                 {
                     b.HasOne("BookInspector.DATA.Models.Publisher", "Publisher")
@@ -359,7 +347,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasOne("BookInspector.DATA.Models.ApplicationUser", "User")
                         .WithMany("FavoriteBook")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -372,7 +360,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasOne("BookInspector.DATA.Models.ApplicationUser", "User")
                         .WithMany("RatingByBook")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

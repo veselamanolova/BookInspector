@@ -29,9 +29,6 @@ namespace BookInspector.DATA.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -71,8 +68,6 @@ namespace BookInspector.DATA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Author", b =>
@@ -305,13 +300,6 @@ namespace BookInspector.DATA.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("BookInspector.DATA.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("BookInspector.DATA.Models.ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Book", b =>

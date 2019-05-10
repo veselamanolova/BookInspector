@@ -40,23 +40,20 @@ namespace BookInspector
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            if (dbContext.Roles.Any(u => u.Name == "Admin"))
+            if (dbContext.Roles.Any(u => u.Name == "Administrator"))
             {
                 return;
             }
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            roleManager.CreateAsync(new IdentityRole { Name = "Admin" }).Wait();
+            roleManager.CreateAsync(new IdentityRole { Name = "Administrator" }).Wait();
 
             var adminUser = new ApplicationUser { UserName = "Admin", Email = "admin@admin.admin" };
-            userManager.CreateAsync(adminUser, "Admin123@").Wait();
-            roleManager.CreateAsync(new IdentityRole()
-            {
-                Name = "Admin"
-            }); 
 
-            userManager.AddToRoleAsync(adminUser, "Admin").Wait();
+            userManager.CreateAsync(adminUser, "Admin123@").Wait();
+
+            userManager.AddToRoleAsync(adminUser, "Administrator").Wait();
           
         }
 
