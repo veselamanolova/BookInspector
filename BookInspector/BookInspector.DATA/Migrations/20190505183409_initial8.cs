@@ -271,12 +271,12 @@ namespace BookInspector.DATA.Migrations
                 name: "FavoriteBooks",
                 columns: table => new
                 {
-                    DbUserId = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: false),
                     BookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FavoriteBooks", x => new { x.DbUserId, x.BookId });
+                    table.PrimaryKey("PK_FavoriteBooks", x => new { x.ApplicationUserId, x.BookId });
                     table.ForeignKey(
                         name: "FK_FavoriteBooks_Books_BookId",
                         column: x => x.BookId,
@@ -284,8 +284,8 @@ namespace BookInspector.DATA.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FavoriteBooks_AspNetUsers_DbUserId",
-                        column: x => x.DbUserId,
+                        name: "FK_FavoriteBooks_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -296,12 +296,12 @@ namespace BookInspector.DATA.Migrations
                 columns: table => new
                 {
                     BookId = table.Column<int>(nullable: false),
-                    DbUserId = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: false),
                     Rating = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserBookRating", x => new { x.BookId, x.DbUserId });
+                    table.PrimaryKey("PK_UserBookRating", x => new { x.BookId, x.ApplicationUserId });
                     table.ForeignKey(
                         name: "FK_UserBookRating_Books_BookId",
                         column: x => x.BookId,
@@ -309,8 +309,8 @@ namespace BookInspector.DATA.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserBookRating_AspNetUsers_DbUserId",
-                        column: x => x.DbUserId,
+                        name: "FK_UserBookRating_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -376,9 +376,9 @@ namespace BookInspector.DATA.Migrations
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserBookRating_DbUserId",
+                name: "IX_UserBookRating_ApplicationUserId",
                 table: "UserBookRating",
-                column: "DbUserId");
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

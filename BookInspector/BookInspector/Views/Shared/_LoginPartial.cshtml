@@ -1,8 +1,8 @@
 @using Microsoft.AspNetCore.Identity
 @using BookInspector.Models
 
-@inject SignInManager<DbUser> SignInManager
-@inject UserManager<DbUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

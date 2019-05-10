@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookInspector.DATA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190505183409_initial8")]
-    partial class initial8
+    [Migration("20190510114827_AfterMergeMigration")]
+    partial class AfterMergeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,11 +160,11 @@ namespace BookInspector.DATA.Migrations
 
             modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
                 {
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("BookId");
 
-                    b.HasKey("ApplicationUserId", "BookId");
+                    b.HasKey("UserId", "BookId");
 
                     b.HasIndex("BookId");
 
@@ -188,13 +188,13 @@ namespace BookInspector.DATA.Migrations
                 {
                     b.Property<int>("BookId");
 
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("Rating");
 
-                    b.HasKey("BookId", "ApplicationUserId");
+                    b.HasKey("BookId", "UserId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserBookRating");
                 });
@@ -359,7 +359,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasOne("BookInspector.DATA.Models.ApplicationUser", "User")
                         .WithMany("FavoriteBook")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -372,7 +372,7 @@ namespace BookInspector.DATA.Migrations
 
                     b.HasOne("BookInspector.DATA.Models.ApplicationUser", "User")
                         .WithMany("RatingByBook")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

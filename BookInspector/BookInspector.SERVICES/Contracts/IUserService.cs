@@ -6,14 +6,14 @@ namespace BookInspector.SERVICES.Contracts
 
     public interface IUserService
     {
-        DbUser Register(string name);
+        ApplicationUser Register(string name);
 
-        DbUser FindByName(string name);
+        ApplicationUser FindByName(string name);
 
-        DbUser DeteleUser(string name);
+        ApplicationUser DeteleUser(string name);
 
-        DbUser Modify(string oldVal, string newVal);
+        ApplicationUser Modify(string oldVal, string newVal);
 
-        IReadOnlyCollection<DbUser> GetUsers(int skip, int take);
+        IReadOnlyCollection<ApplicationUser> GetUsers(int skip, int take);
     }
 }

@@ -1,7 +1,9 @@
 ﻿
 namespace BookInspector.SERVICES.Contracts
 {
-    using BookInspector.DATA.Models;
+	using System.Threading.Tasks;
+	using System.Collections.Generic;
+    using BookInspector.DATA.Models;    
     using BookInspector.SERVICES.DTOs;
     using System;
     using System.Collections.Generic;
@@ -9,10 +11,20 @@ namespace BookInspector.SERVICES.Contracts
     public interface IBookService
     {
         Book GetById(int id);
+        
+        IEnumerable<Book> GetByCategory(string selectedCategory);
 
         IEnumerable<Book> GetAll();
 
-        IEnumerable<BookShortDTO> GetShortBooks();
+        int GetBooksPerPage();
+
+        int GetTotalBooksCount();
+
+        IEnumerable<Book> LoadNext();
+
+        IEnumerable<Book> LoadPrevious();
+
+        Task DeleteBookAsync(int Id);
 
         BookDetailsDTO GetBookDetailsById(int id);
 
@@ -26,5 +38,9 @@ namespace BookInspector.SERVICES.Contracts
              string description,
              string shortDescription,
              string previewLink);
+
+        IEnumerable<BookShortDTO> GetShortBooks();
     }
+	
+	
 }

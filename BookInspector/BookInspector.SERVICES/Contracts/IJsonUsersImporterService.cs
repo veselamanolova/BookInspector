@@ -5,6 +5,6 @@
 
     public interface IJsonUsersImporterService
     {
-        List<DbUser> ImportUsers(string filePath);
+        List<ApplicationUser> ImportUsers(string filePath);
     }
 }

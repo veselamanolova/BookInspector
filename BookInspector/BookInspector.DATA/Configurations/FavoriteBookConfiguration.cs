@@ -10,7 +10,7 @@ namespace BookInspector.Data.Configurations
         public void Configure(EntityTypeBuilder<FavoriteBook> builder)
         {
             builder
-                .HasKey(fb => new { fb.DbUserId, fb.BookId });           
+                .HasKey(fb => new { fb.UserId, fb.BookId });           
 
             builder
                 .HasOne(fb => fb.Book)
@@ -21,7 +21,7 @@ namespace BookInspector.Data.Configurations
             builder
                .HasOne(fb => fb.User)
                .WithMany(u => u.FavoriteBook)
-               .HasForeignKey(fb => fb.DbUserId)
+               .HasForeignKey(fb => fb.UserId)
                .IsRequired();
         }
     }

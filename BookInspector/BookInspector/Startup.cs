@@ -8,10 +8,10 @@ namespace BookInspector
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using BookInspector.DATA;
-    using BookInspector.DATA.Models;
     using BookInspector.SERVICES;
     using BookInspector.SERVICES.Contracts;
+    using BookInspector.DATA;
+    using BookInspector.DATA.Models;
     using BookInspector.Services;
     using BookInspector.SERVICES.Json;
 
@@ -37,17 +37,19 @@ namespace BookInspector
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<DbUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<IBookService, BookService>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IExportService, ExportService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPublisherService, PublisherService>();
-            services.AddScoped<IJsonBooksImporterService, JsonBooksImporterService>(); 
-         
+            services.AddScoped<IJsonBooksImporterService, JsonBooksImporterService>();
+
+
             services.AddMvc();
         }
 

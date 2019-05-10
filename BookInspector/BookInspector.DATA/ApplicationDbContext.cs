@@ -20,8 +20,7 @@ namespace BookInspector.DATA
         public DbSet<Book> Books { get; set; }
         public DbSet<BookAuthor> BooksAuthors { get; set; }
         public DbSet<BookCategory> BooksCategories { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<DbUser> DBUsers { get; set; }
+        public DbSet<Category> Categories { get; set; }        
         public DbSet<FavoriteBook> FavoriteBooks { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<UserBookRating> UserBookRating { get; set; }

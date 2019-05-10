@@ -44,12 +44,12 @@ namespace BookInspector
             {
                 return;
             }
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<DbUser>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             roleManager.CreateAsync(new IdentityRole { Name = "Admin" }).Wait();
 
-            var adminUser = new DbUser { UserName = "Admin", Email = "admin@admin.admin" };
+            var adminUser = new ApplicationUser { UserName = "Admin", Email = "admin@admin.admin" };
             userManager.CreateAsync(adminUser, "Admin123@").Wait();
             roleManager.CreateAsync(new IdentityRole()
             {
@@ -69,28 +69,14 @@ namespace BookInspector
             {
                 return;
             }
-            var bookManager = scope.ServiceProvider.GetRequiredService<IJsonBooksImporterService> ();
-            //GetDirecoryInfo(); 
+            var bookManager = scope.ServiceProvider.GetRequiredService<IJsonBooksImporterService> ();            
             var buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
            
             var filePath =Path.Combine("Json", "booksSeed.json");            
             bookManager.ImportBooks(filePath, false);      
         }
 
-        private static string GetDirecoryInfo(string filepath)
-        {
-            // DirectoryInfo d = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+ @"..\..\..\..\");//Assuming Test is your Folder
-            DirectoryInfo d = new DirectoryInfo(filepath); 
-             FileInfo[] Files = d.GetFiles(" * "); //Getting Text files
-            string str = "";
-            foreach (FileInfo file in Files)
-            {
-                str = str + ", " + file.Name;
-            }
-
-            return str; 
-        }
-
+       
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
@@ -98,4 +84,3 @@ namespace BookInspector
                 .Build();
     }
 }
-

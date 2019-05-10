@@ -8,12 +8,12 @@ namespace BookInspector.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]        
+        [Required]   
         public string Name { get; set; }
 
         [Required]
-        [EmailAddress]        
+        [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]

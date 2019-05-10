@@ -2,36 +2,52 @@
 namespace BookInspector.Controllers
 {
     using System.Linq;
-    using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
     using BookInspector.Models.Catalog;
     using BookInspector.SERVICES.Contracts;
-    using BookInspector.DATA.Models;
+    using System.Threading.Tasks;
 
     public class CatalogController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IExportService _export;
 
-        public CatalogController(IBookService bookService)
+        public CatalogController(IBookService bookService, IExportService export)
         {
             _bookService = bookService;
+            _export = export;
         }
-
 
 
         public IActionResult Index()
         {
-            // IEnumerable<CatalogListingModel> books = _bookService.GetAll() 
-            IEnumerable<CatalogListingModel> books = _bookService.GetShortBooks()
-              .Select(book => new CatalogListingModel
+            IEnumerable<CatalogListingModel> books = _bookService.GetAll()
+                .Select(book => new CatalogListingModel
                 {
                     Id = book.Id,
                     Title = book.Title,
-                    PublishedDate = book.PublishedDate,
-                    Publisher = book.PublisherName,
-                    // Category = GetCategories(book),                  
-                    AuthorNames = book.AuthorNames,
-                    ImageURL = book.ImageURL, 
+                    ImageURL = book.ImageURL,
+                    Categories = book.BooksCategories.Select(x => x.Category).ToList(),
+                    ShortDescription = book.ShortDescription
+                }).ToList();
+
+            var model = new CatalogIndexModel { BooksList = books };
+
+            return View(model);
+        }
+
+
+        public IActionResult Category(string category)
+        {
+            IEnumerable<CatalogListingModel> books = _bookService.GetByCategory(category)
+                .Select(book => new CatalogListingModel
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    ImageURL = book.ImageURL,
+                    Categories = book.BooksCategories.Select(x => x.Category).ToList(),
                     ShortDescription = book.ShortDescription
                 });
 
@@ -41,24 +57,16 @@ namespace BookInspector.Controllers
         }
 
 
-      
         public IActionResult Details(int id)
         {
-            //var book = _bookService.GetById(id);
-
-            var book = _bookService.GetBookDetailsById(id); 
+            var book = _bookService.GetById(id);
 
             var model = new DetailsIndexModel
             {
                 Id = book.Id,
                 Title = book.Title,
-                Publisher = book.PublisherName,
                 PublishedDate = book.PublishedDate,
-                Categories = book.Categories,
-                // Category = GetCategories(book),
                 ImageURL = book.ImageURL,
-                Authors = book.AuthorNames,                 
-                // Authors = GetAuthorsFromBook(book)
                 Description = book.Description, 
                 PreviewLink = book.PreviewLink
             };
@@ -66,29 +74,41 @@ namespace BookInspector.Controllers
             return View(model);
         }
 
-        private IEnumerable<string> GetCategories(Book book)
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult AddBook()
         {
-            var list = new List<string>();
-
-            foreach (var category in book.BooksCategories)
-                list.Add(category.Category.CategoryName);
-
-            return list;
+            return View();
         }
 
 
-        //private IEnumerable<string> GetAuthorsFromBook(ShortBook book)
-        //{
-        //    var list = new List<string>();
+        [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            await _bookService.DeleteBookAsync(Id);
 
-        //    foreach (var author in book)
-        //    {
-        //            list.Add(author.AuthorName);
-        //    }
-                
+            return RedirectToAction("Index", "Home");
+        }
 
-        //    return list;
-        //}
+
+        public IActionResult Download()
+        {
+            _export.ExportToPDF();
+
+            return View("~/Views/Home/Index.cshtml");
+        }
+
+        public IActionResult Next()
+        {
+            return View();
+        }
+
+        public IActionResult Previous()
+        {
+            return View();
+        }
     }
 }
 

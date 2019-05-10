@@ -12,7 +12,7 @@ namespace BookInspector.Models.Catalog
 
         public string Publisher { get; set; }
 
-        public DateTime PublishedDate { get; set; }       
+        public DateTime PublishedDate { get; set; }
 
         public string Description { get; set; }
 

@@ -1,4 +1,5 @@
-﻿body {
+﻿
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -32,4 +33,112 @@
     .carousel-caption {
         display: none;
     }
+}
+
+* {
+    font-family: Times;
+}
+
+p {
+    font-family: "Comic Sans MS";
+}
+
+.glyphicon-chevron-left {
+    font-size: 50px;
+}
+
+    .glyphicon-chevron-left:hover {
+        background-color: #f1f1f1;
+    }
+
+.glyphicon-chevron-right {
+    font-size: 50px;
+}
+    .glyphicon-chevron-right:hover {
+        background-color: #f1f1f1;
+    }
+
+.glyphicon-forward {
+    font-size: 40px;
+}
+
+.glyphicon-backward {
+    font-size: 40px;
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 5px;
+}
+
+    a:hover {
+        color: black;
+    }
+
+.previous {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.next {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+
+.authorLabel {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.titleLabel {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+#itemTitle {
+    font-size: 2.3em;
+}
+
+#itemAuthor {
+    font-size: 1.6em;
+}
+
+#itemStatus {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+#itemType {
+    font-size: 1.6em;
+    color: #888;
+}
+
+.itemLabel {
+    font-weight: bold;
+}
+
+
+.itemValue {
+    text-align: right;
+    font-size: 0.8em;
+}
+
+.availability {
+    padding-top: 20px;
+    font-size: 1.2em;
+}
+
+.detailImage {
+    width: 200px;
+    padding-bottom: 6px;
+}
+
+.detailHeading {
+    padding: 10px;
 }

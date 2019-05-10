@@ -9,12 +9,18 @@ namespace BookInspector.SERVICES
     using Microsoft.EntityFrameworkCore;
     using BookInspector.SERVICES.DTOs;
     using System;
+    using System.Threading.Tasks;
 
     public class BookService : IBookService
     {
+        private const int booksPerPage = 5;
+
         private readonly ApplicationDbContext _context;
+
         private IAuthorService _authorService;
+
         private IPublisherService _publisherService;
+
         private ICategoryService _categoryService;
 
         public BookService(ApplicationDbContext context,
@@ -30,33 +36,70 @@ namespace BookInspector.SERVICES
 
         public Book GetById(int id)
         {
-            return _context.Books.Where(book => book.Id.Equals(id))
-                //.Include(book => book.BookCategories)
-                //.ThenInclude(bookCategories => bookCategories.Category.CategoryName)
-                .Include(book => book.Publisher)
-                //.Include(book => book.Authors)
+           return _context.Books.Where(book => book.Id.Equals(id))
+                .Include(book => book.BooksCategories)
+                    .ThenInclude(category => category.Category)
+                .Include(book => book.BooksAuthors)
+                    .ThenInclude(author => author.Author)
+                .Include(book => book.FavoriteBooks)
+                .Include(book => book.BooksRatings)
                 .First();
         }
 
+		public IEnumerable<Book> GetByCategory(string selectedCategory)
+        {
+            return _context.Books
+                .Where(book => book.BooksCategories
+                    .Select(category => category.Category.CategoryName).Contains(selectedCategory))
+                .Include(bookCategory => bookCategory.BooksCategories)
+                    .ThenInclude(category => category.Category);
+        }
         public IEnumerable<Book> GetAll()
         {
-            var books = _context.Books
-            .Include(book => book.BooksCategories)
-            .ThenInclude(bookCategories => bookCategories.Category)
-            .Include(book => book.Publisher)
-             .Include(book => book.BooksAuthors); 
-           //  .ThenInclude();
-
-          //  var authors = _context.Autors
-
-           
-
-            var list = books.ToList(); 
-            return books; 
-
-
-
+            return _context.Books
+                .Include(book => book.BooksCategories)
+                    .ThenInclude(category => category.Category)
+                .Include(book => book.BooksAuthors)
+                    .ThenInclude(author => author.Author)
+                .Include(book => book.FavoriteBooks)
+                .Include(book => book.BooksRatings);
         }
+		
+		public int GetTotalBooksCount()
+        {
+            return _context.Books.Count();
+        }
+
+        public int GetBooksPerPage()
+        {
+            return booksPerPage;
+        }
+
+        public IEnumerable<Book> LoadNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Book> LoadPrevious()
+        {
+            throw new NotImplementedException();
+		}
+		
+		
+		public async Task DeleteBookAsync(int Id)	
+        {
+            Validator.IfNull<ArgumentNullException>(Id, "Book ID cannot be negative or 0.");
+            var bookToDelete = await _context.Books
+                .Where(book => book.Id == Id)
+                .FirstOrDefaultAsync();
+
+            Validator.IfNull<ArgumentNullException>(bookToDelete, "Book not found!");
+
+   
+            _context.Books.Remove(bookToDelete);
+            await _context.SaveChangesAsync();
+        }
+
 
         public IEnumerable<BookShortDTO> GetShortBooks()
         {
@@ -96,8 +139,9 @@ namespace BookInspector.SERVICES
                        };             
 
             return book.FirstOrDefault(); 
-
         }
+		
+		
 
         public Book AddBook(string title,
            List<string> authorsList,

@@ -20,7 +20,7 @@ namespace BookInspector.SERVICES.Json
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        public List<DbUser> ImportUsers(string filePath)
+        public List<ApplicationUser> ImportUsers(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -30,7 +30,7 @@ namespace BookInspector.SERVICES.Json
             List<JsonUser> jsonUsersList = JsonConvert.DeserializeObject<List<JsonUser>>(fileContent);
 
 
-            List<DbUser> result = new List<DbUser>(); 
+            List<ApplicationUser> result = new List<ApplicationUser>(); 
             foreach (var jsonUser in jsonUsersList)
             {
 

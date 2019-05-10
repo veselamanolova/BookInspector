@@ -1,7 +1,7 @@
 ﻿
 namespace BookInspector.Models.Catalog
 {
-    using System;
+    using BookInspector.DATA.Models;
     using System.Collections.Generic;
 
     public class CatalogListingModel
@@ -10,16 +10,10 @@ namespace BookInspector.Models.Catalog
 
         public string Title { get; set; }
 
-        public string Publisher { get; set; }
-
-        public DateTime PublishedDate { get; set; }
-
         public string ShortDescription { get; set; }
-
-        public string Category { get; set; }
 
         public string ImageURL { get; set; }
 
-        public virtual IEnumerable<string> AuthorNames { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
     }
 }

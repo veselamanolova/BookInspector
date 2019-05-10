@@ -11,7 +11,7 @@ namespace BookInspector.Data.Configurations
         public void Configure(EntityTypeBuilder<UserBookRating> builder)
         {
             builder
-                .HasKey(rb => new { rb.BookId, rb.DbUserId });
+                .HasKey(rb => new { rb.BookId, rb.UserId });
 
             builder
             .HasOne(ubr => ubr.Book)
@@ -21,7 +21,7 @@ namespace BookInspector.Data.Configurations
             builder
                 .HasOne(ubr => ubr.User)
                 .WithMany(u => u.RatingByBook)
-                .HasForeignKey(ubr => ubr.DbUserId);
+                .HasForeignKey(ubr => ubr.UserId);
 
 
             builder

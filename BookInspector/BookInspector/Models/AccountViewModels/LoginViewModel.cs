@@ -21,3 +21,4 @@ namespace BookInspector.Models.AccountViewModels
         public bool RememberMe { get; set; }
     }
 }
+

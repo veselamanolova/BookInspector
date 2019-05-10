@@ -158,11 +158,11 @@ namespace BookInspector.DATA.Migrations
 
             modelBuilder.Entity("BookInspector.DATA.Models.FavoriteBook", b =>
                 {
-                    b.Property<string>("DbUserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("BookId");
 
-                    b.HasKey("DbUserId", "BookId");
+                    b.HasKey("UserId", "BookId");
 
                     b.HasIndex("BookId");
 
@@ -186,13 +186,13 @@ namespace BookInspector.DATA.Migrations
                 {
                     b.Property<int>("BookId");
 
-                    b.Property<string>("DbUserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("Rating");
 
-                    b.HasKey("BookId", "DbUserId");
+                    b.HasKey("BookId", "UserId");
 
-                    b.HasIndex("DbUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserBookRating");
                 });
@@ -307,11 +307,11 @@ namespace BookInspector.DATA.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BookInspector.DATA.Models.DbUser", b =>
+            modelBuilder.Entity("BookInspector.DATA.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("BookInspector.DATA.Models.ApplicationUser");
 
-                    b.HasDiscriminator().HasValue("DbUser");
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BookInspector.DATA.Models.Book", b =>
@@ -355,9 +355,9 @@ namespace BookInspector.DATA.Migrations
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BookInspector.DATA.Models.DbUser", "User")
+                    b.HasOne("BookInspector.DATA.Models.ApplicationUser", "User")
                         .WithMany("FavoriteBook")
-                        .HasForeignKey("DbUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -368,9 +368,9 @@ namespace BookInspector.DATA.Migrations
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BookInspector.DATA.Models.DbUser", "User")
+                    b.HasOne("BookInspector.DATA.Models.ApplicationUser", "User")
                         .WithMany("RatingByBook")
-                        .HasForeignKey("DbUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

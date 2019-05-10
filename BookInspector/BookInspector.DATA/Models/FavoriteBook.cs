@@ -3,11 +3,11 @@ namespace BookInspector.DATA.Models
 {
     public class FavoriteBook
     {
-        public string DbUserId { get; set; }
+        public string UserId { get; set; }
 
         public int BookId { get; set; }
 
-        public virtual DbUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public virtual Book Book { get; set; }
     }

@@ -4,64 +4,132 @@
     ViewBag.Title = @Model.Title;
 }
 
-<div class="container">
-    <div class="header clearfix detailHeading">
-        <h2 class="text-muted">Details</h2>
-    </div>
+    <div class="container">
+        <div class="header clearfix detailHeading">
+            <h2 class="text-muted">Details</h2>
+        </div>
 
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-4">
-                <div>
-                    <img class="detailImage" src="@Model.ImageURL" alt="" height="400"  />
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-4">
+                    <div>
+                        <img src="@Model.ImageURL" alt="" height="300" />
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <h3 id="itemTitle"><strong><font color="#5f93e8">@Model.Title</font></strong></h3>
-                <h5><strong>Publisher:</strong> @Model.Publisher</h5>
+                <div class="col-md-4">
+                    <h4><strong><font color="#5f93e8">@Model.Title</font></strong></h4>
 
+                    <strong>Category: </strong>
+                    <p id="itemStatus">@Model.Categories</p>
+                    a
+                    <strong>Authors: </strong>
+                    <p id="itemAuthor">@Model.Authors</p>
+
+                    <strong>Publisher: </strong>
+                    <p id="itemStatus">@Model.Publisher</p>
+
+                    <strong>Publish Date: </strong>
+                    <p id="itemStatus">@Model.PublishedDate</p>
+
+
+                    <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#myModalNormAddBook">
+                        Edit Book
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                    <br>
+                    <br>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalNormAddBook" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <button type="button" class="close"
+                                            data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        Add new Book
+                                    </h4>
+                                </div>
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+                                    <form asp-controller="Home" asp-action="CreateMovie" method="post" class="create-book">
+                                        <div class="form-group">
+                                            <label for="movieTitle">Book Title</label>
+                                            @*<input asp-for="@Model.NewMovie.Title" type="text" class="form-control"
+                                           id="create-book-title" />
+                                    <span asp-validation-for="@Model.NewMovie.Title" class="text-danger"></span>*@
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="movieDirector">Book Publisher</label>
+                                            @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
+                                           id="create-book-director" />
+                                    <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="movieDirector">Book Category (Split by ' ')</label>
+                                            @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
+                                           id="create-book-director" />
+                                    <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="movieDirector">Book Author (Split by ' ')</label>
+                                            @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
+                                           id="create-book-director" />
+                                    <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Create Book</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (this.User.IsInRole("Administrator"))
+                {
+                    <a asp-controller="Catalog" asp-action="Delete" asp-route-Id="@Model.Id"
+                       class="btn btn-primary pull-left">
+                        Detele Book
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                }
+
+                    <div class="col-md-4">
+                        <br>
+                        <table>
+
+                            <tr>
+                                <td class="itemLabel"><strong>Description: </strong></td>
+                            </tr>
+
+                            <tr>
+                                <td><h5><font color="#5f93e8"><strong>@Model.Description</strong></font></h5></td>
+                            </tr>
+
+                        </table>
+                        @{
+                            var url = "location.href='" + @Model.PreviewLink + "';";
+
+                        <br>
+                        <button type="button" class="btn btn-primary pull-left" onclick=@url>
+                            Read online
+                        </button>
+                        }                      
+
+                    </div>
             </div>
-            <div class="col-md-4 detailInfo">
-                <br>
-                <strong>Other book details</strong>
-                <br><br>
-                <table>
-                    <tr>
-                        <td class="itemLabel"><strong>Publisher: </strong></td>
-                        <td class="itemValue">@Model.Publisher</td>
-                    </tr>
-                    <tr>
-                        <td class="itemLabel"><strong>Publish Date: </strong></td>
-                        <td class="itemValue">@Model.PublishedDate</td>
-                    </tr>
-                    <tr>
-                        <td class="itemLabel"><strong>Category: </strong></td>
-                        <td class="itemValue">
-                            @foreach (var category in @Model.Categories)
-                            {
-                                <span>@category</span>
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="itemLabel"><strong>Authors: </strong></td>
-                        <td class="itemValue">
-                            @foreach (var author in @Model.Authors)
-                            {
-                                <span>@author</span>
-                            }
-                        </td>
-                    <tr>
-                        <td class="itemLabel"><strong>Description: </strong></td>
-                        <td class="itemValue">@Model.Description</td>
-                    </tr>
-                    <tr>
-                        <td><a href=@Model.PreviewLink><strong>Get a book preview</strong></a></td>
-                    </tr>
-                </table>
-            </div>
+            <br>
         </div>
     </div>
-</div>
+
 
 
