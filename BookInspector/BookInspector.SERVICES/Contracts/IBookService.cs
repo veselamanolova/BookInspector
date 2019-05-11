@@ -1,30 +1,21 @@
 ﻿
 namespace BookInspector.SERVICES.Contracts
 {
-	using System.Threading.Tasks;
+    using System;
+    using System.Threading.Tasks;
 	using System.Collections.Generic;
     using BookInspector.DATA.Models;    
     using BookInspector.SERVICES.DTOs;
-    using System;
-    using System.Collections.Generic;
 
     public interface IBookService
     {
-        Book GetById(int id);
-        
-        IEnumerable<Book> GetByCategory(string selectedCategory);
+        Task<Book> GetByIdAsync(int id);
 
-        IEnumerable<Book> GetAll();
+        Task<IEnumerable<Book>> GetByCategoryAsync(string selectedCategory);
+
+        Task<IEnumerable<Book>> GetAllAsync();
 
         Task<IEnumerable<Book>> SearchAsync(string key);
-
-        int GetBooksPerPage();
-
-        int GetTotalBooksCount();
-
-        IEnumerable<Book> LoadNext();
-
-        IEnumerable<Book> LoadPrevious();
 
         Task DeleteBookAsync(int Id);
 

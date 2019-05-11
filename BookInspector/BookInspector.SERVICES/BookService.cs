@@ -1,20 +1,18 @@
 ﻿
 namespace BookInspector.SERVICES
 {
+    using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
     using BookInspector.DATA;
     using BookInspector.DATA.Models;
-    using BookInspector.SERVICES.Contracts;
-    using Microsoft.EntityFrameworkCore;
     using BookInspector.SERVICES.DTOs;
-    using System;
-    using System.Threading.Tasks;
+    using BookInspector.SERVICES.Contracts;
 
     public class BookService : IBookService
     {
-        private const int booksPerPage = 5;
-
         private readonly ApplicationDbContext _context;
 
         private IAuthorService _authorService;
@@ -30,38 +28,36 @@ namespace BookInspector.SERVICES
             _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
-        public Book GetById(int id)
+        public async Task<Book> GetByIdAsync(int id)
         {
-           return _context.Books.Where(book => book.Id.Equals(id))
+           return await _context.Books.Where(book => book.Id.Equals(id))
                 .Include(book => book.BooksCategories)
                     .ThenInclude(category => category.Category)
                 .Include(book => book.BooksAuthors)
                     .ThenInclude(author => author.Author)
-                .Include(book => book.FavoriteBooks)
-                .Include(book => book.BooksRatings)
-                .First();
+                .FirstAsync();
         }
 
 
-		public IEnumerable<Book> GetByCategory(string selectedCategory)
+		public async Task<IEnumerable<Book>> GetByCategoryAsync(string selectedCategory)
         {
-            return _context.Books
+            return await _context.Books
                 .Where(book => book.BooksCategories
                     .Select(category => category.Category.CategoryName).Contains(selectedCategory))
                 .Include(bookCategory => bookCategory.BooksCategories)
-                    .ThenInclude(category => category.Category);
+                    .ThenInclude(category => category.Category)
+                .ToListAsync();
         }
 
 
-        public IEnumerable<Book> GetAll()
+        public async Task<IEnumerable<Book>> GetAllAsync()
         {
-            return _context.Books
+            return await _context.Books
                 .Include(book => book.BooksCategories)
                     .ThenInclude(category => category.Category)
                 .Include(book => book.BooksAuthors)
                     .ThenInclude(author => author.Author)
-                .Include(book => book.FavoriteBooks)
-                .Include(book => book.BooksRatings);
+                .ToListAsync();
         }
 
 
@@ -73,27 +69,6 @@ namespace BookInspector.SERVICES
                      .ThenInclude(category => category.Category)
                  .ToListAsync();
         }
-
-
-        public int GetTotalBooksCount()
-        {
-            return _context.Books.Count();
-        }
-
-        public int GetBooksPerPage()
-        {
-            return booksPerPage;
-        }
-
-        public IEnumerable<Book> LoadNext()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Book> LoadPrevious()
-        {
-            throw new NotImplementedException();
-		}
 		
 		
 		public async Task DeleteBookAsync(int Id)	
