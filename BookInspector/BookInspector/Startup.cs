@@ -49,6 +49,7 @@ namespace BookInspector
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IPublisherService, PublisherService>();
             services.AddScoped<IJsonBooksImporterService, JsonBooksImporterService>();
+            services.AddScoped<IUserService, UserService>();        
 
             services.AddMvc();
         }

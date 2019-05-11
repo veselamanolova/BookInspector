@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - BookInspector</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />       
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -15,6 +15,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="/css/site.min.css" asp-append-version="true" />
     </environment>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -38,6 +39,7 @@
                     {
                         @*<li><a asp-area="" asp-controller="AdministerBooks" asp-action="Index"><strong>Administer Books</strong></a></li>*@
                         <li><a asp-area="Admin" asp-controller="Admin" asp-action="Index"><strong>Admin</strong></a></li>
+                        <li><a asp-area="Admin" asp-controller="Admin" asp-action="Users"><strong>Users</strong></a></li>
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
@@ -72,6 +74,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
