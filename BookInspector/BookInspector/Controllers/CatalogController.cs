@@ -8,6 +8,7 @@ namespace BookInspector.Controllers
     using Microsoft.AspNetCore.Authorization;
     using BookInspector.Models.Catalog;
     using BookInspector.SERVICES.Contracts;
+    using System;
 
     public class CatalogController : Controller
     {
@@ -21,8 +22,11 @@ namespace BookInspector.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 60)]
+        public async Task<IActionResult> Index(string searchString)
         {
+            ViewData["Filter"] = searchString;
+
             IEnumerable<CatalogListingModel> books = (await _bookService.GetAllAsync())
                 .Select(book => new CatalogListingModel
                 {
@@ -32,6 +36,10 @@ namespace BookInspector.Controllers
                     Categories = book.BooksCategories.Select(x => x.Category).ToList(),
                     ShortDescription = book.ShortDescription
                 }).ToList();
+
+            if (!String.IsNullOrEmpty(searchString))
+                books = books
+                    .Where(filter => filter.Title.ToLower().Contains(searchString.ToLower()));
 
             var model = new CatalogIndexModel { BooksList = books };
 
@@ -75,36 +83,6 @@ namespace BookInspector.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult SearchPage()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> SearchResults([Bind("Key")] string key)
-        {
-            var findBooks = await _bookService.SearchAsync(key);
-
-            var listingModel = findBooks
-                .Select(book => new CatalogListingModel
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    ImageURL = book.ImageURL,
-                    Categories = book.BooksCategories.Select(x => x.Category).ToList(),
-                    ShortDescription = book.ShortDescription
-                }).ToList();
-
-            var model = new SearchViewModel
-            {
-                BooksList = listingModel
-            };
-            return View(model);
-        }
-
-
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
@@ -114,6 +92,7 @@ namespace BookInspector.Controllers
         }
 
 
+        [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int Id)
