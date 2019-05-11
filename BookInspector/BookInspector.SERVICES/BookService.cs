@@ -22,41 +22,41 @@ namespace BookInspector.SERVICES
         public BookService(ApplicationDbContext context, IAuthorService authorService,
             IPublisherService publisherService, ICategoryService categoryService)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
-            _publisherService = publisherService ?? throw new ArgumentNullException(nameof(publisherService));
-            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
+            _context = context;
+            _authorService = authorService;
+            _publisherService = publisherService;
+            _categoryService = categoryService;
         }
 
-        public async Task<Book> GetByIdAsync(int id)
+
+        public IQueryable<Book> GetAll()
         {
-           return await _context.Books.Where(book => book.Id.Equals(id))
+            return _context.Books
                 .Include(book => book.BooksCategories)
                     .ThenInclude(category => category.Category)
                 .Include(book => book.BooksAuthors)
-                    .ThenInclude(author => author.Author)
-                .FirstAsync();
+                    .ThenInclude(author => author.Author);
         }
 
 
-		public async Task<IEnumerable<Book>> GetByCategoryAsync(string selectedCategory)
+        public async Task<Book> GetByIdAsync(int id)
+        {
+            return await _context.Books.Where(book => book.Id.Equals(id))
+                 .Include(book => book.BooksCategories)
+                     .ThenInclude(category => category.Category)
+                 .Include(book => book.BooksAuthors)
+                     .ThenInclude(author => author.Author)
+                 .FirstAsync();
+        }
+
+
+        public async Task<IEnumerable<Book>> GetByCategoryAsync(string selectedCategory)
         {
             return await _context.Books
                 .Where(book => book.BooksCategories
                     .Select(category => category.Category.CategoryName).Contains(selectedCategory))
                 .Include(bookCategory => bookCategory.BooksCategories)
                     .ThenInclude(category => category.Category)
-                .ToListAsync();
-        }
-
-
-        public async Task<IEnumerable<Book>> GetAllAsync()
-        {
-            return await _context.Books
-                .Include(book => book.BooksCategories)
-                    .ThenInclude(category => category.Category)
-                .Include(book => book.BooksAuthors)
-                    .ThenInclude(author => author.Author)
                 .ToListAsync();
         }
 
@@ -69,9 +69,9 @@ namespace BookInspector.SERVICES
                      .ThenInclude(category => category.Category)
                  .ToListAsync();
         }
-		
-		
-		public async Task DeleteBookAsync(int Id)	
+
+
+        public async Task DeleteBookAsync(int Id)
         {
             Validator.IfNull<ArgumentNullException>(Id, "Book ID cannot be negative or 0.");
             var bookToDelete = await _context.Books
@@ -80,7 +80,7 @@ namespace BookInspector.SERVICES
 
             Validator.IfNull<ArgumentNullException>(bookToDelete, "Book not found!");
 
-   
+
             _context.Books.Remove(bookToDelete);
             await _context.SaveChangesAsync();
         }
@@ -119,14 +119,14 @@ namespace BookInspector.SERVICES
                            ImageURL = b.ImageURL,
                            Categories = b.BooksCategories.Select(x => x.Category.CategoryName).ToList(),
                            PreviewLink = b.PreviewLink,
-                           Description = b.Description,                          
+                           Description = b.Description,
                            AuthorNames = b.BooksAuthors.Select(x => x.Author.AuthorName).ToList()
-                       };             
+                       };
 
-            return book.FirstOrDefault(); 
+            return book.FirstOrDefault();
         }
-		
-		
+
+
 
         public Book AddBook(string title,
            List<string> authorsList,
@@ -135,20 +135,20 @@ namespace BookInspector.SERVICES
            DateTime publishedDate,
            string isbn,
            string imabeUrl,
-           string description, 
+           string description,
            string shortDescription,
            string previewLink)
         {
 
-            var existingbook = _context.Books.FirstOrDefault(b => (b.Title == title&&b.Publisher.PublisherName== publisherName&&b.PublishedDate==publishedDate));
+            var existingbook = _context.Books.FirstOrDefault(b => (b.Title == title && b.Publisher.PublisherName == publisherName && b.PublishedDate == publishedDate));
             var publisher = _context.Publishers.FirstOrDefault(p => p.PublisherName == publisherName);
-            if(existingbook !=null)
+            if (existingbook != null)
             {
                 throw new ArgumentException($"Book with title: {existingbook.Title}, publisher {publisherName} and date {publishedDate} already exists");
             }
-         //The validation does not work correctly. Although existingbook.Title is null it enters in the validation and throws exception
-         // Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");
-         //   Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
+            //The validation does not work correctly. Although existingbook.Title is null it enters in the validation and throws exception
+            // Validator.IfNotNull<ArgumentException>(existingbook, $"Book with title: {existingbook.Title} already exists");
+            //   Validator.CheckExactLength<ArgumentException>(isbn, 13, $"ISBN should be exactly 13 characters!");
 
             if (publisher is null)
             {
@@ -165,8 +165,8 @@ namespace BookInspector.SERVICES
                 Title = title,
                 PublisherId = publisher.Id,
                 PublishedDate = publishedDate,
-                Isbn = isbn,                
-                Description = description, 
+                Isbn = isbn,
+                Description = description,
                 ImageURL = imabeUrl,
                 ShortDescription = shortDescription,
                 PreviewLink = previewLink
@@ -189,7 +189,7 @@ namespace BookInspector.SERVICES
                     Author = author,
                     Book = book
                 };
-                _context.BooksAuthors.Add(bookAuthorEntry); 
+                _context.BooksAuthors.Add(bookAuthorEntry);
             }
 
             foreach (var categoryName in categoryList)
@@ -206,7 +206,7 @@ namespace BookInspector.SERVICES
                     Category = category,
                     Book = book
                 };
-                _context.BooksCategories.Add(bookByAuthorEntry); 
+                _context.BooksCategories.Add(bookByAuthorEntry);
             }
 
             _context.SaveChanges();

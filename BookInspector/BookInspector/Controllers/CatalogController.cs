@@ -1,6 +1,7 @@
 ﻿
 namespace BookInspector.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace BookInspector.Controllers
     using Microsoft.AspNetCore.Authorization;
     using BookInspector.Models.Catalog;
     using BookInspector.SERVICES.Contracts;
-    using System;
+    using BookInspector.DATA.Models;
 
     public class CatalogController : Controller
     {
@@ -23,33 +24,32 @@ namespace BookInspector.Controllers
 
 
         [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 60)]
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string filter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = filter;
+            }
+
             ViewData["Filter"] = searchString;
 
-            IEnumerable<CatalogListingModel> books = (await _bookService.GetAllAsync())
-                .Select(book => new CatalogListingModel
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    ImageURL = book.ImageURL,
-                    Categories = book.BooksCategories.Select(x => x.Category).ToList(),
-                    ShortDescription = book.ShortDescription
-                }).ToList();
-
+            var books = _bookService.GetAll();
             if (!String.IsNullOrEmpty(searchString))
                 books = books
-                    .Where(filter => filter.Title.ToLower().Contains(searchString.ToLower()));
+                    .Where(book => book.Title.ToLower().Contains(searchString.ToLower()));
 
-            var model = new CatalogIndexModel { BooksList = books };
-
-            return View(model);
+            int pageSize = 3;
+            return View(await PaginatedList<Book>.CreateAsync(books, pageNumber ?? 1, pageSize));
         }
 
 
         public async Task<IActionResult> Category(string category)
         {
-            IEnumerable<CatalogListingModel> books = (await  _bookService.GetByCategoryAsync(category))
+            IEnumerable<CatalogListingModel> books = (await _bookService.GetByCategoryAsync(category))
                 .Select(book => new CatalogListingModel
                 {
                     Id = book.Id,
@@ -75,7 +75,7 @@ namespace BookInspector.Controllers
                 Title = book.Title,
                 PublishedDate = book.PublishedDate,
                 ImageURL = book.ImageURL,
-                Description = book.Description, 
+                Description = book.Description,
                 PreviewLink = book.PreviewLink
             };
 

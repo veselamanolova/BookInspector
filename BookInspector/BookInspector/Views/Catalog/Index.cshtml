@@ -1,5 +1,4 @@
-﻿
-@model BookInspector.Models.Catalog.CatalogIndexModel
+﻿@model PaginatedList<BookInspector.DATA.Models.Book>
 
 <div class="container">
     <div class="row">
@@ -36,29 +35,29 @@
                                     <div class="form-group">
                                         <label for="movieTitle">Book Title</label>
                                         @*<input asp-for="@Model.NewMovie.Title" type="text" class="form-control"
-                                               id="create-book-title" />
-                                        <span asp-validation-for="@Model.NewMovie.Title" class="text-danger"></span>*@
+                                                   id="create-book-title" />
+                                            <span asp-validation-for="@Model.NewMovie.Title" class="text-danger"></span>*@
                                     </div>
 
                                     <div class="form-group">
                                         <label for="movieDirector">Book Publisher</label>
                                         @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                               id="create-book-director" />
-                                        <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                                   id="create-book-director" />
+                                            <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
                                     </div>
 
                                     <div class="form-group">
                                         <label for="movieDirector">Book Category (Split by ' ')</label>
                                         @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                               id="create-book-director" />
-                                        <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                                   id="create-book-director" />
+                                            <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
                                     </div>
 
                                     <div class="form-group">
                                         <label for="movieDirector">Book Author (Split by ' ')</label>
                                         @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                               id="create-book-director" />
-                                        <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                                   id="create-book-director" />
+                                            <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
                                     </div>
 
                                     <button type="submit" class="btn btn-default">Create Book</button>
@@ -101,7 +100,7 @@
 
 <table class="table table-hover" id="forumIndexTable">
     <tbody>
-        @foreach (var book in Model.BooksList)
+        @foreach (var book in Model)
         {
             <tr>
                 <td>
@@ -114,26 +113,37 @@
                     <p> <font color="#337ab7"><strong>Description:</strong></font> @book.ShortDescription</p>
                     <p>
                         <font color="#337ab7"><strong>Category: </strong></font>
-                        @foreach (var category in book.Categories)
-                        {
-                            <a asp-controller="Catalog" asp-action="Category" asp-route-category="@category.CategoryName">
-                                @category.CategoryName
-                            </a>
-                        }
+                        @*@foreach (var category in book.Categories)
+                            {
+                                <a asp-controller="Catalog" asp-action="Category" asp-route-category="@category.CategoryName">
+                                    @category.CategoryName
+                                </a>
+                            }*@
                     </p>
                     <a asp-controller="Catalog" asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary pull-left">
                         Details
                     </a>
                 </td>
             </tr>
-        }   
+        }
     </tbody>
 </table>
 
-<a asp-controller="Catalog" asp-action="Previous">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
 </a>
 
-<a asp-controller="Catalog" asp-action="Next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-</a>
