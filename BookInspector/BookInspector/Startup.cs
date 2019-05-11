@@ -14,6 +14,7 @@ namespace BookInspector
     using BookInspector.DATA.Models;
     using BookInspector.Services;
     using BookInspector.SERVICES.Json;
+    using Microsoft.AspNetCore.Mvc.Razor;
 
     public class Startup
     {
@@ -49,7 +50,6 @@ namespace BookInspector
             services.AddScoped<IPublisherService, PublisherService>();
             services.AddScoped<IJsonBooksImporterService, JsonBooksImporterService>();
 
-
             services.AddMvc();
         }
 
@@ -73,6 +73,11 @@ namespace BookInspector
 
             app.UseMvc(routes =>
             {
+                routes.MapAreaRoute(
+                   name: "Admin",
+                   areaName: "Admin",
+                   template: "Admin/{controller=Admin}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
