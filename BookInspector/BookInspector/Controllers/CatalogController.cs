@@ -21,6 +21,7 @@ namespace BookInspector.Controllers
         }
 
 
+        [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 60)]
         public async Task<IActionResult> Index()
         {
             IEnumerable<CatalogListingModel> books = (await _bookService.GetAllAsync())
@@ -114,6 +115,7 @@ namespace BookInspector.Controllers
         }
 
 
+        [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int Id)
