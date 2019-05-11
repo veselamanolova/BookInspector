@@ -2,12 +2,12 @@
 namespace BookInspector.Controllers
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using BookInspector.Models.Catalog;
     using BookInspector.SERVICES.Contracts;
-    using System.Threading.Tasks;
 
     public class CatalogController : Controller
     {
@@ -21,9 +21,9 @@ namespace BookInspector.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<CatalogListingModel> books = _bookService.GetAll()
+            IEnumerable<CatalogListingModel> books = (await _bookService.GetAllAsync())
                 .Select(book => new CatalogListingModel
                 {
                     Id = book.Id,
@@ -39,9 +39,9 @@ namespace BookInspector.Controllers
         }
 
 
-        public IActionResult Category(string category)
+        public async Task<IActionResult> Category(string category)
         {
-            IEnumerable<CatalogListingModel> books = _bookService.GetByCategory(category)
+            IEnumerable<CatalogListingModel> books = (await  _bookService.GetByCategoryAsync(category))
                 .Select(book => new CatalogListingModel
                 {
                     Id = book.Id,
@@ -57,9 +57,9 @@ namespace BookInspector.Controllers
         }
 
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var book = _bookService.GetById(id);
+            var book = await _bookService.GetByIdAsync(id);
 
             var model = new DetailsIndexModel
             {
@@ -129,16 +129,6 @@ namespace BookInspector.Controllers
             _export.ExportToPDF();
 
             return View("~/Views/Home/Index.cshtml");
-        }
-
-        public IActionResult Next()
-        {
-            return View();
-        }
-
-        public IActionResult Previous()
-        {
-            return View();
         }
     }
 }

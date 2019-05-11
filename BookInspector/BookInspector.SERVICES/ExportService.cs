@@ -4,6 +4,7 @@ namespace BookInspector.SERVICES
     using System.Linq;
     using SautinSoft.Document;
     using BookInspector.SERVICES.Contracts;
+    using System.Threading.Tasks;
 
     public class ExportService : IExportService
     {
@@ -14,9 +15,9 @@ namespace BookInspector.SERVICES
             _bookService = bookService;
         }
 
-        public void ExportToPDF()
+        public async void ExportToPDF()
         {
-            var books = _bookService.GetAll()
+            var books = (await _bookService.GetAllAsync())
                 .Select(book => new
                 {
                     ID = book.Id + "\n",
