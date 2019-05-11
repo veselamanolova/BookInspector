@@ -7,6 +7,8 @@ namespace BookInspector.SERVICES.Contracts
 
     public interface IUserService
     {        
-        Task<IEnumerable<UserDTO>> GetAllAsync(); 
+        Task<IEnumerable<UserDTO>> GetAllAsync();
+        Task<UserDTO> GetUser(string id);
+        Task EditUser(string id, string name, string email, List<string> userRoles);
     }
 }

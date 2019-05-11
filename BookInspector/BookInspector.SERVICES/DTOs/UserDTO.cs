@@ -12,6 +12,6 @@ namespace BookInspector.SERVICES.DTOs
 
         public string Email { get; set; }
 
-        public List<string> roles { get; set; }
+        public List<string> Roles { get; set; }
     }
 }
