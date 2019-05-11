@@ -18,15 +18,11 @@ namespace BookInspector.SERVICES
         private readonly ApplicationDbContext _context;
 
         private IAuthorService _authorService;
-
         private IPublisherService _publisherService;
-
         private ICategoryService _categoryService;
 
-        public BookService(ApplicationDbContext context,
-            IAuthorService authorService,
-            IPublisherService publisherService,
-            ICategoryService categoryService)
+        public BookService(ApplicationDbContext context, IAuthorService authorService,
+            IPublisherService publisherService, ICategoryService categoryService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
@@ -46,6 +42,7 @@ namespace BookInspector.SERVICES
                 .First();
         }
 
+
 		public IEnumerable<Book> GetByCategory(string selectedCategory)
         {
             return _context.Books
@@ -54,6 +51,8 @@ namespace BookInspector.SERVICES
                 .Include(bookCategory => bookCategory.BooksCategories)
                     .ThenInclude(category => category.Category);
         }
+
+
         public IEnumerable<Book> GetAll()
         {
             return _context.Books
@@ -64,8 +63,19 @@ namespace BookInspector.SERVICES
                 .Include(book => book.FavoriteBooks)
                 .Include(book => book.BooksRatings);
         }
-		
-		public int GetTotalBooksCount()
+
+
+        public async Task<IEnumerable<Book>> SearchAsync(string key)
+        {
+            return await _context.Books
+                 .Where(book => book.Title.Contains(key))
+                 .Include(bookCategory => bookCategory.BooksCategories)
+                     .ThenInclude(category => category.Category)
+                 .ToListAsync();
+        }
+
+
+        public int GetTotalBooksCount()
         {
             return _context.Books.Count();
         }

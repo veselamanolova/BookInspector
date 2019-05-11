@@ -16,6 +16,8 @@ namespace BookInspector.SERVICES.Contracts
 
         IEnumerable<Book> GetAll();
 
+        Task<IEnumerable<Book>> SearchAsync(string key);
+
         int GetBooksPerPage();
 
         int GetTotalBooksCount();
