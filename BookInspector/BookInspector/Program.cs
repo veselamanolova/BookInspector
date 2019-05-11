@@ -14,6 +14,7 @@ namespace BookInspector
     using BookInspector.SERVICES.Contracts;
     using System.IO;
     using System.Reflection;
+    using System.Threading.Tasks;
 
     public class Program
     {
@@ -22,21 +23,21 @@ namespace BookInspector
         {
             var host = BuildWebHost(args);
 
-            SeedDatabase(host);
+            SeedDatabaseAsync(host);
 
             host.Run();
         }
 
-        private static void SeedDatabase(IWebHost host)
+        private static async Task SeedDatabaseAsync(IWebHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
-                SeedAdmin(scope);
+                await SeedAdminAsync(scope);
                 SeedBooks(scope);
             }
         }
 
-        private static void SeedAdmin(IServiceScope scope)
+        private static async Task SeedAdminAsync(IServiceScope scope)
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
@@ -47,14 +48,16 @@ namespace BookInspector
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            roleManager.CreateAsync(new IdentityRole { Name = "Administrator" }).Wait();
-
+            var createAdminRole = await roleManager.CreateAsync(new IdentityRole { Name = "Administrator" });
             var adminUser = new ApplicationUser { UserName = "Admin", Email = "admin@admin.admin" };
-
-            userManager.CreateAsync(adminUser, "Admin123@").Wait();
-
-            userManager.AddToRoleAsync(adminUser, "Administrator").Wait();
-          
+            if (createAdminRole.Succeeded)
+            {
+                var createAdminUser= await userManager.CreateAsync(adminUser, "Admin123@");
+                if (createAdminUser.Succeeded)
+                {
+                    userManager.AddToRoleAsync(adminUser, "Administrator").Wait();
+                }
+            }
         }
 
 

@@ -1,5 +1,5 @@
 ﻿
-namespace BookInspector.Area.Controllers
+namespace BookInspector.Area.Admin.Controllers
 {
     using System;
     using System.Linq;
