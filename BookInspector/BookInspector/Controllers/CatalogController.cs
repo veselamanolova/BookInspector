@@ -64,7 +64,7 @@ namespace BookInspector.Controllers
             return View(model);
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var book = await _bookService.GetByIdAsync(id);
