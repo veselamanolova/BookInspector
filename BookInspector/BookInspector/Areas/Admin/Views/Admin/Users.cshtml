@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookInspector.DATA.Models.ApplicationUser>
+﻿@model IEnumerable<BookInspector.SERVICES.DTOs.UserDTO>
 
 @{
     ViewData["Title"] = "Users";
@@ -21,7 +21,7 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.UserName</td>
+                <td>@user.Name</td>
                 <td>@user.Email</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
