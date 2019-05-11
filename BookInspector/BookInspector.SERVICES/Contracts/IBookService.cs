@@ -2,6 +2,7 @@
 namespace BookInspector.SERVICES.Contracts
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 	using System.Collections.Generic;
     using BookInspector.DATA.Models;    
@@ -9,11 +10,11 @@ namespace BookInspector.SERVICES.Contracts
 
     public interface IBookService
     {
+        IQueryable<Book> GetAll();
+
         Task<Book> GetByIdAsync(int id);
 
         Task<IEnumerable<Book>> GetByCategoryAsync(string selectedCategory);
-
-        Task<IEnumerable<Book>> GetAllAsync();
 
         Task<IEnumerable<Book>> SearchAsync(string key);
 

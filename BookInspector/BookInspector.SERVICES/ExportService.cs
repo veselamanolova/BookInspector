@@ -15,9 +15,9 @@ namespace BookInspector.SERVICES
             _bookService = bookService;
         }
 
-        public async void ExportToPDF()
+        public void ExportToPDF()
         {
-            var books = (await _bookService.GetAllAsync())
+            var books = _bookService.GetAll()
                 .Select(book => new
                 {
                     ID = book.Id + "\n",
