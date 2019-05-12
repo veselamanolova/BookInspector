@@ -21,45 +21,39 @@ https://dbprojecct.visualstudio.com/DBProject/_sprints/taskboard/DBProject%20Tea
 
     * **Menu tabs visible to all users:** 
 
-        * Home
-        * Books
-        * Categories 
+        * Catalog        * 
         * Login tab  -  shows as login when the user is not logged in and Welcome, username when the user is logged in    
         
 
-    *  **Menu tab visble only to logged in users:**
+    *  **Page visble only to logged in users:**
 
-        * Community - it will be visible for logged in users  
+        * Book details page - it will be visible for logged in users 
+        
+    *  **Users page and Edit User page will be accessible only to the administrators**
+        
 
-2. **Home:** 
-    * **There will be a global search book on the top**
-    * **In the middle of the page it will list tob 5 books by rating**
+2. **Catalog:** 
+    * **There will be a search book on the top**
     
-3. **Books:** 
-    * **There will be a search book tab on the top**
-    * **In the middle of the page it will list books. It will show for ach book the following information:**
+3. **Details:** 
         * Title,
         * Image,
         * Description, 
-        * Rating, 
-        * Button Details which will redirect to Book page and
-        * Rating control which will save a rating to the book if the user is loggged in. If not it will be redirected to log it first. 
-
-4. **Book:** 
-    * It will show the full information about the book 
-    * And there will be a button to read part of the book online
-
-
-5.  **Category Page**
-    * **There will be a search books by category tab on the top**
-    * **In the middle of the page all categories will be listes. It will show for each category the following information:**
-        * Category Name,
-        * View all books button - which will redirect to Books page but will list only the books from the selected category
-
-6.  **Community**
-    * **This page will be visible only to the logged in users**
-    * It will list all Users and the books they liked
-
+        * Rating
+        
+4. **Users:** 
+        Contains a list of User in a table which allows sorting, paging and searching. 
+        User details consist of 
+        * UserName and
+        * e-mail 
+        * edit
+        
+5. **Edit user page:** 
+      Allows editing the following user datails 
+        * UserName and
+        * e-mail 
+        * Role
+      
 
 
 
