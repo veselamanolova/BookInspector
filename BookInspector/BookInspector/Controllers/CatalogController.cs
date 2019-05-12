@@ -49,6 +49,8 @@ namespace BookInspector.Controllers
 
         public async Task<IActionResult> Category(string category)
         {
+            ViewData["Category"] = category;
+
             IEnumerable<CatalogListingModel> books = (await _bookService.GetByCategoryAsync(category))
                 .Select(book => new CatalogListingModel
                 {

@@ -31,33 +31,29 @@
                             </div>
                             <!-- Modal Body -->
                             <div class="modal-body">
-                                <form asp-controller="Home" asp-action="CreateMovie" method="post" class="create-book">
+                                <form asp-controller="Home" asp-action="CreateBook" method="post" class="create-book">
                                     <div class="form-group">
                                         <label for="movieTitle">Book Title</label>
-                                        @*<input asp-for="@Model.NewMovie.Title" type="text" class="form-control"
-                                                   id="create-book-title" />
-                                            <span asp-validation-for="@Model.NewMovie.Title" class="text-danger"></span>*@
+                                        @*<input asp-for="@Model.Title" type="text" class="form-control"
+                                                   id="create-book-title" />*@
                                     </div>
 
                                     <div class="form-group">
                                         <label for="movieDirector">Book Publisher</label>
-                                        @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                                   id="create-book-director" />
-                                            <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                        @*<input asp-for="@Model.DirectorName" type="text" class="form-control"
+                                                   id="create-book-director" />*@
                                     </div>
 
                                     <div class="form-group">
                                         <label for="movieDirector">Book Category (Split by ' ')</label>
-                                        @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                                   id="create-book-director" />
-                                            <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                        @*<input asp-for="@Model.DirectorName" type="text" class="form-control"
+                                                   id="create-book-director" />*@
                                     </div>
 
                                     <div class="form-group">
                                         <label for="movieDirector">Book Author (Split by ' ')</label>
-                                        @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                                   id="create-book-director" />
-                                            <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                        @*<input asp-for="@Model.DirectorName" type="text" class="form-control"
+                                                   id="create-book-director" />*@
                                     </div>
 
                                     <button type="submit" class="btn btn-default">Create Book</button>
@@ -104,7 +100,7 @@
         {
             <tr>
                 <td>
-                    <img src="@book.ImageURL" alt="" height="150" width="115">
+                    <img src="@book.ImageURL" alt="" height="150">
                 </td>
                 <td>
                     <a asp-controller="Catalog" asp-action="Details" asp-route-id="@book.Id">
@@ -113,12 +109,12 @@
                     <p> <font color="#337ab7"><strong>Description:</strong></font> @book.ShortDescription</p>
                     <p>
                         <font color="#337ab7"><strong>Category: </strong></font>
-                        @*@foreach (var category in book.Categories)
+                        @foreach (var category in book.BooksCategories.Select(c => c.Category))
                             {
                                 <a asp-controller="Catalog" asp-action="Category" asp-route-category="@category.CategoryName">
                                     @category.CategoryName
                                 </a>
-                            }*@
+                            }
                     </p>
                     <a asp-controller="Catalog" asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary pull-left">
                         Details

@@ -38,6 +38,14 @@
                     </button>
                     <br>
                     <br>
+                    @if (this.User.IsInRole("Administrator"))
+                    {
+                        <a asp-controller="Catalog" asp-action="Delete" asp-route-Id="@Model.Id"
+                           class="btn btn-primary pull-left">
+                            Detele Book
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    }
 
                     <!-- Modal -->
                     <div class="modal fade" id="myModalNormAddBook" tabindex="-1" role="dialog"
@@ -60,48 +68,35 @@
                                     <form asp-controller="Home" asp-action="CreateMovie" method="post" class="create-book">
                                         <div class="form-group">
                                             <label for="movieTitle">Book Title</label>
-                                            @*<input asp-for="@Model.NewMovie.Title" type="text" class="form-control"
-                                           id="create-book-title" />
-                                    <span asp-validation-for="@Model.NewMovie.Title" class="text-danger"></span>*@
+                                            @*<input asp-for="@Model.Title" type="text" class="form-control"
+                                id="create-book-title" />*@
                                         </div>
 
                                         <div class="form-group">
                                             <label for="movieDirector">Book Publisher</label>
-                                            @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                           id="create-book-director" />
-                                    <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                            @*<input asp-for="@Model.DirectorName" type="text" class="form-control"
+                                id="create-book-director" />*@
                                         </div>
 
                                         <div class="form-group">
                                             <label for="movieDirector">Book Category (Split by ' ')</label>
-                                            @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                           id="create-book-director" />
-                                    <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                            @*<input asp-for="@Model.DirectorName" type="text" class="form-control"
+                                id="create-book-director" />*@
                                         </div>
 
                                         <div class="form-group">
                                             <label for="movieDirector">Book Author (Split by ' ')</label>
-                                            @*<input asp-for="@Model.NewMovie.DirectorName" type="text" class="form-control"
-                                           id="create-book-director" />
-                                    <span asp-validation-for="@Model.NewMovie.DirectorName" class="text-danger"></span>*@
+                                            @*<input asp-for="@Model.DirectorName" type="text" class="form-control"
+                                id="create-book-director" />*@
                                         </div>
 
-                                        <button type="submit" class="btn btn-default">Create Book</button>
+                                        <button type="submit" class="btn btn-default">Edit Book</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                @if (this.User.IsInRole("Administrator"))
-                {
-                    <a asp-controller="Catalog" asp-action="Delete" asp-route-Id="@Model.Id"
-                       class="btn btn-primary pull-left">
-                        Detele Book
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                }
 
                     <div class="col-md-4">
                         <br>
