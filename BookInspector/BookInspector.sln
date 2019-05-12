@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.DATA", "BookI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookInspector.SERVICES", "BookInspector.SERVICES\BookInspector.SERVICES.csproj", "{828E102E-4789-453B-BB43-C29CBD8ED603}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookInspector.Services.Tests", "BookInspector.Tests\BookInspector.Services.Tests.csproj", "{D3DD21D6-EBF3-40B5-88AB-BDABB7606D4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{828E102E-4789-453B-BB43-C29CBD8ED603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828E102E-4789-453B-BB43-C29CBD8ED603}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{828E102E-4789-453B-BB43-C29CBD8ED603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3DD21D6-EBF3-40B5-88AB-BDABB7606D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DD21D6-EBF3-40B5-88AB-BDABB7606D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DD21D6-EBF3-40B5-88AB-BDABB7606D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DD21D6-EBF3-40B5-88AB-BDABB7606D4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

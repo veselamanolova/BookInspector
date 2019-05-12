@@ -19,11 +19,6 @@ namespace BookInspector.Area.Admin.Controllers
     [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
-        public IActionResult Delete()
-        {
-            return View();
-        }
-
         private readonly IJsonBooksImporterService _jsonBooksImporterService;
         private readonly IUserService _userService;
         private readonly RoleManager<IdentityRole> _roleManager;
