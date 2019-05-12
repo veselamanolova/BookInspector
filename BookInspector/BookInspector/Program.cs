@@ -32,31 +32,41 @@ namespace BookInspector
         {
             using (var scope = host.Services.CreateScope())
             {
+                await SeedRoleAsync(scope, "Administrator");
+                await SeedRoleAsync(scope, "User");
                 await SeedAdminAsync(scope);
                 SeedBooks(scope);
             }
+        }
+
+        private static async Task SeedRoleAsync(IServiceScope scope, string role)
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            if (dbContext.Roles.Any(u => u.Name == role))
+            {
+                return;
+            }
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            await roleManager.CreateAsync(new IdentityRole { Name = role });
         }
 
         private static async Task SeedAdminAsync(IServiceScope scope)
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            if (dbContext.Roles.Any(u => u.Name == "Administrator"))
+            if (dbContext.Users.Any(u => u.UserName == "Admin"))
             {
                 return;
             }
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var createAdminRole = await roleManager.CreateAsync(new IdentityRole { Name = "Administrator" });
             var adminUser = new ApplicationUser { UserName = "Admin", Email = "admin@admin.admin" };
-            if (createAdminRole.Succeeded)
+            var createAdminUser = await userManager.CreateAsync(adminUser, "Admin123@");
+            if (createAdminUser.Succeeded)
             {
-                var createAdminUser= await userManager.CreateAsync(adminUser, "Admin123@");
-                if (createAdminUser.Succeeded)
-                {
-                    userManager.AddToRoleAsync(adminUser, "Administrator").Wait();
-                }
+                userManager.AddToRoleAsync(adminUser, "Administrator").Wait();
             }
         }
 

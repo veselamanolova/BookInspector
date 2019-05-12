@@ -1,0 +1,51 @@
+﻿@model BookInspector.Areas.Admin.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h2>Edit @Model.Name</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditUser" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email" class="control-label"></label>
+                <input asp-for="@Model.Email" class="form-control" />
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=@Model.Roles class="control-label"></label>
+                <br />
+               
+                @for (int i = 0; i < Model.Roles.Count; i++)
+                {                   
+                    string id = "chk" + Model.Roles[i].Name;
+                    <input type="checkbox" id="@id" asp-for="@Model.Roles[i].Selected">
+                    <label for="@id"> @Model.Roles[i].Name</label>
+                    <input type="hidden" asp-for="@Model.Roles[i].Name" />
+                    <br />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\BookInspector.SERVICES\BookInspector.SERVICES.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
-  </ItemGroup>
-
 </Project>

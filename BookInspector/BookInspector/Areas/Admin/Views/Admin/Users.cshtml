@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookInspector.DATA.Models.ApplicationUser>
+﻿@model IEnumerable<BookInspector.SERVICES.DTOs.UserDTO>
 
 @{
     ViewData["Title"] = "Users";
@@ -6,9 +6,6 @@
 
 <h2>Users</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table id="usersTable" class="table table-striped table-bordered" >
     <thead>
         <tr>
@@ -21,12 +18,10 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.UserName</td>
+                <td>@user.Name</td>
                 <td>@user.Email</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Edit", "EditUser", new {  id=user.Id })                   
                 </td>
             </tr>
         }
