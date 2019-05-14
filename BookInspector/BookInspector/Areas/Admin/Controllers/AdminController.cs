@@ -32,7 +32,7 @@ namespace BookInspector.Area.Admin.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult AdministerBooks()
         {
             ImportBookFromJsonViewModel vm = new ImportBookFromJsonViewModel();
             return View(vm);
@@ -41,16 +41,14 @@ namespace BookInspector.Area.Admin.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public IActionResult Index(string url)
+        public IActionResult AdministerBooks(string url)
         {
 
             try
             {
                 var books = _jsonBooksImporterService.ImportBooks(url, true);
-                //return View();
-
-                return RedirectToAction("Index", "Catalog");
-
+                
+                return RedirectToAction("Index", "Catalog", new { area = "Default" });
             }
             catch (ArgumentException ex)
             {

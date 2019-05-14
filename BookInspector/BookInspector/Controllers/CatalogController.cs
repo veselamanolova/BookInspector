@@ -10,7 +10,7 @@ namespace BookInspector.Controllers
     using BookInspector.Models.Catalog;
     using BookInspector.SERVICES.Contracts;
     using BookInspector.DATA.Models;
-
+  
     public class CatalogController : Controller
     {
         private readonly IBookService _bookService;
