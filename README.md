@@ -104,6 +104,7 @@ Example URLs:
 * https://www.googleapis.com/books/v1/volumes?q=AngularJS&maxResults=2
 * https://www.googleapis.com/books/v1/volumes?q=ReactJS&maxResults=5
 * https://www.googleapis.com/books/v1/volumes?q=typescript&maxResults=5
+* https://www.googleapis.com/books/v1/volumes?q=typescript&startIndex=5
 
 
 **Add:**
